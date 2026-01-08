@@ -3,8 +3,14 @@ Bone Mapping API Server v4.0
 체인 기반 분석 + 다중 신호 종합
 """
 import os
+import sys
 import re
 import json
+
+# 현재 디렉토리를 sys.path에 추가 (inference.py import용)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
 from typing import Dict, List, Optional, Set, Tuple
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware

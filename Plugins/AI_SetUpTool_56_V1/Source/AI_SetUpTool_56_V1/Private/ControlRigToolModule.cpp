@@ -115,19 +115,20 @@ void FControlRigToolModule::StartAPIServer()
 	UE_LOG(LogTemp, Log, TEXT("[ControlRigTool] Final Python: %s"), *PythonPath);
 	UE_LOG(LogTemp, Log, TEXT("[ControlRigTool] Final Script: %s"), *ServerScript);
 	
-	// 서버 시작 (백그라운드)
-	FString Args = FString::Printf(TEXT("\"%s\""), *ServerScript);
+	// 서버 시작 (배치 파일 사용)
+	FString BatchFile = PluginDir / TEXT("BoneMapping_AI/start_server.bat");
+	FString WorkingDir = PluginDir / TEXT("BoneMapping_AI");
 	
 	uint32 ProcessID = 0;
 	FProcHandle Handle = FPlatformProcess::CreateProc(
-		*PythonPath,
-		*Args,
+		TEXT("cmd.exe"),
+		*FString::Printf(TEXT("/c \"%s\""), *BatchFile),
 		true,   // bLaunchDetached
 		true,   // bLaunchHidden
 		true,   // bLaunchReallyHidden
 		&ProcessID,
 		0,      // Priority
-		nullptr, // WorkingDirectory
+		*WorkingDir, // WorkingDirectory
 		nullptr  // PipeWriteChild
 	);
 	
