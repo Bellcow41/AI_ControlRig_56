@@ -2703,7 +2703,16 @@ bool SControlRigToolWidget::CreateBodyControlRig()
 FReply SControlRigToolWidget::OnCreateFinalControlRigClicked()
 {
 	if (CreateFinalControlRig())
+	{
 		SetStatus(TEXT("Control Rig created and saved!"));
+		
+		// 컨트롤릭 생성 성공 = 매핑 성공이므로 자동으로 AI 학습 데이터 전송
+		if (LastBoneMapping.Num() > 0)
+		{
+			SendApproveRequest();
+			UE_LOG(LogTemp, Log, TEXT("[ControlRigTool] Auto-approved mapping after Control Rig creation"));
+		}
+	}
 	return FReply::Handled();
 }
 

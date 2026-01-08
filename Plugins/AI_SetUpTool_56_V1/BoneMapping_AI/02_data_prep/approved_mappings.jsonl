@@ -1,0 +1,53 @@
+{"input": "Bone: Root, Parent: None, Children: ['Bip001', 'SC_Fire', 'Root_FootIk', 'SC_FX_Center']", "output": "root"}
+{"input": "Bone: Bip001-Pelvis, Parent: Bip001, Children: ['Bip001-Spine', 'Bip001-L-Thigh', 'Bip001-R-Thigh', 'B_Skirt_Ctrl', 'F_Skirt_Ctrl']", "output": "pelvis"}
+{"input": "Bone: Bip001-Spine, Parent: Bip001-Pelvis, Children: ['Bip001-Spine1']", "output": "spine_01"}
+{"input": "Bone: Bip001-Spine1, Parent: Bip001-Spine, Children: ['Bip001-Spine2']", "output": "spine_02"}
+{"input": "Bone: Bip001-Spine2, Parent: Bip001-Spine1, Children: ['Bip001-Neck', 'Bip001-L-Clavicle', 'Bip001-R-Clavicle', 'L_breast', 'R_breast', 'Mount_A01', 'Bn_CloakCenter_003', 'Mount_A02', 'Mount_A03']", "output": "spine_03"}
+{"input": "Bone: Bip001-Neck, Parent: Bip001-Spine2, Children: ['Bip001-Head']", "output": "neck_01"}
+{"input": "Bone: Bip001-Head, Parent: Bip001-Neck, Children: []", "output": "head"}
+{"input": "Bone: Bip001-L-Thigh, Parent: Bip001-Pelvis, Children: ['Bip001-L-Calf', 'L_ThighTW']", "output": "thigh_l"}
+{"input": "Bone: Bip001-L-Calf, Parent: Bip001-L-Thigh, Children: ['Bip001-L-Foot', 'L_CalfJT']", "output": "calf_l"}
+{"input": "Bone: Bip001-L-Foot, Parent: Bip001-L-Calf, Children: ['Bip001-L-Toe0']", "output": "foot_l"}
+{"input": "Bone: Bip001-L-Toe0, Parent: Bip001-L-Foot, Children: []", "output": "ball_l"}
+{"input": "Bone: Bip001-R-Thigh, Parent: Bip001-Pelvis, Children: ['Bip001-R-Calf', 'R_ThighTW']", "output": "thigh_r"}
+{"input": "Bone: Bip001-R-Calf, Parent: Bip001-R-Thigh, Children: ['Bip001-R-Foot', 'R_CalfJT']", "output": "calf_r"}
+{"input": "Bone: Bip001-R-Foot, Parent: Bip001-R-Calf, Children: ['Bip001-R-Toe0']", "output": "foot_r"}
+{"input": "Bone: Bip001-R-Toe0, Parent: Bip001-R-Foot, Children: []", "output": "ball_r"}
+{"input": "Bone: Bip001-L-Hand, Parent: Bip001-L-Forearm, Children: ['Bip001-L-Finger0', 'Bip001-L-Finger1', 'Bip001-L-Finger2', 'Bip001-L-Finger3', 'Bip001-L-Finger4', 'L_hand_bone']", "output": "hand_l"}
+{"input": "Bone: Bip001-L-Forearm, Parent: Bip001-L-UpperArm, Children: ['Bip001-L-Hand', 'L_ElbowJT', 'L_ForeArmTW']", "output": "lowerarm_l"}
+{"input": "Bone: Bip001-L-UpperArm, Parent: Bip001-L-Clavicle, Children: ['Bip001-L-Forearm', 'L_UpperArmTW']", "output": "upperarm_l"}
+{"input": "Bone: Bip001-L-Clavicle, Parent: Bip001-Spine2, Children: ['Bip001-L-UpperArm', 'L_UpperArmJT']", "output": "clavicle_l"}
+{"input": "Bone: Bip001-R-Hand, Parent: Bip001-R-Forearm, Children: ['Bip001-R-Finger0', 'Bip001-R-Finger1', 'Bip001-R-Finger2', 'Bip001-R-Finger3', 'Bip001-R-Finger4', 'R_hand_bone']", "output": "hand_r"}
+{"input": "Bone: Bip001-R-Forearm, Parent: Bip001-R-UpperArm, Children: ['Bip001-R-Hand', 'R_ElbowJT', 'R_ForeArmTW']", "output": "lowerarm_r"}
+{"input": "Bone: Bip001-R-UpperArm, Parent: Bip001-R-Clavicle, Children: ['Bip001-R-Forearm', 'R_UpperArmTW']", "output": "upperarm_r"}
+{"input": "Bone: Bip001-R-Clavicle, Parent: Bip001-Spine2, Children: ['Bip001-R-UpperArm', 'R_UpperArmJT']", "output": "clavicle_r"}
+{"input": "Bone: Bip001-L-Finger0, Parent: Bip001-L-Hand, Children: ['Bip001-L-Finger01']", "output": "thumb_01_l"}
+{"input": "Bone: Bip001-L-Finger01, Parent: Bip001-L-Finger0, Children: ['Bip001-L-Finger02']", "output": "thumb_02_l"}
+{"input": "Bone: Bip001-L-Finger02, Parent: Bip001-L-Finger01, Children: []", "output": "thumb_03_l"}
+{"input": "Bone: Bip001-L-Finger1, Parent: Bip001-L-Hand, Children: ['Bip001-L-Finger11']", "output": "index_01_l"}
+{"input": "Bone: Bip001-L-Finger11, Parent: Bip001-L-Finger1, Children: ['Bip001-L-Finger12']", "output": "index_02_l"}
+{"input": "Bone: Bip001-L-Finger12, Parent: Bip001-L-Finger11, Children: []", "output": "index_03_l"}
+{"input": "Bone: Bip001-L-Finger2, Parent: Bip001-L-Hand, Children: ['Bip001-L-Finger21']", "output": "middle_01_l"}
+{"input": "Bone: Bip001-L-Finger21, Parent: Bip001-L-Finger2, Children: ['Bip001-L-Finger22']", "output": "middle_02_l"}
+{"input": "Bone: Bip001-L-Finger22, Parent: Bip001-L-Finger21, Children: []", "output": "middle_03_l"}
+{"input": "Bone: Bip001-L-Finger3, Parent: Bip001-L-Hand, Children: ['Bip001-L-Finger31']", "output": "ring_01_l"}
+{"input": "Bone: Bip001-L-Finger31, Parent: Bip001-L-Finger3, Children: ['Bip001-L-Finger32']", "output": "ring_02_l"}
+{"input": "Bone: Bip001-L-Finger32, Parent: Bip001-L-Finger31, Children: []", "output": "ring_03_l"}
+{"input": "Bone: Bip001-L-Finger4, Parent: Bip001-L-Hand, Children: ['Bip001-L-Finger41']", "output": "pinky_01_l"}
+{"input": "Bone: Bip001-L-Finger41, Parent: Bip001-L-Finger4, Children: ['Bip001-L-Finger42']", "output": "pinky_02_l"}
+{"input": "Bone: Bip001-L-Finger42, Parent: Bip001-L-Finger41, Children: []", "output": "pinky_03_l"}
+{"input": "Bone: Bip001-R-Finger0, Parent: Bip001-R-Hand, Children: ['Bip001-R-Finger01']", "output": "thumb_01_r"}
+{"input": "Bone: Bip001-R-Finger01, Parent: Bip001-R-Finger0, Children: ['Bip001-R-Finger02']", "output": "thumb_02_r"}
+{"input": "Bone: Bip001-R-Finger02, Parent: Bip001-R-Finger01, Children: []", "output": "thumb_03_r"}
+{"input": "Bone: Bip001-R-Finger1, Parent: Bip001-R-Hand, Children: ['Bip001-R-Finger11']", "output": "index_01_r"}
+{"input": "Bone: Bip001-R-Finger11, Parent: Bip001-R-Finger1, Children: ['Bip001-R-Finger12']", "output": "index_02_r"}
+{"input": "Bone: Bip001-R-Finger12, Parent: Bip001-R-Finger11, Children: []", "output": "index_03_r"}
+{"input": "Bone: Bip001-R-Finger2, Parent: Bip001-R-Hand, Children: ['Bip001-R-Finger21']", "output": "middle_01_r"}
+{"input": "Bone: Bip001-R-Finger21, Parent: Bip001-R-Finger2, Children: ['Bip001-R-Finger22']", "output": "middle_02_r"}
+{"input": "Bone: Bip001-R-Finger22, Parent: Bip001-R-Finger21, Children: []", "output": "middle_03_r"}
+{"input": "Bone: Bip001-R-Finger3, Parent: Bip001-R-Hand, Children: ['Bip001-R-Finger31']", "output": "ring_01_r"}
+{"input": "Bone: Bip001-R-Finger31, Parent: Bip001-R-Finger3, Children: ['Bip001-R-Finger32']", "output": "ring_02_r"}
+{"input": "Bone: Bip001-R-Finger32, Parent: Bip001-R-Finger31, Children: []", "output": "ring_03_r"}
+{"input": "Bone: Bip001-R-Finger4, Parent: Bip001-R-Hand, Children: ['Bip001-R-Finger41']", "output": "pinky_01_r"}
+{"input": "Bone: Bip001-R-Finger41, Parent: Bip001-R-Finger4, Children: ['Bip001-R-Finger42']", "output": "pinky_02_r"}
+{"input": "Bone: Bip001-R-Finger42, Parent: Bip001-R-Finger41, Children: []", "output": "pinky_03_r"}
