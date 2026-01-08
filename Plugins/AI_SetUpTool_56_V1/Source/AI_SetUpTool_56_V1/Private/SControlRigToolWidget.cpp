@@ -2041,7 +2041,7 @@ TSharedRef<SWidget> SControlRigToolWidget::CreateOutputSection()
 		+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
 		[
 			SAssignNew(OutputNameBox, SEditableTextBox)
-			.Text(FText::FromString(TEXT("CR_NewRig")))
+			.Text(FText::FromString(TEXT("CTR_NewRig_Rig")))
 			.Font(FCoreStyle::GetDefaultFontStyle("Regular", 10))
 		]
 		// 출력 폴더
@@ -2344,7 +2344,7 @@ void SControlRigToolWidget::OnMeshSelectionChanged(TSharedPtr<FString> NewValue,
 	SelectedMesh = NewValue;
 	UpdateMeshThumbnail();
 	if (SelectedMesh.IsValid() && OutputNameBox.IsValid())
-		OutputNameBox->SetText(FText::FromString(FString::Printf(TEXT("CR_%s"), **SelectedMesh)));
+		OutputNameBox->SetText(FText::FromString(FString::Printf(TEXT("CTR_%s_Rig"), **SelectedMesh)));
 }
 
 FText SControlRigToolWidget::GetSelectedMeshName() const
@@ -2401,7 +2401,7 @@ FReply SControlRigToolWidget::OnUseSelectedMeshClicked()
 					if (MeshComboBox.IsValid()) MeshComboBox->SetSelectedItem(SelectedMesh);
 					UpdateMeshThumbnail();
 					if (OutputNameBox.IsValid())
-						OutputNameBox->SetText(FText::FromString(FString::Printf(TEXT("CR_%s"), *A.AssetName.ToString())));
+						OutputNameBox->SetText(FText::FromString(FString::Printf(TEXT("CTR_%s_Rig"), *A.AssetName.ToString())));
 					SetStatus(FString::Printf(TEXT("Mesh: %s"), *A.AssetName.ToString()));
 					return FReply::Handled();
 				}
