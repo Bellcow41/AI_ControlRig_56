@@ -1,0 +1,64 @@
+C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\peft\tuners\lora\layer.py:1091: UserWarning: fan_in_fan_out is set to False but the target module is `Conv1D`. Setting fan_in_fan_out to True.
+  warnings.warn(
+============================================================
+[Bone Mapping AI] Fine-tuning Start (PEFT Mode)
+============================================================
+[OK] GPU: NVIDIA GeForce RTX 4090
+[OK] VRAM: 25.8 GB
+
+[1/6] Loading model...
+[OK] Model loaded: gpt2
+
+[2/6] Adding LoRA adapters...
+trainable params: 1,622,016 || all params: 126,061,824 || trainable%: 1.2867
+[OK] LoRA applied (r=16, alpha=32)
+
+[3/6] Loading dataset...
+Generating train split: 0 examples [00:00, ? examples/s]Generating train split: 161 examples [00:00, 6293.00 examples/s]
+Generating validation split: 0 examples [00:00, ? examples/s]Generating validation split: 18 examples [00:00, 3378.11 examples/s]
+[OK] Train: 161 examples
+[OK] Validation: 18 examples
+Map:   0%|          | 0/161 [00:00<?, ? examples/s]Map: 100%|##########| 161/161 [00:00<00:00, 11061.15 examples/s]
+Map:   0%|          | 0/18 [00:00<?, ? examples/s]Map: 100%|##########| 18/18 [00:00<00:00, 2085.68 examples/s]
+Map:   0%|          | 0/161 [00:00<?, ? examples/s]Map: 100%|##########| 161/161 [00:00<00:00, 2332.70 examples/s]
+Map:   0%|          | 0/18 [00:00<?, ? examples/s]Map: 100%|##########| 18/18 [00:00<00:00, 1013.50 examples/s]
+[OK] Dataset formatted and tokenized
+
+[4/6] Setting up trainer...
+[OK] Trainer configured
+
+[5/6] Starting training...
+   Epochs: 3
+   Batch size: 1 x 8 = 8
+   Learning rate: 0.0002
+------------------------------------------------------------
+  0%|          | 0/60 [00:00<?, ?it/s]C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\_dynamo\eval_frame.py:632: UserWarning: torch.utils.checkpoint: the use_reentrant parameter should be passed explicitly. In version 2.5 we will raise an exception if use_reentrant is not passed. use_reentrant=False is recommended, but if you need to preserve the current default behavior, you can pass use_reentrant=True. Refer to docs for more details on the differences between the two variants.
+  return fn(*args, **kwargs)
+C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\utils\checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+Traceback (most recent call last):
+  File "E:\AI\AI_ControlRig_02\BoneMapping_AI\03_fine_tuning\train.py", line 368, in <module>
+    main()
+  File "E:\AI\AI_ControlRig_02\BoneMapping_AI\03_fine_tuning\train.py", line 272, in main
+    trainer.train()
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\trainer.py", line 1948, in train
+    return inner_training_loop(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\trainer.py", line 2289, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\trainer.py", line 3359, in training_step
+    self.accelerator.backward(loss, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\accelerate\accelerator.py", line 2848, in backward
+    self.scaler.scale(loss).backward(**kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\_tensor.py", line 581, in backward
+    torch.autograd.backward(
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\autograd\__init__.py", line 347, in backward
+    _engine_run_backward(
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\autograd\graph.py", line 825, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn
+  0%|          | 0/60 [00:00<?, ?it/s]

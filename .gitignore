@@ -1,0 +1,70 @@
+# Unreal Engine
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+*.VC.db
+*.opensdf
+*.opendb
+*.sdf
+*.suo
+*.xcodeproj
+*.xcworkspace
+
+# Content Assets (?�?�량 ?�셋 ?�외, Python ?�크립트???��?)
+Content/**/*.uasset
+Content/**/*.umap
+
+# Build
+Build/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+
+# Python site-packages (pip install로 설치되는 패키지들 - install.bat으로 설치)
+**/site-packages/
+
+# AI Model Checkpoints (keep only the final model)
+BoneMapping_AI/03_fine_tuning/checkpoints/checkpoint-*/
+optimizer.pt
+training_args.bin
+trainer_state.json
+
+# Precompiled Headers (huge files)
+*.pch
+*.ipch
+
+# UE Cache
+CachedAssetRegistry*.bin
+
+# Temp
+*.tmp
+*.temp
+*.log
+
+# Content Assets (?�?�량 ?�셋 ?�외)
+Content/**/*.uasset
+Content/**/*.umap
+
+
+
+
+

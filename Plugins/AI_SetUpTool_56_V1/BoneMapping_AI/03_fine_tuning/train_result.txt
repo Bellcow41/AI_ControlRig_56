@@ -1,0 +1,26 @@
+============================================================
+[Bone Mapping AI] Fine-tuning Start (PEFT Mode)
+============================================================
+[OK] GPU: NVIDIA GeForce RTX 4090
+[OK] VRAM: 25.8 GB
+
+[1/6] Loading model...
+[OK] Using 4-bit quantization
+Downloading shards:   0%|          | 0/2 [00:00<?, ?it/s]Downloading shards:  50%|#####     | 1/2 [01:15<01:15, 75.37s/it]Downloading shards: 100%|##########| 2/2 [01:15<00:00, 37.69s/it]
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|#####     | 1/2 [00:02<00:02,  2.11s/it]Loading checkpoint shards: 100%|##########| 2/2 [00:02<00:00,  1.09s/it]Loading checkpoint shards: 100%|##########| 2/2 [00:02<00:00,  1.24s/it]
+Traceback (most recent call last):
+  File "E:\AI\AI_ControlRig_02\BoneMapping_AI\03_fine_tuning\train.py", line 369, in <module>
+    main()
+  File "E:\AI\AI_ControlRig_02\BoneMapping_AI\03_fine_tuning\train.py", line 106, in main
+    model = AutoModelForCausalLM.from_pretrained(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\models\auto\auto_factory.py", line 564, in from_pretrained
+    return model_class.from_pretrained(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\modeling_utils.py", line 4015, in from_pretrained
+    dispatch_model(model, **device_map_kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\accelerate\big_modeling.py", line 502, in dispatch_model
+    model.to(device)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\modeling_utils.py", line 2861, in to
+    raise ValueError(
+ValueError: `.to` is not supported for `4-bit` or `8-bit` bitsandbytes models. Please use the model as it is, since the model has already been set to the correct devices and casted to the correct `dtype`.

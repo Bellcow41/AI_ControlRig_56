@@ -1,0 +1,36 @@
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|##5       | 1/4 [00:01<00:04,  1.52s/it]Loading checkpoint shards:  50%|#####     | 2/4 [00:02<00:02,  1.42s/it]Loading checkpoint shards:  75%|#######5  | 3/4 [00:04<00:01,  1.33s/it]Loading checkpoint shards: 100%|##########| 4/4 [00:04<00:00,  1.04it/s]Loading checkpoint shards: 100%|##########| 4/4 [00:04<00:00,  1.12s/it]
+Traceback (most recent call last):
+  File "E:\AI\AI_ControlRig_02\BoneMapping_AI\03_fine_tuning\train.py", line 372, in <module>
+    main()
+  File "E:\AI\AI_ControlRig_02\BoneMapping_AI\03_fine_tuning\train.py", line 106, in main
+    model = AutoModelForCausalLM.from_pretrained(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\models\auto\auto_factory.py", line 564, in from_pretrained
+    return model_class.from_pretrained(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\modeling_utils.py", line 4015, in from_pretrained
+    dispatch_model(model, **device_map_kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\accelerate\big_modeling.py", line 352, in dispatch_model
+    check_device_map(model, device_map)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\accelerate\utils\modeling.py", line 1422, in check_device_map
+    all_model_tensors = [name for name, _ in model.state_dict().items()]
+                                             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\nn\modules\module.py", line 2219, in state_dict
+    module.state_dict(
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\nn\modules\module.py", line 2219, in state_dict
+    module.state_dict(
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\nn\modules\module.py", line 2219, in state_dict
+    module.state_dict(
+  [Previous line repeated 2 more times]
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\nn\modules\module.py", line 2216, in state_dict
+    self._save_to_state_dict(destination, prefix, keep_vars)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\bitsandbytes\nn\modules.py", line 511, in _save_to_state_dict
+    for k, v in self.weight.quant_state.as_dict(packed=True).items():
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\bitsandbytes\functional.py", line 532, in as_dict
+    qs_packed_dict = {k: v for k, v in qs_dict.items() if isinstance(v, torch.Tensor)}
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\bitsandbytes\functional.py", line 532, in <dictcomp>
+    qs_packed_dict = {k: v for k, v in qs_dict.items() if isinstance(v, torch.Tensor)}
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

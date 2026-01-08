@@ -1,0 +1,29 @@
+{
+  "model_name": "Qwen/Qwen2.5-Coder-7B-Instruct",
+  "lora_r": 16,
+  "lora_alpha": 32,
+  "lora_dropout": 0.05,
+  "target_modules": [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj",
+    "gate_proj",
+    "up_proj",
+    "down_proj"
+  ],
+  "max_seq_length": 1024,
+  "batch_size": 1,
+  "gradient_accumulation_steps": 8,
+  "learning_rate": 0.0002,
+  "num_epochs": 3,
+  "warmup_steps": 10,
+  "weight_decay": 0.01,
+  "max_steps": -1,
+  "output_dir": "./checkpoints",
+  "save_steps": 25,
+  "logging_steps": 5,
+  "train_file": "data/merged_training.jsonl",
+  "val_file": "data/merged_training.jsonl",
+  "use_4bit": true
+}

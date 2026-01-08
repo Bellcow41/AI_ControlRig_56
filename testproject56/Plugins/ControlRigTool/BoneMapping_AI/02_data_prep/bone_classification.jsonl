@@ -1,0 +1,282 @@
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Pelvis", "Bip001-Prop1", "Bip001-Prop2"]}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": ["Bone_Weapon_L_AR_Point001"]}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": ["Bone_Weapon_L_AR_Point001"]}, "output": "secondary", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Elbow_L", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Arm_L", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "secondary", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "weapon", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": []}, "output": "weapon", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": []}, "output": "weapon", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": []}, "output": "weapon", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": []}, "output": "weapon", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": []}, "output": "weapon", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Pelvis", "Bip001-Prop1", "Bip001-Prop2"]}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Elbow_L", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Arm_L", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Elbow_R", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": ["Bone_Weapon_L_AR_Point001"]}, "output": "weapon", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L_AR_Point001", "parent": "Bone_Weapon_L", "children": ["Bone_Weapon_L_AR_Point002"]}, "output": "weapon", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Pelvis"]}, "output": "helper", "skeleton": "PC_Merlin_0001_Preview"}
+{"input": {"bone_name": "Bip001_B_R-Knee", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "PC_Merlin_0001_Preview"}
+{"input": {"bone_name": "Bip001_B_L-Knee", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "PC_Merlin_0001_Preview"}
+{"input": {"bone_name": "Bip001_B_R-Elbow", "parent": "Bip001-R-Forearm", "children": []}, "output": "helper", "skeleton": "PC_Merlin_0001_Preview"}
+{"input": {"bone_name": "Bip001_B_L-Elbow", "parent": "Bip001-L-Forearm", "children": []}, "output": "helper", "skeleton": "PC_Merlin_0001_Preview"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": []}, "output": "weapon", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": []}, "output": "weapon", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": []}, "output": "weapon", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": []}, "output": "weapon", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": []}, "output": "weapon", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": []}, "output": "weapon", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": []}, "output": "weapon", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": []}, "output": "weapon", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Pelvis", "Bip001-Prop1", "Bip001-Prop2"]}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": ["Bone_Weapon_L_AR_Point001"]}, "output": "weapon", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L_AR_Point001", "parent": "Bone_Weapon_L", "children": ["Bone_Weapon_L_AR_Point002"]}, "output": "weapon", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Elbow_L", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Arm_L", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Elbow_R", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Shoulder_R", "parent": "Bip001-R-Clavicle", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Pelvis", "Bip001-Prop1", "Bip001-Prop2"]}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Pelvis"]}, "output": "helper", "skeleton": "PC_howzer_0001_preview"}
+{"input": {"bone_name": "Bip001_B_R-Elbow", "parent": "Bip001-R-Forearm", "children": []}, "output": "helper", "skeleton": "PC_howzer_0001_preview"}
+{"input": {"bone_name": "Bip001_B_L-Knee", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "PC_howzer_0001_preview"}
+{"input": {"bone_name": "Bip001_B_R-Knee", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "PC_howzer_0001_preview"}
+{"input": {"bone_name": "Skirt_BN_Front", "parent": "Bip001-Pelvis", "children": ["Howzer_body_003_Bone000"]}, "output": "helper", "skeleton": "PC_howzer_0001_preview"}
+{"input": {"bone_name": "Skirt_BN_Front", "parent": "Bip001-Pelvis", "children": ["Howzer_body_003_Bone000"]}, "output": "secondary", "skeleton": "PC_howzer_0001_preview"}
+{"input": {"bone_name": "Bip001_B_L-Elbow", "parent": "Bip001-L-Forearm", "children": []}, "output": "helper", "skeleton": "PC_howzer_0001_preview"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": []}, "output": "weapon", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": []}, "output": "weapon", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Pelvis", "Bip001-Prop1", "Bip001-Prop2"]}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": ["Bone_Weapon_L_AR_Point001"]}, "output": "weapon", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L_AR_Point001", "parent": "Bone_Weapon_L", "children": ["Bone_Weapon_L_AR_Point002"]}, "output": "weapon", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Elbow_L", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Arm_L", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Elbow_R", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Shoulder_R", "parent": "Bip001-R-Clavicle", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": []}, "output": "weapon", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Pelvis", "Bip001-Prop1", "Bip001-Prop2"]}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": ["Bone_Weapon_L_AR_Point001"]}, "output": "weapon", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L_AR_Point001", "parent": "Bone_Weapon_L", "children": ["Bone_Weapon_L_AR_Point002"]}, "output": "weapon", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Elbow_R", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Shoulder_R", "parent": "Bip001-R-Clavicle", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Pelvis", "Bip001-Prop1", "Bip001-Prop2"]}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": ["Bone_Weapon_L_AR_Point001"]}, "output": "weapon", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L_AR_Point001", "parent": "Bone_Weapon_L", "children": ["Bone_Weapon_L_AR_Point002"]}, "output": "weapon", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Elbow_L", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Arm_L", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Elbow_R", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Shoulder_R", "parent": "Bip001-R-Clavicle", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Prop1", "Bip001-Prop2", "Bip001-Pelvis"]}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": []}, "output": "weapon", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Pon_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Pelvis", "Bip001-Prop1", "Bip001-Prop2"]}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L", "parent": "Bip001-L-Hand", "children": ["Bone_Weapon_L_AR_Point001"]}, "output": "weapon", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Weapon_L_AR_Point001", "parent": "Bone_Weapon_L", "children": ["Bone_Weapon_L_AR_Point002"]}, "output": "weapon", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone001", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_LBone002", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Elbow_L", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Arm_L", "parent": "Bip001-L-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone001", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Clavicle_RBone002", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Elbow_R", "parent": "Bip001-R-UpperArm", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Shoulder_R", "parent": "Bip001-R-Clavicle", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_L", "parent": "Bip001-L-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bone_Calf_R", "parent": "Bip001-R-Calf", "children": []}, "output": "helper", "skeleton": "Cit_Jishuka_A00_CooT_V2"}
+{"input": {"bone_name": "Bip001", "parent": "Root", "children": ["Bip001-Pelvis"]}, "output": "helper", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_L_Twintails_000", "parent": "Bip001-Head", "children": ["Bone_L_Twintails_001"]}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_L_Twintails_001", "parent": "Bone_L_Twintails_000", "children": ["Bone_L_Twintails_002"]}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_L_Twintails_002", "parent": "Bone_L_Twintails_001", "children": ["Bone_L_Twintails_003"]}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_L_Twintails_003", "parent": "Bone_L_Twintails_002", "children": ["Bone_L_Twintails_004"]}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_L_Twintails_004", "parent": "Bone_L_Twintails_003", "children": ["Bone_L_Twintails_005"]}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_L_Twintails_005", "parent": "Bone_L_Twintails_004", "children": ["Bone_L_Twintails_006"]}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_L_Twintails_006", "parent": "Bone_L_Twintails_005", "children": ["Bone_L_Twintails_007"]}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_L_Twintails_007", "parent": "Bone_L_Twintails_006", "children": ["Bone_L_Twintails_008"]}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_L_Twintails_008", "parent": "Bone_L_Twintails_007", "children": ["Bone_L_Twintails_009"]}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_L_Twintails_009", "parent": "Bone_L_Twintails_008", "children": []}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_R_Twintails_000", "parent": "Bip001-Head", "children": ["Bone_R_Twintails_001"]}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_R_Twintails_001", "parent": "Bone_R_Twintails_000", "children": ["Bone_R_Twintails_002"]}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_R_Twintails_002", "parent": "Bone_R_Twintails_001", "children": ["Bone_R_Twintails_003"]}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_R_Twintails_003", "parent": "Bone_R_Twintails_002", "children": ["Bone_R_Twintails_004"]}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_R_Twintails_004", "parent": "Bone_R_Twintails_003", "children": ["Bone_R_Twintails_005"]}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_R_Twintails_005", "parent": "Bone_R_Twintails_004", "children": ["Bone_R_Twintails_006"]}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_R_Twintails_006", "parent": "Bone_R_Twintails_005", "children": ["Bone_R_Twintails_007"]}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_R_Twintails_007", "parent": "Bone_R_Twintails_006", "children": ["Bone_R_Twintails_008"]}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_R_Twintails_008", "parent": "Bone_R_Twintails_007", "children": ["Bone_R_Twintails_009"]}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_R_Twintails_009", "parent": "Bone_R_Twintails_008", "children": []}, "output": "secondary", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_L_UArmTw", "parent": "Bip001-L-UpperArm", "children": ["Bone_L_armpit"]}, "output": "helper", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_L_armpit", "parent": "Bone_L_UArmTw", "children": []}, "output": "helper", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_R_UArmTw", "parent": "Bip001-R-UpperArm", "children": ["Bone_R_armpit"]}, "output": "helper", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_R_armpit", "parent": "Bone_R_UArmTw", "children": []}, "output": "helper", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_L_Bn_Calf", "parent": "Bip001-L-Calf", "children": ["Bone_L_Knee"]}, "output": "helper", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_L_Knee", "parent": "Bone_L_Bn_Calf", "children": []}, "output": "helper", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_L_ThighTw", "parent": "Bip001-L-Thigh", "children": []}, "output": "helper", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_R_Bn_Calf", "parent": "Bip001-R-Calf", "children": ["Bone_R_Knee"]}, "output": "helper", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_R_Knee", "parent": "Bone_R_Bn_Calf", "children": []}, "output": "helper", "skeleton": "Mina"}
+{"input": {"bone_name": "Bone_R_ThighTw", "parent": "Bip001-R-Thigh", "children": []}, "output": "helper", "skeleton": "Mina"}

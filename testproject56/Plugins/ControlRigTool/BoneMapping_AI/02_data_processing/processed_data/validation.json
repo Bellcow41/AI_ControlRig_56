@@ -1,0 +1,884 @@
+[
+  {
+    "instruction": "What is the target bone for 'L_Pinky_3' in UE5_Mannequin?",
+    "input": "Source skeleton: Cinema4D\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'L_Pinky_3' from Cinema4D maps to 'pinky_03_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'r_pinky1' in UE5_Mannequin?",
+    "input": "Source skeleton: Shorthand_LR\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'r_pinky1' from Shorthand_LR maps to 'pinky_01_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the spine chain from Paragon to UE5_Mannequin.",
+    "input": "Bones in order: pelvis, spine_01, spine_02, spine_03, neck_01, head",
+    "output": "Spine hierarchy mapping:\n  1. pelvis -> pelvis\n  2. spine_01 -> spine_01\n  3. spine_02 -> spine_02\n  4. spine_03 -> spine_03\n  5. neck_01 -> neck_01\n  6. head -> head",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the arm bones from iClone to UE5_Mannequin.",
+    "input": "Source arm bones: CC_Base_L_Upperarm, CC_Base_L_UpperarmTwist01, CC_Base_L_Forearm, CC_Base_L_ForearmTwist01, CC_Base_L_Hand, CC_Base_R_Upperarm, CC_Base_R_UpperarmTwist01, CC_Base_R_Forearm, CC_Base_R_ForearmTwist01, CC_Base_R_Hand",
+    "output": "Arm bone mapping:\n  CC_Base_L_Upperarm -> upperarm_l\n  CC_Base_L_UpperarmTwist01 -> upperarm_twist_01_l\n  CC_Base_L_Forearm -> lowerarm_l\n  CC_Base_L_ForearmTwist01 -> lowerarm_twist_01_l\n  CC_Base_L_Hand -> hand_l\n  CC_Base_R_Upperarm -> upperarm_r\n  CC_Base_R_UpperarmTwist01 -> upperarm_twist_01_r\n  CC_Base_R_Forearm -> lowerarm_r\n  CC_Base_R_ForearmTwist01 -> lowerarm_twist_01_r\n  CC_Base_R_Hand -> hand_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Spine3' in UE5_Mannequin?",
+    "input": "Source skeleton: MotionBuilder\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Spine3' from MotionBuilder maps to 'spine_04' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'hand.R' in UE5_Mannequin?",
+    "input": "Source skeleton: Blender_Rigify_Full\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'hand.R' from Blender_Rigify_Full maps to 'hand_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'RightIndexProximal' in UE5_Mannequin?",
+    "input": "Source skeleton: Unity_Humanoid\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'RightIndexProximal' from Unity_Humanoid maps to 'index_01_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the spine bones from Korean_Studio_A to UE5_Mannequin.",
+    "input": "Source spine bones: Bip01-Spine, Bip01-Spine1, Bip01-Spine2",
+    "output": "Spine bone mapping:\n  Bip01-Spine -> spine_01\n  Bip01-Spine1 -> spine_02\n  Bip01-Spine2 -> spine_03",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'right_ring_3' in UE5_Mannequin?",
+    "input": "Source skeleton: Generic_Underscore\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'right_ring_3' from Generic_Underscore maps to 'ring_03_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'mixamorig:RightLeg' in UE5_Mannequin?",
+    "input": "Source skeleton: Mixamo_Full\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'mixamorig:RightLeg' from Mixamo_Full maps to 'calf_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'l_toe' in UE5_Mannequin?",
+    "input": "Source skeleton: Shorthand_LR\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'l_toe' from Shorthand_LR maps to 'ball_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'CC_Base_L_Mid2' in UE5_Mannequin?",
+    "input": "Source skeleton: iClone\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'CC_Base_L_Mid2' from iClone maps to 'middle_02_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Bip001_R_Finger22' in UE5_Mannequin?",
+    "input": "Source skeleton: 3dsMax_Biped_Full\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Bip001_R_Finger22' from 3dsMax_Biped_Full maps to 'middle_03_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'lMid2' in UE5_Mannequin?",
+    "input": "Source skeleton: Daz3D_Genesis8\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'lMid2' from Daz3D_Genesis8 maps to 'middle_02_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'mixamorig:Head' in UE5_Mannequin?",
+    "input": "Source skeleton: Mixamo_Full\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'mixamorig:Head' from Mixamo_Full maps to 'head' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Head' in UE5_Mannequin?",
+    "input": "Source skeleton: Maya_HumanIK\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Head' from Maya_HumanIK maps to 'head' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Find all hand-related bones and map them.",
+    "input": "Source skeleton: Cinema4D\nBones: L_Hand, R_Hand",
+    "output": "Hand bone mappings:\n  L_Hand -> hand_l\n  R_Hand -> hand_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the right arm chain from Generic_Underscore to UE5_Mannequin.",
+    "input": "Bones in order: left_upper_arm, left_lower_arm, right_upper_arm, right_lower_arm",
+    "output": "Right Arm hierarchy mapping:\n  1. left_upper_arm -> upperarm_l\n  2. left_lower_arm -> lowerarm_l\n  3. right_upper_arm -> upperarm_r\n  4. right_lower_arm -> lowerarm_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map only these 10 bones from the source to target skeleton.",
+    "input": "Source skeleton: Paragon\nBones to map: lowerarm_twist_01_l, thigh_l, upperarm_l, clavicle_l, upperarm_r, calf_twist_01_l, foot_r, spine_01, clavicle_r, ball_l\n\nAvailable target bones (UE5_Mannequin):\n1. root\n2. pelvis\n3. spine_01\n4. spine_02\n5. spine_03\n6. neck_01\n7. head\n8. clavicle_l\n9. upperarm_l\n10. upperarm_twist_01_l\n11. lowerarm_l\n12. lowerarm_twist_01_l\n13. hand_l\n14. clavicle_r\n15. upperarm_r\n16. upperarm_twist_01_r\n17. lowerarm_r\n18. lowerarm_twist_01_r\n19. hand_r\n20. thigh_l\n21. thigh_twist_01_l\n22. calf_l\n23. calf_twist_01_l\n24. foot_l\n25. ball_l\n26. thigh_r\n27. thigh_twist_01_r\n28. calf_r\n29. calf_twist_01_r\n30. foot_r\n31. ball_r",
+    "output": "Bone mapping results:\n\n  spine_01 -> spine_01\n  clavicle_l -> clavicle_l\n  upperarm_l -> upperarm_l\n  lowerarm_twist_01_l -> lowerarm_twist_01_l\n  clavicle_r -> clavicle_r\n  upperarm_r -> upperarm_r\n  thigh_l -> thigh_l\n  calf_twist_01_l -> calf_twist_01_l\n  ball_l -> ball_l\n  foot_r -> foot_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map only these 3 bones from the source to target skeleton.",
+    "input": "Source skeleton: MetaHuman\nBones to map: thumb_01_r, pinky_02_l, pinky_01_l\n\nAvailable target bones (UE5_Mannequin):\n1. middle_01_l\n2. neck_01\n3. spine_01\n4. lowerarm_r\n5. hand_l\n6. index_metacarpal_r\n7. lowerarm_twist_01_r\n8. calf_twist_02_l\n9. spine_03\n10. thigh_r\n11. thumb_02_l\n12. thumb_02_r\n13. middle_03_r\n14. lowerarm_twist_02_l\n15. pinky_02_r\n16. upperarm_twist_01_l\n17. calf_l\n18. pinky_03_l\n19. calf_r\n20. foot_l\n21. ring_03_l\n22. neck_02\n23. middle_01_r\n24. thumb_01_l\n25. pinky_01_l\n26. index_01_l\n27. ball_l\n28. ring_03_r\n29. ring_02_l\n30. pinky_01_r\n31. thumb_03_r\n32. upperarm_l\n33. head\n34. clavicle_r\n35. foot_r\n36. ring_metacarpal_l\n37. ring_01_r\n38. calf_twist_01_l\n39. thumb_03_l\n40. pelvis\n41. index_03_r\n42. middle_02_l\n43. calf_twist_02_r\n44. pinky_03_r\n45. middle_03_l\n46. ring_metacarpal_r\n47. upperarm_r\n48. thigh_twist_02_l\n49. pinky_metacarpal_r\n50. pinky_02_l\n51. index_02_r\n52. middle_02_r\n53. index_metacarpal_l\n54. middle_metacarpal_r\n55. lowerarm_l\n56. lowerarm_twist_01_l\n57. index_03_l\n58. thigh_twist_01_r\n59. spine_05\n60. lowerarm_twist_02_r\n61. thigh_twist_01_l\n62. ring_02_r\n63. upperarm_twist_01_r\n64. root\n65. upperarm_twist_02_r\n66. index_01_r\n67. clavicle_l\n68. calf_twist_01_r\n69. upperarm_twist_02_l\n70. thigh_twist_02_r\n71. index_02_l\n72. thigh_l\n73. pinky_metacarpal_l\n74. spine_02\n75. hand_r\n76. middle_metacarpal_l\n77. thumb_01_r\n78. ring_01_l\n79. ball_r\n80. spine_04",
+    "output": "Bone mapping results:\n\n  pinky_01_l -> pinky_01_l\n  pinky_02_l -> pinky_02_l\n  thumb_01_r -> thumb_01_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Find all arm-related bones and map them.",
+    "input": "Source skeleton: 3dsMax_CAT\nBones: CATRigLArmCollarbone, CATRigLArmUpperArm, CATRigLArmForeArm, CATRigLArmPalm, CATRigLArmThumb1, CATRigLArmThumb2, CATRigLArmThumb3, CATRigLArmIndex1, CATRigLArmIndex2, CATRigLArmIndex3, CATRigLArmMiddle1, CATRigLArmMiddle2, CATRigLArmMiddle3, CATRigLArmRing1, CATRigLArmRing2, CATRigLArmRing3, CATRigLArmPinky1, CATRigLArmPinky2, CATRigLArmPinky3, CATRigRArmCollarbone, CATRigRArmUpperArm, CATRigRArmForeArm, CATRigRArmPalm, CATRigRArmThumb1, CATRigRArmThumb2, CATRigRArmThumb3, CATRigRArmIndex1, CATRigRArmIndex2, CATRigRArmIndex3, CATRigRArmMiddle1, CATRigRArmMiddle2, CATRigRArmMiddle3, CATRigRArmRing1, CATRigRArmRing2, CATRigRArmRing3, CATRigRArmPinky1, CATRigRArmPinky2, CATRigRArmPinky3",
+    "output": "Arm bone mappings:\n  CATRigLArmCollarbone -> clavicle_l\n  CATRigLArmUpperArm -> upperarm_l\n  CATRigLArmForeArm -> lowerarm_l\n  CATRigLArmPalm -> hand_l\n  CATRigLArmThumb1 -> thumb_01_l\n  CATRigLArmThumb2 -> thumb_02_l\n  CATRigLArmThumb3 -> thumb_03_l\n  CATRigLArmIndex1 -> index_01_l\n  CATRigLArmIndex2 -> index_02_l\n  CATRigLArmIndex3 -> index_03_l\n  CATRigLArmMiddle1 -> middle_01_l\n  CATRigLArmMiddle2 -> middle_02_l\n  CATRigLArmMiddle3 -> middle_03_l\n  CATRigLArmRing1 -> ring_01_l\n  CATRigLArmRing2 -> ring_02_l\n  CATRigLArmRing3 -> ring_03_l\n  CATRigLArmPinky1 -> pinky_01_l\n  CATRigLArmPinky2 -> pinky_02_l\n  CATRigLArmPinky3 -> pinky_03_l\n  CATRigRArmCollarbone -> clavicle_r\n  CATRigRArmUpperArm -> upperarm_r\n  CATRigRArmForeArm -> lowerarm_r\n  CATRigRArmPalm -> hand_r\n  CATRigRArmThumb1 -> thumb_01_r\n  CATRigRArmThumb2 -> thumb_02_r\n  CATRigRArmThumb3 -> thumb_03_r\n  CATRigRArmIndex1 -> index_01_r\n  CATRigRArmIndex2 -> index_02_r\n  CATRigRArmIndex3 -> index_03_r\n  CATRigRArmMiddle1 -> middle_01_r\n  CATRigRArmMiddle2 -> middle_02_r\n  CATRigRArmMiddle3 -> middle_03_r\n  CATRigRArmRing1 -> ring_01_r\n  CATRigRArmRing2 -> ring_02_r\n  CATRigRArmRing3 -> ring_03_r\n  CATRigRArmPinky1 -> pinky_01_r\n  CATRigRArmPinky2 -> pinky_02_r\n  CATRigRArmPinky3 -> pinky_03_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Bip01-R-Foot' in UE5_Mannequin?",
+    "input": "Source skeleton: Korean_Studio_A\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Bip01-R-Foot' from Korean_Studio_A maps to 'foot_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the right leg chain from Maya_HumanIK to UE5_Mannequin.",
+    "input": "Bones in order: RightUpLeg, RightLeg, RightFoot, RightToeBase",
+    "output": "Right Leg hierarchy mapping:\n  1. RightUpLeg -> thigh_r\n  2. RightLeg -> calf_r\n  3. RightFoot -> foot_r\n  4. RightToeBase -> ball_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'upper_arm.L' in UE5_Mannequin?",
+    "input": "Source skeleton: Blender_Rigify\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'upper_arm.L' from Blender_Rigify maps to 'upperarm_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the left leg chain from Mixamo to UE5_Mannequin.",
+    "input": "Bones in order: mixamorig:LeftUpLeg, mixamorig:LeftLeg, mixamorig:LeftFoot, mixamorig:LeftToeBase",
+    "output": "Left Leg hierarchy mapping:\n  1. mixamorig:LeftUpLeg -> thigh_l\n  2. mixamorig:LeftLeg -> calf_l\n  3. mixamorig:LeftFoot -> foot_l\n  4. mixamorig:LeftToeBase -> ball_l",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map only these 5 bones from the source to target skeleton.",
+    "input": "Source skeleton: Maya_HumanIK\nBones to map: RightShoulder, RightHand, Spine, LeftShoulder, RightForeArm\n\nAvailable target bones (UE5_Mannequin):\n1. pelvis\n2. spine_01\n3. spine_02\n4. spine_03\n5. neck_01\n6. head\n7. clavicle_l\n8. upperarm_l\n9. lowerarm_l\n10. hand_l\n11. clavicle_r\n12. upperarm_r\n13. lowerarm_r\n14. hand_r\n15. thigh_l\n16. calf_l\n17. foot_l\n18. ball_l\n19. thigh_r\n20. calf_r\n21. foot_r\n22. ball_r",
+    "output": "Bone mapping results:\n\n  Spine -> spine_01\n  LeftShoulder -> clavicle_l\n  RightShoulder -> clavicle_r\n  RightForeArm -> lowerarm_r\n  RightHand -> hand_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Bip01-Neck' in UE5_Mannequin?",
+    "input": "Source skeleton: Korean_Studio_A\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Bip01-Neck' from Korean_Studio_A maps to 'neck_01' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'RightToeBase' in UE5_Mannequin?",
+    "input": "Source skeleton: AccuRIG\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'RightToeBase' from AccuRIG maps to 'ball_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the head bones from Cinema4D to UE5_Mannequin.",
+    "input": "Source head bones: Neck_1, Head",
+    "output": "Head bone mapping:\n  Neck_1 -> neck_01\n  Head -> head",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Neck' in UE5_Mannequin?",
+    "input": "Source skeleton: MotionBuilder\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Neck' from MotionBuilder maps to 'neck_01' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'left_foot' in UE5_Mannequin?",
+    "input": "Source skeleton: Generic_Underscore\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'left_foot' from Generic_Underscore maps to 'foot_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'CATRigRArmUpperArm' in UE5_Mannequin?",
+    "input": "Source skeleton: 3dsMax_CAT\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'CATRigRArmUpperArm' from 3dsMax_CAT maps to 'upperarm_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Find all head-related bones and map them.",
+    "input": "Source skeleton: iClone\nBones: CC_Base_NeckTwist01, CC_Base_NeckTwist02, CC_Base_Head",
+    "output": "Head bone mappings:\n  CC_Base_NeckTwist01 -> neck_01\n  CC_Base_NeckTwist02 -> neck_02\n  CC_Base_Head -> head",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Root' in UE5_Mannequin?",
+    "input": "Source skeleton: Generic_CamelCase\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Root' from Generic_CamelCase maps to 'root' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'RightFoot' in UE5_Mannequin?",
+    "input": "Source skeleton: MotionBuilder\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'RightFoot' from MotionBuilder maps to 'foot_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'RightHandMiddle2' in UE5_Mannequin?",
+    "input": "Source skeleton: MotionBuilder\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'RightHandMiddle2' from MotionBuilder maps to 'middle_02_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the right leg chain from Blender_Rigify to UE5_Mannequin.",
+    "input": "Bones in order: thigh.R, shin.R",
+    "output": "Right Leg hierarchy mapping:\n  1. thigh.R -> thigh_r\n  2. shin.R -> calf_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Bip001_L_Forearm' in UE5_Mannequin?",
+    "input": "Source skeleton: 3dsMax_Biped\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Bip001_L_Forearm' from 3dsMax_Biped maps to 'lowerarm_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'RightIndex1' in UE5_Mannequin?",
+    "input": "Source skeleton: Generic_CamelCase\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'RightIndex1' from Generic_CamelCase maps to 'index_01_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Find all head-related bones and map them.",
+    "input": "Source skeleton: Daz3D_Genesis8\nBones: neckLower, neckUpper, head",
+    "output": "Head bone mappings:\n  neckLower -> neck_01\n  neckUpper -> neck_02\n  head -> head",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'thigh_twist_01_r' in UE5_Mannequin?",
+    "input": "Source skeleton: MetaHuman\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'thigh_twist_01_r' from MetaHuman maps to 'thigh_twist_01_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Generate a bone mapping table for the following skeleton.",
+    "input": "Source skeleton type: 3dsMax_Biped_Full_variant\nSource bones:\n1. BIP001\n2. BIP001_PELVIS\n3. BIP001_SPINE\n4. BIP001_SPINE1\n5. BIP001_SPINE2\n6. BIP001_SPINE3\n7. BIP001_NECK\n8. BIP001_NECK1\n9. BIP001_HEAD\n10. BIP001_L_CLAVICLE\n11. BIP001_L_UPPERARM\n12. BIP001_L_FOREARM\n13. BIP001_L_HAND\n14. BIP001_L_FINGER0\n15. BIP001_L_FINGER01\n16. BIP001_L_FINGER02\n17. BIP001_L_FINGER1\n18. BIP001_L_FINGER11\n19. BIP001_L_FINGER12\n20. BIP001_L_FINGER2\n21. BIP001_L_FINGER21\n22. BIP001_L_FINGER22\n23. BIP001_L_FINGER3\n24. BIP001_L_FINGER31\n25. BIP001_L_FINGER32\n26. BIP001_L_FINGER4\n27. BIP001_L_FINGER41\n28. BIP001_L_FINGER42\n29. BIP001_R_CLAVICLE\n30. BIP001_R_UPPERARM\n31. BIP001_R_FOREARM\n32. BIP001_R_HAND\n33. BIP001_R_FINGER0\n34. BIP001_R_FINGER01\n35. BIP001_R_FINGER02\n36. BIP001_R_FINGER1\n37. BIP001_R_FINGER11\n38. BIP001_R_FINGER12\n39. BIP001_R_FINGER2\n40. BIP001_R_FINGER21\n41. BIP001_R_FINGER22\n42. BIP001_R_FINGER3\n43. BIP001_R_FINGER31\n44. BIP001_R_FINGER32\n45. BIP001_R_FINGER4\n46. BIP001_R_FINGER41\n47. BIP001_R_FINGER42\n48. BIP001_L_THIGH\n49. BIP001_L_CALF\n50. BIP001_L_FOOT\n51. BIP001_L_TOE0\n52. BIP001_L_TOE01\n53. BIP001_R_THIGH\n54. BIP001_R_CALF\n55. BIP001_R_FOOT\n56. BIP001_R_TOE0\n57. BIP001_R_TOE01\n\nTarget skeleton type: UE5_Mannequin\nTarget bones:\n1. middle_03_l\n2. middle_01_l\n3. ring_03_l\n4. neck_01\n5. index_01_r\n6. neck_02\n7. spine_01\n8. upperarm_r\n9. clavicle_l\n10. middle_01_r\n11. thumb_01_l\n12. pinky_01_l\n13. index_01_l\n14. lowerarm_r\n15. hand_l\n16. ball_l\n17. index_02_l\n18. pinky_02_l\n19. ring_03_r\n20. ring_02_l\n21. index_02_r\n22. pinky_01_r\n23. spine_03\n24. thumb_03_r\n25. middle_02_r\n26. upperarm_l\n27. thigh_l\n28. head\n29. clavicle_r\n30. thigh_r\n31. foot_r\n32. lowerarm_l\n33. ring_01_r\n34. thumb_02_l\n35. spine_02\n36. thumb_02_r\n37. index_03_l\n38. middle_03_r\n39. thumb_03_l\n40. hand_r\n41. thumb_01_r\n42. ring_01_l\n43. pelvis\n44. index_03_r\n45. ball_r\n46. middle_02_l\n47. spine_04\n48. pinky_02_r\n49. ring_02_r\n50. calf_l\n51. pinky_03_l\n52. root\n53. pinky_03_r\n54. calf_r\n55. foot_l",
+    "output": "Here is the bone mapping from 3dsMax_Biped_Full_variant to UE5_Mannequin:\n\n  BIP001 -> root\n  BIP001_PELVIS -> pelvis\n  BIP001_SPINE -> spine_01\n  BIP001_SPINE1 -> spine_02\n  BIP001_SPINE2 -> spine_03\n  BIP001_SPINE3 -> spine_04\n  BIP001_NECK -> neck_01\n  BIP001_NECK1 -> neck_02\n  BIP001_HEAD -> head\n  BIP001_L_CLAVICLE -> clavicle_l\n  BIP001_L_UPPERARM -> upperarm_l\n  BIP001_L_FOREARM -> lowerarm_l\n  BIP001_L_HAND -> hand_l\n  BIP001_L_FINGER0 -> thumb_01_l\n  BIP001_L_FINGER01 -> thumb_02_l\n  BIP001_L_FINGER02 -> thumb_03_l\n  BIP001_L_FINGER1 -> index_01_l\n  BIP001_L_FINGER11 -> index_02_l\n  BIP001_L_FINGER12 -> index_03_l\n  BIP001_L_FINGER2 -> middle_01_l\n  BIP001_L_FINGER21 -> middle_02_l\n  BIP001_L_FINGER22 -> middle_03_l\n  BIP001_L_FINGER3 -> ring_01_l\n  BIP001_L_FINGER31 -> ring_02_l\n  BIP001_L_FINGER32 -> ring_03_l\n  BIP001_L_FINGER4 -> pinky_01_l\n  BIP001_L_FINGER41 -> pinky_02_l\n  BIP001_L_FINGER42 -> pinky_03_l\n  BIP001_R_CLAVICLE -> clavicle_r\n  BIP001_R_UPPERARM -> upperarm_r\n  BIP001_R_FOREARM -> lowerarm_r\n  BIP001_R_HAND -> hand_r\n  BIP001_R_FINGER0 -> thumb_01_r\n  BIP001_R_FINGER01 -> thumb_02_r\n  BIP001_R_FINGER02 -> thumb_03_r\n  BIP001_R_FINGER1 -> index_01_r\n  BIP001_R_FINGER11 -> index_02_r\n  BIP001_R_FINGER12 -> index_03_r\n  BIP001_R_FINGER2 -> middle_01_r\n  BIP001_R_FINGER21 -> middle_02_r\n  BIP001_R_FINGER22 -> middle_03_r\n  BIP001_R_FINGER3 -> ring_01_r\n  BIP001_R_FINGER31 -> ring_02_r\n  BIP001_R_FINGER32 -> ring_03_r\n  BIP001_R_FINGER4 -> pinky_01_r\n  BIP001_R_FINGER41 -> pinky_02_r\n  BIP001_R_FINGER42 -> pinky_03_r\n  BIP001_L_THIGH -> thigh_l\n  BIP001_L_CALF -> calf_l\n  BIP001_L_FOOT -> foot_l\n  BIP001_L_TOE0 -> ball_l\n  BIP001_L_TOE01 -> ball_l\n  BIP001_R_THIGH -> thigh_r\n  BIP001_R_CALF -> calf_r\n  BIP001_R_FOOT -> foot_r\n  BIP001_R_TOE0 -> ball_r\n  BIP001_R_TOE01 -> ball_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the right leg chain from Cinema4D to UE5_Mannequin.",
+    "input": "Bones in order: R_Thigh, R_Shin",
+    "output": "Right Leg hierarchy mapping:\n  1. R_Thigh -> thigh_r\n  2. R_Shin -> calf_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'RightForeArmRoll' in UE5_Mannequin?",
+    "input": "Source skeleton: MotionBuilder\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'RightForeArmRoll' from MotionBuilder maps to 'lowerarm_twist_01_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'RightForeArm' in UE5_Mannequin?",
+    "input": "Source skeleton: Maya_HumanIK\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'RightForeArm' from Maya_HumanIK maps to 'lowerarm_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the left leg chain from iClone to UE5_Mannequin.",
+    "input": "Bones in order: CC_Base_L_Thigh, CC_Base_L_ThighTwist01, CC_Base_L_Calf, CC_Base_L_CalfTwist01",
+    "output": "Left Leg hierarchy mapping:\n  1. CC_Base_L_Thigh -> thigh_l\n  2. CC_Base_L_ThighTwist01 -> thigh_twist_01_l\n  3. CC_Base_L_Calf -> calf_l\n  4. CC_Base_L_CalfTwist01 -> calf_twist_01_l",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Create a bone mapping from the given skeleton to Unreal Engine 5 standard skeleton.",
+    "input": "Source skeleton type: Generic_Underscore_variant\nSource bones:\n1. root\n2. hip\n3. spine_1\n4. spine_2\n5. spine_3\n6. neck_1\n7. head\n8. left_clavicle\n9. left_upper_arm\n10. left_lower_arm\n11. left_hand\n12. left_thumb_1\n13. left_thumb_2\n14. left_thumb_3\n15. left_index_1\n16. left_index_2\n17. left_index_3\n18. left_middle_1\n19. left_middle_2\n20. left_middle_3\n21. left_ring_1\n22. left_ring_2\n23. left_ring_3\n24. left_pinky_1\n25. left_pinky_2\n26. left_pinky_3\n27. right_clavicle\n28. right_upper_arm\n29. right_lower_arm\n30. right_hand\n31. right_thumb_1\n32. right_thumb_2\n33. right_thumb_3\n34. right_index_1\n35. right_index_2\n36. right_index_3\n37. right_middle_1\n38. right_middle_2\n39. right_middle_3\n40. right_ring_1\n41. right_ring_2\n42. right_ring_3\n43. right_pinky_1\n44. right_pinky_2\n45. right_pinky_3\n46. left_thigh\n47. left_calf\n48. left_foot\n49. left_toe\n50. right_thigh\n51. right_calf\n52. right_foot\n53. right_toe\n\nTarget skeleton type: UE5_Mannequin\nTarget bones:\n1. middle_03_l\n2. middle_01_l\n3. ring_03_l\n4. neck_01\n5. index_01_r\n6. spine_01\n7. upperarm_r\n8. clavicle_l\n9. middle_01_r\n10. thumb_01_l\n11. pinky_01_l\n12. index_01_l\n13. lowerarm_r\n14. hand_l\n15. ball_l\n16. index_02_l\n17. pinky_02_l\n18. ring_03_r\n19. ring_02_l\n20. index_02_r\n21. pinky_01_r\n22. spine_03\n23. thumb_03_r\n24. middle_02_r\n25. upperarm_l\n26. thigh_l\n27. head\n28. clavicle_r\n29. thigh_r\n30. foot_r\n31. lowerarm_l\n32. ring_01_r\n33. thumb_02_l\n34. spine_02\n35. thumb_02_r\n36. index_03_l\n37. middle_03_r\n38. thumb_03_l\n39. hand_r\n40. thumb_01_r\n41. ring_01_l\n42. pelvis\n43. index_03_r\n44. ball_r\n45. middle_02_l\n46. pinky_02_r\n47. ring_02_r\n48. calf_l\n49. pinky_03_l\n50. root\n51. pinky_03_r\n52. calf_r\n53. foot_l",
+    "output": "Here is the bone mapping from Generic_Underscore_variant to UE5_Mannequin:\n\n  root -> root\n  hip -> pelvis\n  spine_1 -> spine_01\n  spine_2 -> spine_02\n  spine_3 -> spine_03\n  neck_1 -> neck_01\n  head -> head\n  left_clavicle -> clavicle_l\n  left_upper_arm -> upperarm_l\n  left_lower_arm -> lowerarm_l\n  left_hand -> hand_l\n  left_thumb_1 -> thumb_01_l\n  left_thumb_2 -> thumb_02_l\n  left_thumb_3 -> thumb_03_l\n  left_index_1 -> index_01_l\n  left_index_2 -> index_02_l\n  left_index_3 -> index_03_l\n  left_middle_1 -> middle_01_l\n  left_middle_2 -> middle_02_l\n  left_middle_3 -> middle_03_l\n  left_ring_1 -> ring_01_l\n  left_ring_2 -> ring_02_l\n  left_ring_3 -> ring_03_l\n  left_pinky_1 -> pinky_01_l\n  left_pinky_2 -> pinky_02_l\n  left_pinky_3 -> pinky_03_l\n  right_clavicle -> clavicle_r\n  right_upper_arm -> upperarm_r\n  right_lower_arm -> lowerarm_r\n  right_hand -> hand_r\n  right_thumb_1 -> thumb_01_r\n  right_thumb_2 -> thumb_02_r\n  right_thumb_3 -> thumb_03_r\n  right_index_1 -> index_01_r\n  right_index_2 -> index_02_r\n  right_index_3 -> index_03_r\n  right_middle_1 -> middle_01_r\n  right_middle_2 -> middle_02_r\n  right_middle_3 -> middle_03_r\n  right_ring_1 -> ring_01_r\n  right_ring_2 -> ring_02_r\n  right_ring_3 -> ring_03_r\n  right_pinky_1 -> pinky_01_r\n  right_pinky_2 -> pinky_02_r\n  right_pinky_3 -> pinky_03_r\n  left_thigh -> thigh_l\n  left_calf -> calf_l\n  left_foot -> foot_l\n  left_toe -> ball_l\n  right_thigh -> thigh_r\n  right_calf -> calf_r\n  right_foot -> foot_r\n  right_toe -> ball_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map only these 5 bones from the source to target skeleton.",
+    "input": "Source skeleton: MotionBuilder\nBones to map: RightHandRing3, LeftForeArmRoll, LeftHandMiddle3, LeftHandPinky2, Spine1\n\nAvailable target bones (UE5_Mannequin):\n1. middle_03_l\n2. middle_01_l\n3. ring_03_l\n4. neck_01\n5. index_01_r\n6. neck_02\n7. spine_01\n8. upperarm_r\n9. clavicle_l\n10. middle_01_r\n11. thumb_01_l\n12. pinky_01_l\n13. calf_twist_01_r\n14. index_01_l\n15. lowerarm_r\n16. hand_l\n17. ball_l\n18. index_02_l\n19. pinky_02_l\n20. ring_03_r\n21. ring_02_l\n22. lowerarm_twist_01_r\n23. index_02_r\n24. pinky_01_r\n25. spine_03\n26. thumb_03_r\n27. middle_02_r\n28. upperarm_l\n29. thigh_l\n30. head\n31. clavicle_r\n32. thigh_r\n33. foot_r\n34. lowerarm_l\n35. ring_01_r\n36. thumb_02_l\n37. calf_twist_01_l\n38. lowerarm_twist_01_l\n39. spine_02\n40. index_03_l\n41. thumb_02_r\n42. middle_03_r\n43. thumb_03_l\n44. hand_r\n45. thigh_twist_01_r\n46. thumb_01_r\n47. ring_01_l\n48. pelvis\n49. index_03_r\n50. thigh_twist_01_l\n51. ball_r\n52. middle_02_l\n53. spine_04\n54. pinky_02_r\n55. upperarm_twist_01_l\n56. ring_02_r\n57. upperarm_twist_01_r\n58. calf_l\n59. pinky_03_l\n60. root\n61. pinky_03_r\n62. calf_r\n63. foot_l",
+    "output": "Bone mapping results:\n\n  Spine1 -> spine_02\n  LeftForeArmRoll -> lowerarm_twist_01_l\n  LeftHandMiddle3 -> middle_03_l\n  LeftHandPinky2 -> pinky_02_l\n  RightHandRing3 -> ring_03_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Bip001_R_Finger1' in UE5_Mannequin?",
+    "input": "Source skeleton: 3dsMax_Biped_Full\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Bip001_R_Finger1' from 3dsMax_Biped_Full maps to 'index_01_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'l_thumb1' in UE5_Mannequin?",
+    "input": "Source skeleton: Shorthand_LR\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'l_thumb1' from Shorthand_LR maps to 'thumb_01_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'f_ring.01.L' in UE5_Mannequin?",
+    "input": "Source skeleton: Blender_Rigify_Full\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'f_ring.01.L' from Blender_Rigify_Full maps to 'ring_01_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'rRing2' in UE5_Mannequin?",
+    "input": "Source skeleton: Daz3D_Genesis8\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'rRing2' from Daz3D_Genesis8 maps to 'ring_02_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Spine2' in UE5_Mannequin?",
+    "input": "Source skeleton: MotionBuilder\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Spine2' from MotionBuilder maps to 'spine_03' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'CATRigLArmIndex3' in UE5_Mannequin?",
+    "input": "Source skeleton: 3dsMax_CAT\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'CATRigLArmIndex3' from 3dsMax_CAT maps to 'index_03_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'LeftPinky3' in UE5_Mannequin?",
+    "input": "Source skeleton: Generic_CamelCase\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'LeftPinky3' from Generic_CamelCase maps to 'pinky_03_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'LeftHandRing2' in UE5_Mannequin?",
+    "input": "Source skeleton: AccuRIG\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'LeftHandRing2' from AccuRIG maps to 'ring_02_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'spine.001' in UE5_Mannequin?",
+    "input": "Source skeleton: Blender_Rigify_Full\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'spine.001' from Blender_Rigify_Full maps to 'spine_01' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Find all leg-related bones and map them.",
+    "input": "Source skeleton: Korean_Studio_A\nBones: Bip01-L-Thigh, Bip01-L-Calf, Bip01-R-Thigh, Bip01-R-Calf",
+    "output": "Leg bone mappings:\n  Bip01-L-Thigh -> thigh_l\n  Bip01-L-Calf -> calf_l\n  Bip01-R-Thigh -> thigh_r\n  Bip01-R-Calf -> calf_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'index_03_l' in UE5_Mannequin?",
+    "input": "Source skeleton: MetaHuman\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'index_03_l' from MetaHuman maps to 'index_03_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map only these 5 bones from the source to target skeleton.",
+    "input": "Source skeleton: Shorthand_LR\nBones to map: r_hand, l_index2, l_clavicle, r_middle2, r_ring3\n\nAvailable target bones (UE5_Mannequin):\n1. middle_03_l\n2. middle_01_l\n3. ring_03_l\n4. neck_01\n5. index_01_r\n6. spine_01\n7. upperarm_r\n8. clavicle_l\n9. middle_01_r\n10. thumb_01_l\n11. pinky_01_l\n12. index_01_l\n13. lowerarm_r\n14. hand_l\n15. ball_l\n16. index_02_l\n17. pinky_02_l\n18. ring_03_r\n19. ring_02_l\n20. index_02_r\n21. pinky_01_r\n22. spine_03\n23. thumb_03_r\n24. middle_02_r\n25. upperarm_l\n26. thigh_l\n27. head\n28. clavicle_r\n29. thigh_r\n30. foot_r\n31. lowerarm_l\n32. ring_01_r\n33. thumb_02_l\n34. spine_02\n35. thumb_02_r\n36. index_03_l\n37. middle_03_r\n38. thumb_03_l\n39. hand_r\n40. thumb_01_r\n41. ring_01_l\n42. pelvis\n43. index_03_r\n44. ball_r\n45. middle_02_l\n46. pinky_02_r\n47. ring_02_r\n48. calf_l\n49. pinky_03_l\n50. root\n51. pinky_03_r\n52. calf_r\n53. foot_l",
+    "output": "Bone mapping results:\n\n  l_clavicle -> clavicle_l\n  l_index2 -> index_02_l\n  r_hand -> hand_r\n  r_middle2 -> middle_02_r\n  r_ring3 -> ring_03_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map only these 15 bones from the source to target skeleton.",
+    "input": "Source skeleton: MetaHuman\nBones to map: neck_02, spine_01, calf_r, ball_r, thumb_03_l, lowerarm_l, index_01_r, pelvis, ring_01_r, spine_05, calf_l, pinky_metacarpal_l, head, upperarm_twist_01_l, thigh_twist_01_r\n\nAvailable target bones (UE5_Mannequin):\n1. middle_01_l\n2. neck_01\n3. spine_01\n4. lowerarm_r\n5. hand_l\n6. index_metacarpal_r\n7. lowerarm_twist_01_r\n8. calf_twist_02_l\n9. spine_03\n10. thigh_r\n11. thumb_02_l\n12. thumb_02_r\n13. middle_03_r\n14. lowerarm_twist_02_l\n15. pinky_02_r\n16. upperarm_twist_01_l\n17. calf_l\n18. pinky_03_l\n19. calf_r\n20. foot_l\n21. ring_03_l\n22. neck_02\n23. middle_01_r\n24. thumb_01_l\n25. pinky_01_l\n26. index_01_l\n27. ball_l\n28. ring_03_r\n29. ring_02_l\n30. pinky_01_r\n31. thumb_03_r\n32. upperarm_l\n33. head\n34. clavicle_r\n35. foot_r\n36. ring_metacarpal_l\n37. ring_01_r\n38. calf_twist_01_l\n39. thumb_03_l\n40. pelvis\n41. index_03_r\n42. middle_02_l\n43. calf_twist_02_r\n44. pinky_03_r\n45. middle_03_l\n46. ring_metacarpal_r\n47. upperarm_r\n48. thigh_twist_02_l\n49. pinky_metacarpal_r\n50. pinky_02_l\n51. index_02_r\n52. middle_02_r\n53. index_metacarpal_l\n54. middle_metacarpal_r\n55. lowerarm_l\n56. lowerarm_twist_01_l\n57. index_03_l\n58. thigh_twist_01_r\n59. spine_05\n60. lowerarm_twist_02_r\n61. thigh_twist_01_l\n62. ring_02_r\n63. upperarm_twist_01_r\n64. root\n65. upperarm_twist_02_r\n66. index_01_r\n67. clavicle_l\n68. calf_twist_01_r\n69. upperarm_twist_02_l\n70. thigh_twist_02_r\n71. index_02_l\n72. thigh_l\n73. pinky_metacarpal_l\n74. spine_02\n75. hand_r\n76. middle_metacarpal_l\n77. thumb_01_r\n78. ring_01_l\n79. ball_r\n80. spine_04",
+    "output": "Bone mapping results:\n\n  pelvis -> pelvis\n  spine_01 -> spine_01\n  spine_05 -> spine_05\n  neck_02 -> neck_02\n  head -> head\n  upperarm_twist_01_l -> upperarm_twist_01_l\n  lowerarm_l -> lowerarm_l\n  thumb_03_l -> thumb_03_l\n  pinky_metacarpal_l -> pinky_metacarpal_l\n  index_01_r -> index_01_r\n  ring_01_r -> ring_01_r\n  calf_l -> calf_l\n  thigh_twist_01_r -> thigh_twist_01_r\n  calf_r -> calf_r\n  ball_r -> ball_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'right_pinky_1' in UE5_Mannequin?",
+    "input": "Source skeleton: Generic_Underscore\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'right_pinky_1' from Generic_Underscore maps to 'pinky_01_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'LeftHandPinky3' in UE5_Mannequin?",
+    "input": "Source skeleton: MotionBuilder\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'LeftHandPinky3' from MotionBuilder maps to 'pinky_03_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'lIndex3' in UE5_Mannequin?",
+    "input": "Source skeleton: Daz3D_Genesis8\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'lIndex3' from Daz3D_Genesis8 maps to 'index_03_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Bip001_L_Finger41' in UE5_Mannequin?",
+    "input": "Source skeleton: 3dsMax_Biped_Full\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Bip001_L_Finger41' from 3dsMax_Biped_Full maps to 'pinky_02_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'mixamorig:RightHandRing1' in UE5_Mannequin?",
+    "input": "Source skeleton: Mixamo_Full\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'mixamorig:RightHandRing1' from Mixamo_Full maps to 'ring_01_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map only these 10 bones from the source to target skeleton.",
+    "input": "Source skeleton: 3dsMax_Biped_Full\nBones to map: Bip001_R_Thigh, Bip001_L_Finger31, Bip001_R_Finger3, Bip001_Neck1, Bip001_L_Finger2, Bip001_Neck, Bip001_R_Finger22, Bip001_R_Finger12, Bip001_R_Finger4, Bip001_L_Finger0\n\nAvailable target bones (UE5_Mannequin):\n1. middle_03_l\n2. middle_01_l\n3. ring_03_l\n4. neck_01\n5. index_01_r\n6. neck_02\n7. spine_01\n8. upperarm_r\n9. clavicle_l\n10. middle_01_r\n11. thumb_01_l\n12. pinky_01_l\n13. index_01_l\n14. lowerarm_r\n15. hand_l\n16. ball_l\n17. index_02_l\n18. pinky_02_l\n19. ring_03_r\n20. ring_02_l\n21. index_02_r\n22. pinky_01_r\n23. spine_03\n24. thumb_03_r\n25. middle_02_r\n26. upperarm_l\n27. thigh_l\n28. head\n29. clavicle_r\n30. thigh_r\n31. foot_r\n32. lowerarm_l\n33. ring_01_r\n34. thumb_02_l\n35. spine_02\n36. thumb_02_r\n37. index_03_l\n38. middle_03_r\n39. thumb_03_l\n40. hand_r\n41. thumb_01_r\n42. ring_01_l\n43. pelvis\n44. index_03_r\n45. ball_r\n46. middle_02_l\n47. spine_04\n48. pinky_02_r\n49. ring_02_r\n50. calf_l\n51. pinky_03_l\n52. root\n53. pinky_03_r\n54. calf_r\n55. foot_l",
+    "output": "Bone mapping results:\n\n  Bip001_Neck -> neck_01\n  Bip001_Neck1 -> neck_02\n  Bip001_L_Finger0 -> thumb_01_l\n  Bip001_L_Finger2 -> middle_01_l\n  Bip001_L_Finger31 -> ring_02_l\n  Bip001_R_Finger12 -> index_03_r\n  Bip001_R_Finger22 -> middle_03_r\n  Bip001_R_Finger3 -> ring_01_r\n  Bip001_R_Finger4 -> pinky_01_r\n  Bip001_R_Thigh -> thigh_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Provide bone mapping for retargeting from the source to target skeleton.",
+    "input": "Source (UE5_Mannequin):\n1. middle_03_l\n2. middle_01_l\n3. ring_03_l\n4. neck_01\n5. index_01_r\n6. spine_01\n7. upperarm_r\n8. clavicle_l\n9. middle_01_r\n10. thumb_01_l\n11. pinky_01_l\n12. index_01_l\n13. lowerarm_r\n14. hand_l\n15. ball_l\n16. index_02_l\n17. pinky_02_l\n18. ring_03_r\n19. ring_02_l\n20. index_02_r\n21. pinky_01_r\n22. spine_03\n23. thumb_03_r\n24. middle_02_r\n25. upperarm_l\n26. thigh_l\n27. head\n28. clavicle_r\n29. thigh_r\n30. foot_r\n31. lowerarm_l\n32. ring_01_r\n33. thumb_02_l\n34. spine_02\n35. thumb_02_r\n36. index_03_l\n37. middle_03_r\n38. thumb_03_l\n39. hand_r\n40. thumb_01_r\n41. ring_01_l\n42. pelvis\n43. index_03_r\n44. ball_r\n45. middle_02_l\n46. pinky_02_r\n47. ring_02_r\n48. calf_l\n49. pinky_03_l\n50. root\n51. pinky_03_r\n52. calf_r\n53. foot_l\n\nTarget (AccuRIG):\n1. Reference\n2. Hips\n3. Spine\n4. Spine1\n5. Spine2\n6. Neck\n7. Head\n8. LeftShoulder\n9. LeftArm\n10. LeftForeArm\n11. LeftHand\n12. LeftHandThumb1\n13. LeftHandThumb2\n14. LeftHandThumb3\n15. LeftHandIndex1\n16. LeftHandIndex2\n17. LeftHandIndex3\n18. LeftHandMiddle1\n19. LeftHandMiddle2\n20. LeftHandMiddle3\n21. LeftHandRing1\n22. LeftHandRing2\n23. LeftHandRing3\n24. LeftHandPinky1\n25. LeftHandPinky2\n26. LeftHandPinky3\n27. RightShoulder\n28. RightArm\n29. RightForeArm\n30. RightHand\n31. RightHandThumb1\n32. RightHandThumb2\n33. RightHandThumb3\n34. RightHandIndex1\n35. RightHandIndex2\n36. RightHandIndex3\n37. RightHandMiddle1\n38. RightHandMiddle2\n39. RightHandMiddle3\n40. RightHandRing1\n41. RightHandRing2\n42. RightHandRing3\n43. RightHandPinky1\n44. RightHandPinky2\n45. RightHandPinky3\n46. LeftUpLeg\n47. LeftLeg\n48. LeftFoot\n49. LeftToeBase\n50. RightUpLeg\n51. RightLeg\n52. RightFoot\n53. RightToeBase",
+    "output": "Here is the bone mapping from UE5_Mannequin to AccuRIG:\n\n  root -> Reference\n  pelvis -> Hips\n  spine_01 -> Spine\n  spine_02 -> Spine1\n  spine_03 -> Spine2\n  neck_01 -> Neck\n  head -> Head\n  clavicle_l -> LeftShoulder\n  upperarm_l -> LeftArm\n  lowerarm_l -> LeftForeArm\n  hand_l -> LeftHand\n  thumb_01_l -> LeftHandThumb1\n  thumb_02_l -> LeftHandThumb2\n  thumb_03_l -> LeftHandThumb3\n  index_01_l -> LeftHandIndex1\n  index_02_l -> LeftHandIndex2\n  index_03_l -> LeftHandIndex3\n  middle_01_l -> LeftHandMiddle1\n  middle_02_l -> LeftHandMiddle2\n  middle_03_l -> LeftHandMiddle3\n  ring_01_l -> LeftHandRing1\n  ring_02_l -> LeftHandRing2\n  ring_03_l -> LeftHandRing3\n  pinky_01_l -> LeftHandPinky1\n  pinky_02_l -> LeftHandPinky2\n  pinky_03_l -> LeftHandPinky3\n  clavicle_r -> RightShoulder\n  upperarm_r -> RightArm\n  lowerarm_r -> RightForeArm\n  hand_r -> RightHand\n  thumb_01_r -> RightHandThumb1\n  thumb_02_r -> RightHandThumb2\n  thumb_03_r -> RightHandThumb3\n  index_01_r -> RightHandIndex1\n  index_02_r -> RightHandIndex2\n  index_03_r -> RightHandIndex3\n  middle_01_r -> RightHandMiddle1\n  middle_02_r -> RightHandMiddle2\n  middle_03_r -> RightHandMiddle3\n  ring_01_r -> RightHandRing1\n  ring_02_r -> RightHandRing2\n  ring_03_r -> RightHandRing3\n  pinky_01_r -> RightHandPinky1\n  pinky_02_r -> RightHandPinky2\n  pinky_03_r -> RightHandPinky3\n  thigh_l -> LeftUpLeg\n  calf_l -> LeftLeg\n  foot_l -> LeftFoot\n  ball_l -> LeftToeBase\n  thigh_r -> RightUpLeg\n  calf_r -> RightLeg\n  foot_r -> RightFoot\n  ball_r -> RightToeBase",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Bip001_L_Calf' in UE5_Mannequin?",
+    "input": "Source skeleton: 3dsMax_Biped_Full\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Bip001_L_Calf' from 3dsMax_Biped_Full maps to 'calf_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'rFoot' in UE5_Mannequin?",
+    "input": "Source skeleton: Daz3D_Genesis8\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'rFoot' from Daz3D_Genesis8 maps to 'foot_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the left leg chain from Blender_Rigify to UE5_Mannequin.",
+    "input": "Bones in order: thigh.L, shin.L",
+    "output": "Left Leg hierarchy mapping:\n  1. thigh.L -> thigh_l\n  2. shin.L -> calf_l",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the spine chain from Korean_Studio_A to UE5_Mannequin.",
+    "input": "Bones in order: Bip01-Pelvis, Bip01-Spine, Bip01-Spine1, Bip01-Spine2, Bip01-Neck, Bip01-Head",
+    "output": "Spine hierarchy mapping:\n  1. Bip01-Pelvis -> pelvis\n  2. Bip01-Spine -> spine_01\n  3. Bip01-Spine1 -> spine_02\n  4. Bip01-Spine2 -> spine_03\n  5. Bip01-Neck -> neck_01\n  6. Bip01-Head -> head",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Find all spine-related bones and map them.",
+    "input": "Source skeleton: Generic_CamelCase\nBones: Spine1, Spine2, Spine3",
+    "output": "Spine bone mappings:\n  Spine1 -> spine_01\n  Spine2 -> spine_02\n  Spine3 -> spine_03",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the head bones from Shorthand_LR to UE5_Mannequin.",
+    "input": "Source head bones: neck, head",
+    "output": "Head bone mapping:\n  neck -> neck_01\n  head -> head",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'CC_Base_R_Thumb2' in UE5_Mannequin?",
+    "input": "Source skeleton: iClone\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'CC_Base_R_Thumb2' from iClone maps to 'thumb_02_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'l_shin' in UE5_Mannequin?",
+    "input": "Source skeleton: Shorthand_LR\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'l_shin' from Shorthand_LR maps to 'calf_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Bip001_R_Finger42' in UE5_Mannequin?",
+    "input": "Source skeleton: 3dsMax_Biped_Full\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Bip001_R_Finger42' from 3dsMax_Biped_Full maps to 'pinky_03_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Chest' in UE5_Mannequin?",
+    "input": "Source skeleton: Unity_Humanoid\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Chest' from Unity_Humanoid maps to 'spine_02' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'LeftMiddleDistal' in UE5_Mannequin?",
+    "input": "Source skeleton: Unity_Humanoid\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'LeftMiddleDistal' from Unity_Humanoid maps to 'middle_03_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map only these 3 bones from the source to target skeleton.",
+    "input": "Source skeleton: Shorthand_LR\nBones to map: r_thumb1, r_ring3, l_foot\n\nAvailable target bones (UE5_Mannequin):\n1. middle_03_l\n2. middle_01_l\n3. ring_03_l\n4. neck_01\n5. index_01_r\n6. spine_01\n7. upperarm_r\n8. clavicle_l\n9. middle_01_r\n10. thumb_01_l\n11. pinky_01_l\n12. index_01_l\n13. lowerarm_r\n14. hand_l\n15. ball_l\n16. index_02_l\n17. pinky_02_l\n18. ring_03_r\n19. ring_02_l\n20. index_02_r\n21. pinky_01_r\n22. spine_03\n23. thumb_03_r\n24. middle_02_r\n25. upperarm_l\n26. thigh_l\n27. head\n28. clavicle_r\n29. thigh_r\n30. foot_r\n31. lowerarm_l\n32. ring_01_r\n33. thumb_02_l\n34. spine_02\n35. thumb_02_r\n36. index_03_l\n37. middle_03_r\n38. thumb_03_l\n39. hand_r\n40. thumb_01_r\n41. ring_01_l\n42. pelvis\n43. index_03_r\n44. ball_r\n45. middle_02_l\n46. pinky_02_r\n47. ring_02_r\n48. calf_l\n49. pinky_03_l\n50. root\n51. pinky_03_r\n52. calf_r\n53. foot_l",
+    "output": "Bone mapping results:\n\n  r_thumb1 -> thumb_01_r\n  r_ring3 -> ring_03_r\n  l_foot -> foot_l",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'toe.L' in UE5_Mannequin?",
+    "input": "Source skeleton: Blender_Rigify\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'toe.L' from Blender_Rigify maps to 'ball_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'mixamorig:RightHandPinky4' in UE5_Mannequin?",
+    "input": "Source skeleton: Mixamo_Full\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'mixamorig:RightHandPinky4' from Mixamo_Full maps to 'pinky_03_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'RightHandIndex1' in UE5_Mannequin?",
+    "input": "Source skeleton: AccuRIG\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'RightHandIndex1' from AccuRIG maps to 'index_01_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'RightHandMiddle1' in UE5_Mannequin?",
+    "input": "Source skeleton: MotionBuilder\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'RightHandMiddle1' from MotionBuilder maps to 'middle_01_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'f_index.03.R' in UE5_Mannequin?",
+    "input": "Source skeleton: Blender_Rigify_Full\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'f_index.03.R' from Blender_Rigify_Full maps to 'index_03_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Bip01-R-Finger22' in UE5_Mannequin?",
+    "input": "Source skeleton: Korean_Studio_A\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Bip01-R-Finger22' from Korean_Studio_A maps to 'middle_03_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Find all pelvis-related bones and map them.",
+    "input": "Source skeleton: iClone\nBones: CC_Base_Hip, CC_Base_Pelvis",
+    "output": "Pelvis bone mappings:\n  CC_Base_Hip -> pelvis\n  CC_Base_Pelvis -> pelvis",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'CC_Base_R_Mid2' in UE5_Mannequin?",
+    "input": "Source skeleton: iClone\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'CC_Base_R_Mid2' from iClone maps to 'middle_02_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the left arm chain from 3dsMax_Biped to UE5_Mannequin.",
+    "input": "Bones in order: Bip001_L_Clavicle, Bip001_L_UpperArm",
+    "output": "Left Arm hierarchy mapping:\n  1. Bip001_L_Clavicle -> clavicle_l\n  2. Bip001_L_UpperArm -> upperarm_l",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map only these 5 bones from the source to target skeleton.",
+    "input": "Source skeleton: Unity_Humanoid\nBones to map: RightLowerArm, RightIndexIntermediate, LeftRingDistal, RightLowerLeg, RightUpperLeg\n\nAvailable target bones (UE5_Mannequin):\n1. middle_03_l\n2. middle_01_l\n3. ring_03_l\n4. neck_01\n5. index_01_r\n6. spine_01\n7. upperarm_r\n8. clavicle_l\n9. middle_01_r\n10. thumb_01_l\n11. pinky_01_l\n12. index_01_l\n13. lowerarm_r\n14. hand_l\n15. ball_l\n16. index_02_l\n17. pinky_02_l\n18. ring_03_r\n19. ring_02_l\n20. index_02_r\n21. pinky_01_r\n22. spine_03\n23. thumb_03_r\n24. middle_02_r\n25. upperarm_l\n26. thigh_l\n27. head\n28. clavicle_r\n29. thigh_r\n30. foot_r\n31. lowerarm_l\n32. ring_01_r\n33. thumb_02_l\n34. spine_02\n35. thumb_02_r\n36. index_03_l\n37. middle_03_r\n38. thumb_03_l\n39. hand_r\n40. thumb_01_r\n41. ring_01_l\n42. pelvis\n43. index_03_r\n44. ball_r\n45. middle_02_l\n46. pinky_02_r\n47. ring_02_r\n48. calf_l\n49. pinky_03_l\n50. pinky_03_r\n51. calf_r\n52. foot_l",
+    "output": "Bone mapping results:\n\n  LeftRingDistal -> ring_03_l\n  RightLowerArm -> lowerarm_r\n  RightIndexIntermediate -> index_02_r\n  RightUpperLeg -> thigh_r\n  RightLowerLeg -> calf_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'neck' in UE5_Mannequin?",
+    "input": "Source skeleton: Shorthand_LR\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'neck' from Shorthand_LR maps to 'neck_01' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the spine bones from Paragon to UE5_Mannequin.",
+    "input": "Source spine bones: pelvis, spine_01, spine_02, spine_03",
+    "output": "Spine bone mapping:\n  pelvis -> pelvis\n  spine_01 -> spine_01\n  spine_02 -> spine_02\n  spine_03 -> spine_03",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'neck_02' in UE5_Mannequin?",
+    "input": "Source skeleton: MetaHuman\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'neck_02' from MetaHuman maps to 'neck_02' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'CATRigLArmMiddle2' in UE5_Mannequin?",
+    "input": "Source skeleton: 3dsMax_CAT\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'CATRigLArmMiddle2' from 3dsMax_CAT maps to 'middle_02_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Bip001_L_Finger31' in UE5_Mannequin?",
+    "input": "Source skeleton: 3dsMax_Biped_Full\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Bip001_L_Finger31' from 3dsMax_Biped_Full maps to 'ring_02_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the spine chain from Generic_Underscore to UE5_Mannequin.",
+    "input": "Bones in order: hip, spine_1, spine_2, spine_3, neck_1, head",
+    "output": "Spine hierarchy mapping:\n  1. hip -> pelvis\n  2. spine_1 -> spine_01\n  3. spine_2 -> spine_02\n  4. spine_3 -> spine_03\n  5. neck_1 -> neck_01\n  6. head -> head",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Find all foot-related bones and map them.",
+    "input": "Source skeleton: 3dsMax_Biped_Full\nBones: Bip001_L_Foot, Bip001_L_Toe0, Bip001_L_Toe01, Bip001_R_Foot, Bip001_R_Toe0, Bip001_R_Toe01",
+    "output": "Foot bone mappings:\n  Bip001_L_Foot -> foot_l\n  Bip001_L_Toe0 -> ball_l\n  Bip001_L_Toe01 -> ball_l\n  Bip001_R_Foot -> foot_r\n  Bip001_R_Toe0 -> ball_r\n  Bip001_R_Toe01 -> ball_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Find all clavicle-related bones and map them.",
+    "input": "Source skeleton: iClone\nBones: CC_Base_L_Clavicle, CC_Base_R_Clavicle",
+    "output": "Clavicle bone mappings:\n  CC_Base_L_Clavicle -> clavicle_l\n  CC_Base_R_Clavicle -> clavicle_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'l_thumb2' in UE5_Mannequin?",
+    "input": "Source skeleton: Shorthand_LR\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'l_thumb2' from Shorthand_LR maps to 'thumb_02_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Create a bone mapping from the given skeleton to Unreal Engine 5 standard skeleton.",
+    "input": "Source (Unity_Humanoid):\n1. Hips\n2. Spine\n3. Chest\n4. UpperChest\n5. Neck\n6. Head\n7. LeftShoulder\n8. LeftUpperArm\n9. LeftLowerArm\n10. LeftHand\n11. LeftThumbProximal\n12. LeftThumbIntermediate\n13. LeftThumbDistal\n14. LeftIndexProximal\n15. LeftIndexIntermediate\n16. LeftIndexDistal\n17. LeftMiddleProximal\n18. LeftMiddleIntermediate\n19. LeftMiddleDistal\n20. LeftRingProximal\n21. LeftRingIntermediate\n22. LeftRingDistal\n23. LeftLittleProximal\n24. LeftLittleIntermediate\n25. LeftLittleDistal\n26. RightShoulder\n27. RightUpperArm\n28. RightLowerArm\n29. RightHand\n30. RightThumbProximal\n31. RightThumbIntermediate\n32. RightThumbDistal\n33. RightIndexProximal\n34. RightIndexIntermediate\n35. RightIndexDistal\n36. RightMiddleProximal\n37. RightMiddleIntermediate\n38. RightMiddleDistal\n39. RightRingProximal\n40. RightRingIntermediate\n41. RightRingDistal\n42. RightLittleProximal\n43. RightLittleIntermediate\n44. RightLittleDistal\n45. LeftUpperLeg\n46. LeftLowerLeg\n47. LeftFoot\n48. LeftToes\n49. RightUpperLeg\n50. RightLowerLeg\n51. RightFoot\n52. RightToes\n\nTarget (UE5_Mannequin):\n1. middle_03_l\n2. middle_01_l\n3. ring_03_l\n4. neck_01\n5. index_01_r\n6. spine_01\n7. upperarm_r\n8. clavicle_l\n9. middle_01_r\n10. thumb_01_l\n11. pinky_01_l\n12. index_01_l\n13. lowerarm_r\n14. hand_l\n15. ball_l\n16. index_02_l\n17. pinky_02_l\n18. ring_03_r\n19. ring_02_l\n20. index_02_r\n21. pinky_01_r\n22. spine_03\n23. thumb_03_r\n24. middle_02_r\n25. upperarm_l\n26. thigh_l\n27. head\n28. clavicle_r\n29. thigh_r\n30. foot_r\n31. lowerarm_l\n32. ring_01_r\n33. thumb_02_l\n34. spine_02\n35. thumb_02_r\n36. index_03_l\n37. middle_03_r\n38. thumb_03_l\n39. hand_r\n40. thumb_01_r\n41. ring_01_l\n42. pelvis\n43. index_03_r\n44. ball_r\n45. middle_02_l\n46. pinky_02_r\n47. ring_02_r\n48. calf_l\n49. pinky_03_l\n50. pinky_03_r\n51. calf_r\n52. foot_l",
+    "output": "Here is the bone mapping from Unity_Humanoid to UE5_Mannequin:\n\n  Hips -> pelvis\n  Spine -> spine_01\n  Chest -> spine_02\n  UpperChest -> spine_03\n  Neck -> neck_01\n  Head -> head\n  LeftShoulder -> clavicle_l\n  LeftUpperArm -> upperarm_l\n  LeftLowerArm -> lowerarm_l\n  LeftHand -> hand_l\n  LeftThumbProximal -> thumb_01_l\n  LeftThumbIntermediate -> thumb_02_l\n  LeftThumbDistal -> thumb_03_l\n  LeftIndexProximal -> index_01_l\n  LeftIndexIntermediate -> index_02_l\n  LeftIndexDistal -> index_03_l\n  LeftMiddleProximal -> middle_01_l\n  LeftMiddleIntermediate -> middle_02_l\n  LeftMiddleDistal -> middle_03_l\n  LeftRingProximal -> ring_01_l\n  LeftRingIntermediate -> ring_02_l\n  LeftRingDistal -> ring_03_l\n  LeftLittleProximal -> pinky_01_l\n  LeftLittleIntermediate -> pinky_02_l\n  LeftLittleDistal -> pinky_03_l\n  RightShoulder -> clavicle_r\n  RightUpperArm -> upperarm_r\n  RightLowerArm -> lowerarm_r\n  RightHand -> hand_r\n  RightThumbProximal -> thumb_01_r\n  RightThumbIntermediate -> thumb_02_r\n  RightThumbDistal -> thumb_03_r\n  RightIndexProximal -> index_01_r\n  RightIndexIntermediate -> index_02_r\n  RightIndexDistal -> index_03_r\n  RightMiddleProximal -> middle_01_r\n  RightMiddleIntermediate -> middle_02_r\n  RightMiddleDistal -> middle_03_r\n  RightRingProximal -> ring_01_r\n  RightRingIntermediate -> ring_02_r\n  RightRingDistal -> ring_03_r\n  RightLittleProximal -> pinky_01_r\n  RightLittleIntermediate -> pinky_02_r\n  RightLittleDistal -> pinky_03_r\n  LeftUpperLeg -> thigh_l\n  LeftLowerLeg -> calf_l\n  LeftFoot -> foot_l\n  LeftToes -> ball_l\n  RightUpperLeg -> thigh_r\n  RightLowerLeg -> calf_r\n  RightFoot -> foot_r\n  RightToes -> ball_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'RightHandPinky3' in UE5_Mannequin?",
+    "input": "Source skeleton: MotionBuilder\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'RightHandPinky3' from MotionBuilder maps to 'pinky_03_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'left_ring_2' in UE5_Mannequin?",
+    "input": "Source skeleton: Generic_Underscore\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'left_ring_2' from Generic_Underscore maps to 'ring_02_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'RightThigh' in UE5_Mannequin?",
+    "input": "Source skeleton: Generic_CamelCase\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'RightThigh' from Generic_CamelCase maps to 'thigh_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'RightLowerArm' in UE5_Mannequin?",
+    "input": "Source skeleton: Generic_CamelCase\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'RightLowerArm' from Generic_CamelCase maps to 'lowerarm_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'root' in UE5_Mannequin?",
+    "input": "Source skeleton: Shorthand_LR\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'root' from Shorthand_LR maps to 'root' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'CATRigLArmMiddle1' in UE5_Mannequin?",
+    "input": "Source skeleton: 3dsMax_CAT\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'CATRigLArmMiddle1' from 3dsMax_CAT maps to 'middle_01_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'CATRigRArmIndex3' in UE5_Mannequin?",
+    "input": "Source skeleton: 3dsMax_CAT\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'CATRigRArmIndex3' from 3dsMax_CAT maps to 'index_03_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map only these 10 bones from the source to target skeleton.",
+    "input": "Source skeleton: Daz3D_Genesis8\nBones to map: rShin, lForearmTwist, rShldrTwist, lPinky2, spine4, rPinky1, rThighTwist, spine3, neckUpper, lRing3\n\nAvailable target bones (UE5_Mannequin):\n1. middle_03_l\n2. middle_01_l\n3. ring_03_l\n4. neck_01\n5. index_01_r\n6. neck_02\n7. spine_01\n8. upperarm_r\n9. clavicle_l\n10. middle_01_r\n11. thumb_01_l\n12. pinky_01_l\n13. index_01_l\n14. lowerarm_r\n15. hand_l\n16. ball_l\n17. index_02_l\n18. pinky_02_l\n19. ring_03_r\n20. ring_02_l\n21. lowerarm_twist_01_r\n22. index_02_r\n23. pinky_01_r\n24. spine_03\n25. thumb_03_r\n26. middle_02_r\n27. upperarm_l\n28. thigh_l\n29. head\n30. clavicle_r\n31. thigh_r\n32. foot_r\n33. lowerarm_l\n34. ring_01_r\n35. thumb_02_l\n36. lowerarm_twist_01_l\n37. spine_02\n38. index_03_l\n39. thumb_02_r\n40. middle_03_r\n41. thumb_03_l\n42. hand_r\n43. thigh_twist_01_r\n44. thumb_01_r\n45. ring_01_l\n46. pelvis\n47. index_03_r\n48. thigh_twist_01_l\n49. ball_r\n50. middle_02_l\n51. spine_04\n52. pinky_02_r\n53. upperarm_twist_01_l\n54. ring_02_r\n55. upperarm_twist_01_r\n56. calf_l\n57. pinky_03_l\n58. root\n59. pinky_03_r\n60. calf_r\n61. foot_l",
+    "output": "Bone mapping results:\n\n  spine3 -> spine_03\n  spine4 -> spine_04\n  neckUpper -> neck_02\n  lForearmTwist -> lowerarm_twist_01_l\n  lRing3 -> ring_03_l\n  lPinky2 -> pinky_02_l\n  rShldrTwist -> upperarm_twist_01_r\n  rPinky1 -> pinky_01_r\n  rThighTwist -> thigh_twist_01_r\n  rShin -> calf_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the bones from the source skeleton to the UE5 Mannequin skeleton.",
+    "input": "Source skeleton type: Mixamo_Full_variant\nSource bones:\n1. mixamorig:hips\n2. mixamorig:spine\n3. mixamorig:spine1\n4. mixamorig:spine2\n5. mixamorig:neck\n6. mixamorig:head\n7. mixamorig:headtop_end\n8. mixamorig:leftshoulder\n9. mixamorig:leftarm\n10. mixamorig:leftforearm\n11. mixamorig:lefthand\n12. mixamorig:lefthandthumb1\n13. mixamorig:lefthandthumb2\n14. mixamorig:lefthandthumb3\n15. mixamorig:lefthandthumb4\n16. mixamorig:lefthandindex1\n17. mixamorig:lefthandindex2\n18. mixamorig:lefthandindex3\n19. mixamorig:lefthandindex4\n20. mixamorig:lefthandmiddle1\n21. mixamorig:lefthandmiddle2\n22. mixamorig:lefthandmiddle3\n23. mixamorig:lefthandmiddle4\n24. mixamorig:lefthandring1\n25. mixamorig:lefthandring2\n26. mixamorig:lefthandring3\n27. mixamorig:lefthandring4\n28. mixamorig:lefthandpinky1\n29. mixamorig:lefthandpinky2\n30. mixamorig:lefthandpinky3\n31. mixamorig:lefthandpinky4\n32. mixamorig:rightshoulder\n33. mixamorig:rightarm\n34. mixamorig:rightforearm\n35. mixamorig:righthand\n36. mixamorig:righthandthumb1\n37. mixamorig:righthandthumb2\n38. mixamorig:righthandthumb3\n39. mixamorig:righthandthumb4\n40. mixamorig:righthandindex1\n41. mixamorig:righthandindex2\n42. mixamorig:righthandindex3\n43. mixamorig:righthandindex4\n44. mixamorig:righthandmiddle1\n45. mixamorig:righthandmiddle2\n46. mixamorig:righthandmiddle3\n47. mixamorig:righthandmiddle4\n48. mixamorig:righthandring1\n49. mixamorig:righthandring2\n50. mixamorig:righthandring3\n51. mixamorig:righthandring4\n52. mixamorig:righthandpinky1\n53. mixamorig:righthandpinky2\n54. mixamorig:righthandpinky3\n55. mixamorig:righthandpinky4\n56. mixamorig:leftupleg\n57. mixamorig:leftleg\n58. mixamorig:leftfoot\n59. mixamorig:lefttoebase\n60. mixamorig:lefttoe_end\n61. mixamorig:rightupleg\n62. mixamorig:rightleg\n63. mixamorig:rightfoot\n64. mixamorig:righttoebase\n65. mixamorig:righttoe_end\n\nTarget skeleton type: UE5_Mannequin\nTarget bones:\n1. middle_03_l\n2. middle_01_l\n3. ring_03_l\n4. neck_01\n5. index_01_r\n6. spine_01\n7. upperarm_r\n8. clavicle_l\n9. middle_01_r\n10. thumb_01_l\n11. pinky_01_l\n12. index_01_l\n13. lowerarm_r\n14. hand_l\n15. ball_l\n16. index_02_l\n17. pinky_02_l\n18. ring_03_r\n19. ring_02_l\n20. index_02_r\n21. pinky_01_r\n22. spine_03\n23. thumb_03_r\n24. middle_02_r\n25. upperarm_l\n26. thigh_l\n27. head\n28. clavicle_r\n29. thigh_r\n30. foot_r\n31. lowerarm_l\n32. ring_01_r\n33. thumb_02_l\n34. spine_02\n35. thumb_02_r\n36. index_03_l\n37. middle_03_r\n38. thumb_03_l\n39. hand_r\n40. thumb_01_r\n41. ring_01_l\n42. pelvis\n43. index_03_r\n44. ball_r\n45. middle_02_l\n46. pinky_02_r\n47. ring_02_r\n48. calf_l\n49. pinky_03_l\n50. pinky_03_r\n51. calf_r\n52. foot_l",
+    "output": "Here is the bone mapping from Mixamo_Full_variant to UE5_Mannequin:\n\n  mixamorig:hips -> pelvis\n  mixamorig:spine -> spine_01\n  mixamorig:spine1 -> spine_02\n  mixamorig:spine2 -> spine_03\n  mixamorig:neck -> neck_01\n  mixamorig:head -> head\n  mixamorig:headtop_end -> head\n  mixamorig:leftshoulder -> clavicle_l\n  mixamorig:leftarm -> upperarm_l\n  mixamorig:leftforearm -> lowerarm_l\n  mixamorig:lefthand -> hand_l\n  mixamorig:lefthandthumb1 -> thumb_01_l\n  mixamorig:lefthandthumb2 -> thumb_02_l\n  mixamorig:lefthandthumb3 -> thumb_03_l\n  mixamorig:lefthandthumb4 -> thumb_03_l\n  mixamorig:lefthandindex1 -> index_01_l\n  mixamorig:lefthandindex2 -> index_02_l\n  mixamorig:lefthandindex3 -> index_03_l\n  mixamorig:lefthandindex4 -> index_03_l\n  mixamorig:lefthandmiddle1 -> middle_01_l\n  mixamorig:lefthandmiddle2 -> middle_02_l\n  mixamorig:lefthandmiddle3 -> middle_03_l\n  mixamorig:lefthandmiddle4 -> middle_03_l\n  mixamorig:lefthandring1 -> ring_01_l\n  mixamorig:lefthandring2 -> ring_02_l\n  mixamorig:lefthandring3 -> ring_03_l\n  mixamorig:lefthandring4 -> ring_03_l\n  mixamorig:lefthandpinky1 -> pinky_01_l\n  mixamorig:lefthandpinky2 -> pinky_02_l\n  mixamorig:lefthandpinky3 -> pinky_03_l\n  mixamorig:lefthandpinky4 -> pinky_03_l\n  mixamorig:rightshoulder -> clavicle_r\n  mixamorig:rightarm -> upperarm_r\n  mixamorig:rightforearm -> lowerarm_r\n  mixamorig:righthand -> hand_r\n  mixamorig:righthandthumb1 -> thumb_01_r\n  mixamorig:righthandthumb2 -> thumb_02_r\n  mixamorig:righthandthumb3 -> thumb_03_r\n  mixamorig:righthandthumb4 -> thumb_03_r\n  mixamorig:righthandindex1 -> index_01_r\n  mixamorig:righthandindex2 -> index_02_r\n  mixamorig:righthandindex3 -> index_03_r\n  mixamorig:righthandindex4 -> index_03_r\n  mixamorig:righthandmiddle1 -> middle_01_r\n  mixamorig:righthandmiddle2 -> middle_02_r\n  mixamorig:righthandmiddle3 -> middle_03_r\n  mixamorig:righthandmiddle4 -> middle_03_r\n  mixamorig:righthandring1 -> ring_01_r\n  mixamorig:righthandring2 -> ring_02_r\n  mixamorig:righthandring3 -> ring_03_r\n  mixamorig:righthandring4 -> ring_03_r\n  mixamorig:righthandpinky1 -> pinky_01_r\n  mixamorig:righthandpinky2 -> pinky_02_r\n  mixamorig:righthandpinky3 -> pinky_03_r\n  mixamorig:righthandpinky4 -> pinky_03_r\n  mixamorig:leftupleg -> thigh_l\n  mixamorig:leftleg -> calf_l\n  mixamorig:leftfoot -> foot_l\n  mixamorig:lefttoebase -> ball_l\n  mixamorig:lefttoe_end -> ball_l\n  mixamorig:rightupleg -> thigh_r\n  mixamorig:rightleg -> calf_r\n  mixamorig:rightfoot -> foot_r\n  mixamorig:righttoebase -> ball_r\n  mixamorig:righttoe_end -> ball_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Match each source bone to its corresponding target bone.",
+    "input": "I have a Blender_Rigify_Full skeleton with the following bones:\n1. root\n2. spine\n3. spine.001\n4. spine.002\n5. spine.003\n6. spine.004\n7. spine.005\n8. spine.006\n9. shoulder.L\n10. upper_arm.L\n11. upper_arm.L.001\n12. forearm.L\n13. forearm.L.001\n14. hand.L\n15. thumb.01.L\n16. thumb.02.L\n17. thumb.03.L\n18. f_index.01.L\n19. f_index.02.L\n20. f_index.03.L\n21. f_middle.01.L\n22. f_middle.02.L\n23. f_middle.03.L\n24. f_ring.01.L\n25. f_ring.02.L\n26. f_ring.03.L\n27. f_pinky.01.L\n28. f_pinky.02.L\n29. f_pinky.03.L\n30. shoulder.R\n31. upper_arm.R\n32. upper_arm.R.001\n33. forearm.R\n34. forearm.R.001\n35. hand.R\n36. thumb.01.R\n37. thumb.02.R\n38. thumb.03.R\n39. f_index.01.R\n40. f_index.02.R\n41. f_index.03.R\n42. f_middle.01.R\n43. f_middle.02.R\n44. f_middle.03.R\n45. f_ring.01.R\n46. f_ring.02.R\n47. f_ring.03.R\n48. f_pinky.01.R\n49. f_pinky.02.R\n50. f_pinky.03.R\n51. thigh.L\n52. thigh.L.001\n53. shin.L\n54. shin.L.001\n55. foot.L\n56. toe.L\n57. thigh.R\n58. thigh.R.001\n59. shin.R\n60. shin.R.001\n61. foot.R\n62. toe.R\n\nMap these to UE5_Mannequin:\n1. middle_03_l\n2. middle_01_l\n3. ring_03_l\n4. neck_01\n5. index_01_r\n6. spine_01\n7. upperarm_r\n8. clavicle_l\n9. middle_01_r\n10. thumb_01_l\n11. pinky_01_l\n12. calf_twist_01_r\n13. index_01_l\n14. lowerarm_r\n15. hand_l\n16. ball_l\n17. index_02_l\n18. pinky_02_l\n19. ring_03_r\n20. ring_02_l\n21. lowerarm_twist_01_r\n22. index_02_r\n23. pinky_01_r\n24. spine_03\n25. thumb_03_r\n26. middle_02_r\n27. upperarm_l\n28. thigh_l\n29. head\n30. clavicle_r\n31. thigh_r\n32. foot_r\n33. lowerarm_l\n34. ring_01_r\n35. thumb_02_l\n36. calf_twist_01_l\n37. lowerarm_twist_01_l\n38. spine_02\n39. index_03_l\n40. thumb_02_r\n41. middle_03_r\n42. thumb_03_l\n43. hand_r\n44. thigh_twist_01_r\n45. thumb_01_r\n46. ring_01_l\n47. pelvis\n48. index_03_r\n49. thigh_twist_01_l\n50. ball_r\n51. middle_02_l\n52. spine_04\n53. pinky_02_r\n54. upperarm_twist_01_l\n55. ring_02_r\n56. upperarm_twist_01_r\n57. calf_l\n58. pinky_03_l\n59. root\n60. pinky_03_r\n61. calf_r\n62. foot_l",
+    "output": "Here is the bone mapping from Blender_Rigify_Full to UE5_Mannequin:\n\n  root -> root\n  spine -> pelvis\n  spine.001 -> spine_01\n  spine.002 -> spine_02\n  spine.003 -> spine_03\n  spine.004 -> spine_04\n  spine.005 -> neck_01\n  spine.006 -> head\n  shoulder.L -> clavicle_l\n  upper_arm.L -> upperarm_l\n  upper_arm.L.001 -> upperarm_twist_01_l\n  forearm.L -> lowerarm_l\n  forearm.L.001 -> lowerarm_twist_01_l\n  hand.L -> hand_l\n  thumb.01.L -> thumb_01_l\n  thumb.02.L -> thumb_02_l\n  thumb.03.L -> thumb_03_l\n  f_index.01.L -> index_01_l\n  f_index.02.L -> index_02_l\n  f_index.03.L -> index_03_l\n  f_middle.01.L -> middle_01_l\n  f_middle.02.L -> middle_02_l\n  f_middle.03.L -> middle_03_l\n  f_ring.01.L -> ring_01_l\n  f_ring.02.L -> ring_02_l\n  f_ring.03.L -> ring_03_l\n  f_pinky.01.L -> pinky_01_l\n  f_pinky.02.L -> pinky_02_l\n  f_pinky.03.L -> pinky_03_l\n  shoulder.R -> clavicle_r\n  upper_arm.R -> upperarm_r\n  upper_arm.R.001 -> upperarm_twist_01_r\n  forearm.R -> lowerarm_r\n  forearm.R.001 -> lowerarm_twist_01_r\n  hand.R -> hand_r\n  thumb.01.R -> thumb_01_r\n  thumb.02.R -> thumb_02_r\n  thumb.03.R -> thumb_03_r\n  f_index.01.R -> index_01_r\n  f_index.02.R -> index_02_r\n  f_index.03.R -> index_03_r\n  f_middle.01.R -> middle_01_r\n  f_middle.02.R -> middle_02_r\n  f_middle.03.R -> middle_03_r\n  f_ring.01.R -> ring_01_r\n  f_ring.02.R -> ring_02_r\n  f_ring.03.R -> ring_03_r\n  f_pinky.01.R -> pinky_01_r\n  f_pinky.02.R -> pinky_02_r\n  f_pinky.03.R -> pinky_03_r\n  thigh.L -> thigh_l\n  thigh.L.001 -> thigh_twist_01_l\n  shin.L -> calf_l\n  shin.L.001 -> calf_twist_01_l\n  foot.L -> foot_l\n  toe.L -> ball_l\n  thigh.R -> thigh_r\n  thigh.R.001 -> thigh_twist_01_r\n  shin.R -> calf_r\n  shin.R.001 -> calf_twist_01_r\n  foot.R -> foot_r\n  toe.R -> ball_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'CATRigLArmPinky3' in UE5_Mannequin?",
+    "input": "Source skeleton: 3dsMax_CAT\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'CATRigLArmPinky3' from 3dsMax_CAT maps to 'pinky_03_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the arm bones from MetaHuman to UE5_Mannequin.",
+    "input": "Source arm bones: upperarm_l, upperarm_twist_01_l, upperarm_twist_02_l, lowerarm_l, lowerarm_twist_01_l, lowerarm_twist_02_l, hand_l, upperarm_r, upperarm_twist_01_r, upperarm_twist_02_r, lowerarm_r, lowerarm_twist_01_r, lowerarm_twist_02_r, hand_r",
+    "output": "Arm bone mapping:\n  upperarm_l -> upperarm_l\n  upperarm_twist_01_l -> upperarm_twist_01_l\n  upperarm_twist_02_l -> upperarm_twist_02_l\n  lowerarm_l -> lowerarm_l\n  lowerarm_twist_01_l -> lowerarm_twist_01_l\n  lowerarm_twist_02_l -> lowerarm_twist_02_l\n  hand_l -> hand_l\n  upperarm_r -> upperarm_r\n  upperarm_twist_01_r -> upperarm_twist_01_r\n  upperarm_twist_02_r -> upperarm_twist_02_r\n  lowerarm_r -> lowerarm_r\n  lowerarm_twist_01_r -> lowerarm_twist_01_r\n  lowerarm_twist_02_r -> lowerarm_twist_02_r\n  hand_r -> hand_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'mixamorig:LeftHandRing3' in UE5_Mannequin?",
+    "input": "Source skeleton: Mixamo_Full\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'mixamorig:LeftHandRing3' from Mixamo_Full maps to 'ring_03_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'ball_l' in UE5_Mannequin?",
+    "input": "Source skeleton: Paragon\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'ball_l' from Paragon maps to 'ball_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the bones from the source skeleton to the UE5 Mannequin skeleton.",
+    "input": "Source skeleton type: UE5_Mannequin\nSource bones:\n1. middle_03_l\n2. middle_01_l\n3. ring_03_l\n4. neck_01\n5. index_01_r\n6. spine_01\n7. upperarm_r\n8. clavicle_l\n9. middle_01_r\n10. thumb_01_l\n11. pinky_01_l\n12. index_01_l\n13. lowerarm_r\n14. hand_l\n15. ball_l\n16. index_02_l\n17. pinky_02_l\n18. ring_03_r\n19. ring_02_l\n20. index_02_r\n21. pinky_01_r\n22. spine_03\n23. thumb_03_r\n24. middle_02_r\n25. upperarm_l\n26. thigh_l\n27. head\n28. clavicle_r\n29. thigh_r\n30. foot_r\n31. lowerarm_l\n32. ring_01_r\n33. thumb_02_l\n34. spine_02\n35. thumb_02_r\n36. index_03_l\n37. middle_03_r\n38. thumb_03_l\n39. hand_r\n40. thumb_01_r\n41. ring_01_l\n42. pelvis\n43. index_03_r\n44. ball_r\n45. middle_02_l\n46. pinky_02_r\n47. ring_02_r\n48. calf_l\n49. pinky_03_l\n50. root\n51. pinky_03_r\n52. calf_r\n53. foot_l\n\nTarget skeleton type: Korean_Studio_A\nTarget bones:\n1. Bip01\n2. Bip01-Pelvis\n3. Bip01-Spine\n4. Bip01-Spine1\n5. Bip01-Spine2\n6. Bip01-Neck\n7. Bip01-Head\n8. Bip01-L-Clavicle\n9. Bip01-L-UpperArm\n10. Bip01-L-Forearm\n11. Bip01-L-Hand\n12. Bip01-L-Finger0\n13. Bip01-L-Finger01\n14. Bip01-L-Finger02\n15. Bip01-L-Finger1\n16. Bip01-L-Finger11\n17. Bip01-L-Finger12\n18. Bip01-L-Finger2\n19. Bip01-L-Finger21\n20. Bip01-L-Finger22\n21. Bip01-L-Finger3\n22. Bip01-L-Finger31\n23. Bip01-L-Finger32\n24. Bip01-L-Finger4\n25. Bip01-L-Finger41\n26. Bip01-L-Finger42\n27. Bip01-R-Clavicle\n28. Bip01-R-UpperArm\n29. Bip01-R-Forearm\n30. Bip01-R-Hand\n31. Bip01-R-Finger0\n32. Bip01-R-Finger01\n33. Bip01-R-Finger02\n34. Bip01-R-Finger1\n35. Bip01-R-Finger11\n36. Bip01-R-Finger12\n37. Bip01-R-Finger2\n38. Bip01-R-Finger21\n39. Bip01-R-Finger22\n40. Bip01-R-Finger3\n41. Bip01-R-Finger31\n42. Bip01-R-Finger32\n43. Bip01-R-Finger4\n44. Bip01-R-Finger41\n45. Bip01-R-Finger42\n46. Bip01-L-Thigh\n47. Bip01-L-Calf\n48. Bip01-L-Foot\n49. Bip01-L-Toe0\n50. Bip01-R-Thigh\n51. Bip01-R-Calf\n52. Bip01-R-Foot\n53. Bip01-R-Toe0",
+    "output": "Here is the bone mapping from UE5_Mannequin to Korean_Studio_A:\n\n  root -> Bip01\n  pelvis -> Bip01-Pelvis\n  spine_01 -> Bip01-Spine\n  spine_02 -> Bip01-Spine1\n  spine_03 -> Bip01-Spine2\n  neck_01 -> Bip01-Neck\n  head -> Bip01-Head\n  clavicle_l -> Bip01-L-Clavicle\n  upperarm_l -> Bip01-L-UpperArm\n  lowerarm_l -> Bip01-L-Forearm\n  hand_l -> Bip01-L-Hand\n  thumb_01_l -> Bip01-L-Finger0\n  thumb_02_l -> Bip01-L-Finger01\n  thumb_03_l -> Bip01-L-Finger02\n  index_01_l -> Bip01-L-Finger1\n  index_02_l -> Bip01-L-Finger11\n  index_03_l -> Bip01-L-Finger12\n  middle_01_l -> Bip01-L-Finger2\n  middle_02_l -> Bip01-L-Finger21\n  middle_03_l -> Bip01-L-Finger22\n  ring_01_l -> Bip01-L-Finger3\n  ring_02_l -> Bip01-L-Finger31\n  ring_03_l -> Bip01-L-Finger32\n  pinky_01_l -> Bip01-L-Finger4\n  pinky_02_l -> Bip01-L-Finger41\n  pinky_03_l -> Bip01-L-Finger42\n  clavicle_r -> Bip01-R-Clavicle\n  upperarm_r -> Bip01-R-UpperArm\n  lowerarm_r -> Bip01-R-Forearm\n  hand_r -> Bip01-R-Hand\n  thumb_01_r -> Bip01-R-Finger0\n  thumb_02_r -> Bip01-R-Finger01\n  thumb_03_r -> Bip01-R-Finger02\n  index_01_r -> Bip01-R-Finger1\n  index_02_r -> Bip01-R-Finger11\n  index_03_r -> Bip01-R-Finger12\n  middle_01_r -> Bip01-R-Finger2\n  middle_02_r -> Bip01-R-Finger21\n  middle_03_r -> Bip01-R-Finger22\n  ring_01_r -> Bip01-R-Finger3\n  ring_02_r -> Bip01-R-Finger31\n  ring_03_r -> Bip01-R-Finger32\n  pinky_01_r -> Bip01-R-Finger4\n  pinky_02_r -> Bip01-R-Finger41\n  pinky_03_r -> Bip01-R-Finger42\n  thigh_l -> Bip01-L-Thigh\n  calf_l -> Bip01-L-Calf\n  foot_l -> Bip01-L-Foot\n  ball_l -> Bip01-L-Toe0\n  thigh_r -> Bip01-R-Thigh\n  calf_r -> Bip01-R-Calf\n  foot_r -> Bip01-R-Foot\n  ball_r -> Bip01-R-Toe0",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the right arm chain from 3dsMax_Biped to UE5_Mannequin.",
+    "input": "Bones in order: Bip001_R_Clavicle, Bip001_R_UpperArm",
+    "output": "Right Arm hierarchy mapping:\n  1. Bip001_R_Clavicle -> clavicle_r\n  2. Bip001_R_UpperArm -> upperarm_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the spine chain from Daz3D_Genesis8 to UE5_Mannequin.",
+    "input": "Bones in order: hip, pelvis, spine1, spine2, spine3, spine4, neckLower, neckUpper, head",
+    "output": "Spine hierarchy mapping:\n  1. hip -> pelvis\n  2. pelvis -> pelvis\n  3. spine1 -> spine_01\n  4. spine2 -> spine_02\n  5. spine3 -> spine_03\n  6. spine4 -> spine_04\n  7. neckLower -> neck_01\n  8. neckUpper -> neck_02\n  9. head -> head",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Bip001_R_Clavicle' in UE5_Mannequin?",
+    "input": "Source skeleton: 3dsMax_Biped_Full\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Bip001_R_Clavicle' from 3dsMax_Biped_Full maps to 'clavicle_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'mixamorig:RightHand' in UE5_Mannequin?",
+    "input": "Source skeleton: Mixamo\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'mixamorig:RightHand' from Mixamo maps to 'hand_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the right leg chain from Daz3D_Genesis8 to UE5_Mannequin.",
+    "input": "Bones in order: rThigh, rThighBend, rThighTwist, rShin",
+    "output": "Right Leg hierarchy mapping:\n  1. rThigh -> thigh_r\n  2. rThighBend -> thigh_r\n  3. rThighTwist -> thigh_twist_01_r\n  4. rShin -> calf_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Bip01-Spine1' in UE5_Mannequin?",
+    "input": "Source skeleton: Korean_Studio_A\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Bip01-Spine1' from Korean_Studio_A maps to 'spine_02' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Find all foot-related bones and map them.",
+    "input": "Source skeleton: Generic_CamelCase\nBones: LeftFoot, LeftToe, RightFoot, RightToe",
+    "output": "Foot bone mappings:\n  LeftFoot -> foot_l\n  LeftToe -> ball_l\n  RightFoot -> foot_r\n  RightToe -> ball_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'RightUpLeg' in UE5_Mannequin?",
+    "input": "Source skeleton: MotionBuilder\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'RightUpLeg' from MotionBuilder maps to 'thigh_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'RightPinky2' in UE5_Mannequin?",
+    "input": "Source skeleton: Generic_CamelCase\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'RightPinky2' from Generic_CamelCase maps to 'pinky_02_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'L_Arm' in UE5_Mannequin?",
+    "input": "Source skeleton: Cinema4D\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'L_Arm' from Cinema4D maps to 'upperarm_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Bip001_Neck' in UE5_Mannequin?",
+    "input": "Source skeleton: 3dsMax_Biped_Full\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Bip001_Neck' from 3dsMax_Biped_Full maps to 'neck_01' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Generate a bone mapping table for the following skeleton.",
+    "input": "Source skeleton type: 3dsMax_CAT_variant\nSource bones:\n1. CATRIGHUB\n2. CATRIGPELVIS\n3. CATRIGSPINE1\n4. CATRIGSPINE2\n5. CATRIGSPINE3\n6. CATRIGRIBCAGE\n7. CATRIGNECK1\n8. CATRIGHEAD\n9. CATRIGLARMCOLLARBONE\n10. CATRIGLARMUPPERARM\n11. CATRIGLARMFOREARM\n12. CATRIGLARMPALM\n13. CATRIGLARMTHUMB1\n14. CATRIGLARMTHUMB2\n15. CATRIGLARMTHUMB3\n16. CATRIGLARMINDEX1\n17. CATRIGLARMINDEX2\n18. CATRIGLARMINDEX3\n19. CATRIGLARMMIDDLE1\n20. CATRIGLARMMIDDLE2\n21. CATRIGLARMMIDDLE3\n22. CATRIGLARMRING1\n23. CATRIGLARMRING2\n24. CATRIGLARMRING3\n25. CATRIGLARMPINKY1\n26. CATRIGLARMPINKY2\n27. CATRIGLARMPINKY3\n28. CATRIGRARMCOLLARBONE\n29. CATRIGRARMUPPERARM\n30. CATRIGRARMFOREARM\n31. CATRIGRARMPALM\n32. CATRIGRARMTHUMB1\n33. CATRIGRARMTHUMB2\n34. CATRIGRARMTHUMB3\n35. CATRIGRARMINDEX1\n36. CATRIGRARMINDEX2\n37. CATRIGRARMINDEX3\n38. CATRIGRARMMIDDLE1\n39. CATRIGRARMMIDDLE2\n40. CATRIGRARMMIDDLE3\n41. CATRIGRARMRING1\n42. CATRIGRARMRING2\n43. CATRIGRARMRING3\n44. CATRIGRARMPINKY1\n45. CATRIGRARMPINKY2\n46. CATRIGRARMPINKY3\n47. CATRIGLLEGTHIGH\n48. CATRIGLLEGCALF\n49. CATRIGLLEGANKLE\n50. CATRIGLLEGTOE\n51. CATRIGRLEGTHIGH\n52. CATRIGRLEGCALF\n53. CATRIGRLEGANKLE\n54. CATRIGRLEGTOE\n\nTarget skeleton type: UE5_Mannequin\nTarget bones:\n1. middle_03_l\n2. middle_01_l\n3. ring_03_l\n4. neck_01\n5. index_01_r\n6. spine_01\n7. upperarm_r\n8. clavicle_l\n9. middle_01_r\n10. thumb_01_l\n11. pinky_01_l\n12. index_01_l\n13. lowerarm_r\n14. hand_l\n15. ball_l\n16. index_02_l\n17. pinky_02_l\n18. ring_03_r\n19. ring_02_l\n20. index_02_r\n21. pinky_01_r\n22. spine_03\n23. thumb_03_r\n24. middle_02_r\n25. upperarm_l\n26. thigh_l\n27. head\n28. clavicle_r\n29. thigh_r\n30. foot_r\n31. lowerarm_l\n32. ring_01_r\n33. thumb_02_l\n34. spine_02\n35. thumb_02_r\n36. index_03_l\n37. middle_03_r\n38. thumb_03_l\n39. hand_r\n40. thumb_01_r\n41. ring_01_l\n42. pelvis\n43. index_03_r\n44. ball_r\n45. middle_02_l\n46. spine_04\n47. pinky_02_r\n48. ring_02_r\n49. calf_l\n50. pinky_03_l\n51. root\n52. pinky_03_r\n53. calf_r\n54. foot_l",
+    "output": "Here is the bone mapping from 3dsMax_CAT_variant to UE5_Mannequin:\n\n  CATRIGHUB -> root\n  CATRIGPELVIS -> pelvis\n  CATRIGSPINE1 -> spine_01\n  CATRIGSPINE2 -> spine_02\n  CATRIGSPINE3 -> spine_03\n  CATRIGRIBCAGE -> spine_04\n  CATRIGNECK1 -> neck_01\n  CATRIGHEAD -> head\n  CATRIGLARMCOLLARBONE -> clavicle_l\n  CATRIGLARMUPPERARM -> upperarm_l\n  CATRIGLARMFOREARM -> lowerarm_l\n  CATRIGLARMPALM -> hand_l\n  CATRIGLARMTHUMB1 -> thumb_01_l\n  CATRIGLARMTHUMB2 -> thumb_02_l\n  CATRIGLARMTHUMB3 -> thumb_03_l\n  CATRIGLARMINDEX1 -> index_01_l\n  CATRIGLARMINDEX2 -> index_02_l\n  CATRIGLARMINDEX3 -> index_03_l\n  CATRIGLARMMIDDLE1 -> middle_01_l\n  CATRIGLARMMIDDLE2 -> middle_02_l\n  CATRIGLARMMIDDLE3 -> middle_03_l\n  CATRIGLARMRING1 -> ring_01_l\n  CATRIGLARMRING2 -> ring_02_l\n  CATRIGLARMRING3 -> ring_03_l\n  CATRIGLARMPINKY1 -> pinky_01_l\n  CATRIGLARMPINKY2 -> pinky_02_l\n  CATRIGLARMPINKY3 -> pinky_03_l\n  CATRIGRARMCOLLARBONE -> clavicle_r\n  CATRIGRARMUPPERARM -> upperarm_r\n  CATRIGRARMFOREARM -> lowerarm_r\n  CATRIGRARMPALM -> hand_r\n  CATRIGRARMTHUMB1 -> thumb_01_r\n  CATRIGRARMTHUMB2 -> thumb_02_r\n  CATRIGRARMTHUMB3 -> thumb_03_r\n  CATRIGRARMINDEX1 -> index_01_r\n  CATRIGRARMINDEX2 -> index_02_r\n  CATRIGRARMINDEX3 -> index_03_r\n  CATRIGRARMMIDDLE1 -> middle_01_r\n  CATRIGRARMMIDDLE2 -> middle_02_r\n  CATRIGRARMMIDDLE3 -> middle_03_r\n  CATRIGRARMRING1 -> ring_01_r\n  CATRIGRARMRING2 -> ring_02_r\n  CATRIGRARMRING3 -> ring_03_r\n  CATRIGRARMPINKY1 -> pinky_01_r\n  CATRIGRARMPINKY2 -> pinky_02_r\n  CATRIGRARMPINKY3 -> pinky_03_r\n  CATRIGLLEGTHIGH -> thigh_l\n  CATRIGLLEGCALF -> calf_l\n  CATRIGLLEGANKLE -> foot_l\n  CATRIGLLEGTOE -> ball_l\n  CATRIGRLEGTHIGH -> thigh_r\n  CATRIGRLEGCALF -> calf_r\n  CATRIGRLEGANKLE -> foot_r\n  CATRIGRLEGTOE -> ball_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'LeftFoot' in UE5_Mannequin?",
+    "input": "Source skeleton: Unity_Humanoid\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'LeftFoot' from Unity_Humanoid maps to 'foot_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'shin.L.001' in UE5_Mannequin?",
+    "input": "Source skeleton: Blender_Rigify_Full\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'shin.L.001' from Blender_Rigify_Full maps to 'calf_twist_01_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Find all leg-related bones and map them.",
+    "input": "Source skeleton: iClone\nBones: CC_Base_L_Thigh, CC_Base_L_ThighTwist01, CC_Base_L_Calf, CC_Base_L_CalfTwist01, CC_Base_R_Thigh, CC_Base_R_ThighTwist01, CC_Base_R_Calf, CC_Base_R_CalfTwist01",
+    "output": "Leg bone mappings:\n  CC_Base_L_Thigh -> thigh_l\n  CC_Base_L_ThighTwist01 -> thigh_twist_01_l\n  CC_Base_L_Calf -> calf_l\n  CC_Base_L_CalfTwist01 -> calf_twist_01_l\n  CC_Base_R_Thigh -> thigh_r\n  CC_Base_R_ThighTwist01 -> thigh_twist_01_r\n  CC_Base_R_Calf -> calf_r\n  CC_Base_R_CalfTwist01 -> calf_twist_01_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Neck' in UE5_Mannequin?",
+    "input": "Source skeleton: Generic_CamelCase\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Neck' from Generic_CamelCase maps to 'neck_01' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'Neck' in UE5_Mannequin?",
+    "input": "Source skeleton: AccuRIG\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'Neck' from AccuRIG maps to 'neck_01' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'foot.L' in UE5_Mannequin?",
+    "input": "Source skeleton: Blender_Rigify\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'foot.L' from Blender_Rigify maps to 'foot_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'clavicle_r' in UE5_Mannequin?",
+    "input": "Source skeleton: MetaHuman\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'clavicle_r' from MetaHuman maps to 'clavicle_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Find all leg-related bones and map them.",
+    "input": "Source skeleton: Blender_Rigify_Full\nBones: thigh.L, thigh.L.001, thigh.R, thigh.R.001",
+    "output": "Leg bone mappings:\n  thigh.L -> thigh_l\n  thigh.L.001 -> thigh_twist_01_l\n  thigh.R -> thigh_r\n  thigh.R.001 -> thigh_twist_01_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'l_upperarm' in UE5_Mannequin?",
+    "input": "Source skeleton: Shorthand_LR\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'l_upperarm' from Shorthand_LR maps to 'upperarm_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Find all clavicle-related bones and map them.",
+    "input": "Source skeleton: Paragon\nBones: clavicle_l, clavicle_r",
+    "output": "Clavicle bone mappings:\n  clavicle_l -> clavicle_l\n  clavicle_r -> clavicle_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What naming conventions does the iClone skeleton use?",
+    "input": "Sample bones: BoneRoot, CC_Base_Hip, CC_Base_Pelvis, CC_Base_Waist, CC_Base_Spine01, CC_Base_Spine02, CC_Base_NeckTwist01, CC_Base_NeckTwist02, CC_Base_Head, CC_Base_L_Clavicle",
+    "output": "The iClone skeleton uses:\n- Prefixes: CC_Base_\n- Separators: _",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Find all head-related bones and map them.",
+    "input": "Source skeleton: Shorthand_LR\nBones: neck, head",
+    "output": "Head bone mappings:\n  neck -> neck_01\n  head -> head",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Map the bones from the source skeleton to the UE5 Mannequin skeleton.",
+    "input": "I have a UE5_Mannequin skeleton with the following bones:\n1. middle_03_l\n2. middle_01_l\n3. ring_03_l\n4. neck_01\n5. index_01_r\n6. spine_01\n7. upperarm_r\n8. clavicle_l\n9. middle_01_r\n10. thumb_01_l\n11. pinky_01_l\n12. index_01_l\n13. lowerarm_r\n14. hand_l\n15. ball_l\n16. index_02_l\n17. pinky_02_l\n18. ring_03_r\n19. ring_02_l\n20. index_02_r\n21. pinky_01_r\n22. spine_03\n23. thumb_03_r\n24. middle_02_r\n25. upperarm_l\n26. thigh_l\n27. head\n28. clavicle_r\n29. thigh_r\n30. foot_r\n31. lowerarm_l\n32. ring_01_r\n33. thumb_02_l\n34. spine_02\n35. thumb_02_r\n36. index_03_l\n37. middle_03_r\n38. thumb_03_l\n39. hand_r\n40. thumb_01_r\n41. ring_01_l\n42. pelvis\n43. index_03_r\n44. ball_r\n45. middle_02_l\n46. pinky_02_r\n47. ring_02_r\n48. calf_l\n49. pinky_03_l\n50. pinky_03_r\n51. calf_r\n52. foot_l\n\nMap these to Unity_Humanoid:\n1. Hips\n2. Spine\n3. Chest\n4. UpperChest\n5. Neck\n6. Head\n7. LeftShoulder\n8. LeftUpperArm\n9. LeftLowerArm\n10. LeftHand\n11. LeftThumbProximal\n12. LeftThumbIntermediate\n13. LeftThumbDistal\n14. LeftIndexProximal\n15. LeftIndexIntermediate\n16. LeftIndexDistal\n17. LeftMiddleProximal\n18. LeftMiddleIntermediate\n19. LeftMiddleDistal\n20. LeftRingProximal\n21. LeftRingIntermediate\n22. LeftRingDistal\n23. LeftLittleProximal\n24. LeftLittleIntermediate\n25. LeftLittleDistal\n26. RightShoulder\n27. RightUpperArm\n28. RightLowerArm\n29. RightHand\n30. RightThumbProximal\n31. RightThumbIntermediate\n32. RightThumbDistal\n33. RightIndexProximal\n34. RightIndexIntermediate\n35. RightIndexDistal\n36. RightMiddleProximal\n37. RightMiddleIntermediate\n38. RightMiddleDistal\n39. RightRingProximal\n40. RightRingIntermediate\n41. RightRingDistal\n42. RightLittleProximal\n43. RightLittleIntermediate\n44. RightLittleDistal\n45. LeftUpperLeg\n46. LeftLowerLeg\n47. LeftFoot\n48. LeftToes\n49. RightUpperLeg\n50. RightLowerLeg\n51. RightFoot\n52. RightToes",
+    "output": "Here is the bone mapping from UE5_Mannequin to Unity_Humanoid:\n\n  pelvis -> Hips\n  spine_01 -> Spine\n  spine_02 -> Chest\n  spine_03 -> UpperChest\n  neck_01 -> Neck\n  head -> Head\n  clavicle_l -> LeftShoulder\n  upperarm_l -> LeftUpperArm\n  lowerarm_l -> LeftLowerArm\n  hand_l -> LeftHand\n  thumb_01_l -> LeftThumbProximal\n  thumb_02_l -> LeftThumbIntermediate\n  thumb_03_l -> LeftThumbDistal\n  index_01_l -> LeftIndexProximal\n  index_02_l -> LeftIndexIntermediate\n  index_03_l -> LeftIndexDistal\n  middle_01_l -> LeftMiddleProximal\n  middle_02_l -> LeftMiddleIntermediate\n  middle_03_l -> LeftMiddleDistal\n  ring_01_l -> LeftRingProximal\n  ring_02_l -> LeftRingIntermediate\n  ring_03_l -> LeftRingDistal\n  pinky_01_l -> LeftLittleProximal\n  pinky_02_l -> LeftLittleIntermediate\n  pinky_03_l -> LeftLittleDistal\n  clavicle_r -> RightShoulder\n  upperarm_r -> RightUpperArm\n  lowerarm_r -> RightLowerArm\n  hand_r -> RightHand\n  thumb_01_r -> RightThumbProximal\n  thumb_02_r -> RightThumbIntermediate\n  thumb_03_r -> RightThumbDistal\n  index_01_r -> RightIndexProximal\n  index_02_r -> RightIndexIntermediate\n  index_03_r -> RightIndexDistal\n  middle_01_r -> RightMiddleProximal\n  middle_02_r -> RightMiddleIntermediate\n  middle_03_r -> RightMiddleDistal\n  ring_01_r -> RightRingProximal\n  ring_02_r -> RightRingIntermediate\n  ring_03_r -> RightRingDistal\n  pinky_01_r -> RightLittleProximal\n  pinky_02_r -> RightLittleIntermediate\n  pinky_03_r -> RightLittleDistal\n  thigh_l -> LeftUpperLeg\n  calf_l -> LeftLowerLeg\n  foot_l -> LeftFoot\n  ball_l -> LeftToes\n  thigh_r -> RightUpperLeg\n  calf_r -> RightLowerLeg\n  foot_r -> RightFoot\n  ball_r -> RightToes",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Find all leg-related bones and map them.",
+    "input": "Source skeleton: MotionBuilder\nBones: LeftUpLeg, LeftUpLegRoll, LeftLeg, LeftLegRoll, RightUpLeg, RightUpLegRoll, RightLeg, RightLegRoll",
+    "output": "Leg bone mappings:\n  LeftUpLeg -> thigh_l\n  LeftUpLegRoll -> thigh_twist_01_l\n  LeftLeg -> calf_l\n  LeftLegRoll -> calf_twist_01_l\n  RightUpLeg -> thigh_r\n  RightUpLegRoll -> thigh_twist_01_r\n  RightLeg -> calf_r\n  RightLegRoll -> calf_twist_01_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Find all hand-related bones and map them.",
+    "input": "Source skeleton: iClone\nBones: CC_Base_L_Hand, CC_Base_R_Hand",
+    "output": "Hand bone mappings:\n  CC_Base_L_Hand -> hand_l\n  CC_Base_R_Hand -> hand_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'lowerarm_r' in UE5_Mannequin?",
+    "input": "Source skeleton: MetaHuman\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'lowerarm_r' from MetaHuman maps to 'lowerarm_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'index_02_r' in UE5_Mannequin?",
+    "input": "Source skeleton: MetaHuman\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'index_02_r' from MetaHuman maps to 'index_02_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'lPinky3' in UE5_Mannequin?",
+    "input": "Source skeleton: Daz3D_Genesis8\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'lPinky3' from Daz3D_Genesis8 maps to 'pinky_03_l' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "Create a bone mapping from the given skeleton to Unreal Engine 5 standard skeleton.",
+    "input": "Source skeleton type: 3dsMax_Biped_Full_variant\nSource bones:\n1. Bip001\n2. Bip001_Pelvis\n3. Bip001_Spine\n4. Bip001_Spine1\n5. Bip001_Spine2\n6. Bip001_Spine3\n7. Bip001_Neck\n8. Bip001_Neck1\n9. Bip001_Head\n10. Bip001_L_Clavicle\n11. Bip001_L_Upperarm\n12. Bip001_L_Forearm\n13. Bip001_L_Hand\n14. Bip001_L_Finger0\n15. Bip001_L_Finger01\n16. Bip001_L_Finger02\n17. Bip001_L_Finger1\n18. Bip001_L_Finger11\n19. Bip001_L_Finger12\n20. Bip001_L_Finger2\n21. Bip001_L_Finger21\n22. Bip001_L_Finger22\n23. Bip001_L_Finger3\n24. Bip001_L_Finger31\n25. Bip001_L_Finger32\n26. Bip001_L_Finger4\n27. Bip001_L_Finger41\n28. Bip001_L_Finger42\n29. Bip001_R_Clavicle\n30. Bip001_R_Upperarm\n31. Bip001_R_Forearm\n32. Bip001_R_Hand\n33. Bip001_R_Finger0\n34. Bip001_R_Finger01\n35. Bip001_R_Finger02\n36. Bip001_R_Finger1\n37. Bip001_R_Finger11\n38. Bip001_R_Finger12\n39. Bip001_R_Finger2\n40. Bip001_R_Finger21\n41. Bip001_R_Finger22\n42. Bip001_R_Finger3\n43. Bip001_R_Finger31\n44. Bip001_R_Finger32\n45. Bip001_R_Finger4\n46. Bip001_R_Finger41\n47. Bip001_R_Finger42\n48. Bip001_L_Thigh\n49. Bip001_L_Calf\n50. Bip001_L_Foot\n51. Bip001_L_Toe0\n52. Bip001_L_Toe01\n53. Bip001_R_Thigh\n54. Bip001_R_Calf\n55. Bip001_R_Foot\n56. Bip001_R_Toe0\n57. Bip001_R_Toe01\n\nTarget skeleton type: UE5_Mannequin\nTarget bones:\n1. middle_03_l\n2. middle_01_l\n3. ring_03_l\n4. neck_01\n5. index_01_r\n6. neck_02\n7. spine_01\n8. upperarm_r\n9. clavicle_l\n10. middle_01_r\n11. thumb_01_l\n12. pinky_01_l\n13. index_01_l\n14. lowerarm_r\n15. hand_l\n16. ball_l\n17. index_02_l\n18. pinky_02_l\n19. ring_03_r\n20. ring_02_l\n21. index_02_r\n22. pinky_01_r\n23. spine_03\n24. thumb_03_r\n25. middle_02_r\n26. upperarm_l\n27. thigh_l\n28. head\n29. clavicle_r\n30. thigh_r\n31. foot_r\n32. lowerarm_l\n33. ring_01_r\n34. thumb_02_l\n35. spine_02\n36. thumb_02_r\n37. index_03_l\n38. middle_03_r\n39. thumb_03_l\n40. hand_r\n41. thumb_01_r\n42. ring_01_l\n43. pelvis\n44. index_03_r\n45. ball_r\n46. middle_02_l\n47. spine_04\n48. pinky_02_r\n49. ring_02_r\n50. calf_l\n51. pinky_03_l\n52. root\n53. pinky_03_r\n54. calf_r\n55. foot_l",
+    "output": "Here is the bone mapping from 3dsMax_Biped_Full_variant to UE5_Mannequin:\n\n  Bip001 -> root\n  Bip001_Pelvis -> pelvis\n  Bip001_Spine -> spine_01\n  Bip001_Spine1 -> spine_02\n  Bip001_Spine2 -> spine_03\n  Bip001_Spine3 -> spine_04\n  Bip001_Neck -> neck_01\n  Bip001_Neck1 -> neck_02\n  Bip001_Head -> head\n  Bip001_L_Clavicle -> clavicle_l\n  Bip001_L_Upperarm -> upperarm_l\n  Bip001_L_Forearm -> lowerarm_l\n  Bip001_L_Hand -> hand_l\n  Bip001_L_Finger0 -> thumb_01_l\n  Bip001_L_Finger01 -> thumb_02_l\n  Bip001_L_Finger02 -> thumb_03_l\n  Bip001_L_Finger1 -> index_01_l\n  Bip001_L_Finger11 -> index_02_l\n  Bip001_L_Finger12 -> index_03_l\n  Bip001_L_Finger2 -> middle_01_l\n  Bip001_L_Finger21 -> middle_02_l\n  Bip001_L_Finger22 -> middle_03_l\n  Bip001_L_Finger3 -> ring_01_l\n  Bip001_L_Finger31 -> ring_02_l\n  Bip001_L_Finger32 -> ring_03_l\n  Bip001_L_Finger4 -> pinky_01_l\n  Bip001_L_Finger41 -> pinky_02_l\n  Bip001_L_Finger42 -> pinky_03_l\n  Bip001_R_Clavicle -> clavicle_r\n  Bip001_R_Upperarm -> upperarm_r\n  Bip001_R_Forearm -> lowerarm_r\n  Bip001_R_Hand -> hand_r\n  Bip001_R_Finger0 -> thumb_01_r\n  Bip001_R_Finger01 -> thumb_02_r\n  Bip001_R_Finger02 -> thumb_03_r\n  Bip001_R_Finger1 -> index_01_r\n  Bip001_R_Finger11 -> index_02_r\n  Bip001_R_Finger12 -> index_03_r\n  Bip001_R_Finger2 -> middle_01_r\n  Bip001_R_Finger21 -> middle_02_r\n  Bip001_R_Finger22 -> middle_03_r\n  Bip001_R_Finger3 -> ring_01_r\n  Bip001_R_Finger31 -> ring_02_r\n  Bip001_R_Finger32 -> ring_03_r\n  Bip001_R_Finger4 -> pinky_01_r\n  Bip001_R_Finger41 -> pinky_02_r\n  Bip001_R_Finger42 -> pinky_03_r\n  Bip001_L_Thigh -> thigh_l\n  Bip001_L_Calf -> calf_l\n  Bip001_L_Foot -> foot_l\n  Bip001_L_Toe0 -> ball_l\n  Bip001_L_Toe01 -> ball_l\n  Bip001_R_Thigh -> thigh_r\n  Bip001_R_Calf -> calf_r\n  Bip001_R_Foot -> foot_r\n  Bip001_R_Toe0 -> ball_r\n  Bip001_R_Toe01 -> ball_r",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  },
+  {
+    "instruction": "What is the target bone for 'CATRigRArmThumb3' in UE5_Mannequin?",
+    "input": "Source skeleton: 3dsMax_CAT\nTarget skeleton: UE5_Mannequin",
+    "output": "The bone 'CATRigRArmThumb3' from 3dsMax_CAT maps to 'thumb_03_r' in UE5_Mannequin.",
+    "system": "You are a bone mapping expert for skeletal meshes in game engines. \nYour task is to map bones from a source skeleton to a target skeleton based on their names and anatomical positions.\nAlways provide accurate mappings considering naming conventions from different DCC tools (Maya, 3ds Max, Blender, Mixamo, etc.)."
+  }
+]

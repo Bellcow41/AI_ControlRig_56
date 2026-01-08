@@ -1,0 +1,23 @@
+{"input": "{\"bone_name\": \"Bip001\", \"parent\": \"Root\", \"children\": [\"Bip001-Pelvis\", \"Bip001-Prop1\", \"Bip001-Prop2\"]}", "output": "helper"}
+{"input": "{\"bone_name\": \"Bone_Weapon_L\", \"parent\": \"Bip001-L-Hand\", \"children\": [\"Bone_Weapon_L_AR_Point001\"]}", "output": "helper"}
+{"input": "{\"bone_name\": \"Bone_Weapon_L\", \"parent\": \"Bip001-L-Hand\", \"children\": [\"Bone_Weapon_L_AR_Point001\"]}", "output": "secondary"}
+{"input": "{\"bone_name\": \"Clavicle_LBone001\", \"parent\": \"Bip001-L-UpperArm\", \"children\": []}", "output": "helper"}
+{"input": "{\"bone_name\": \"Clavicle_LBone002\", \"parent\": \"Bip001-L-UpperArm\", \"children\": []}", "output": "helper"}
+{"input": "{\"bone_name\": \"Bone_Elbow_L\", \"parent\": \"Bip001-L-UpperArm\", \"children\": []}", "output": "helper"}
+{"input": "{\"bone_name\": \"Bone_Arm_L\", \"parent\": \"Bip001-L-UpperArm\", \"children\": []}", "output": "helper"}
+{"input": "{\"bone_name\": \"Bone_Calf_L\", \"parent\": \"Bip001-L-Calf\", \"children\": []}", "output": "helper"}
+{"input": "{\"bone_name\": \"Bone_Calf_R\", \"parent\": \"Bip001-R-Calf\", \"children\": []}", "output": "helper"}
+{"input": "{\"bone_name\": \"Clavicle_RBone001\", \"parent\": \"Bip001-R-UpperArm\", \"children\": []}", "output": "helper"}
+{"input": "{\"bone_name\": \"Clavicle_RBone002\", \"parent\": \"Bip001-R-UpperArm\", \"children\": []}", "output": "helper"}
+{"input": "{\"bone_name\": \"Bip001\", \"parent\": \"Root\", \"children\": [\"Bip001-Prop1\", \"Bip001-Prop2\", \"Bip001-Pelvis\"]}", "output": "helper"}
+{"input": "{\"bone_name\": \"Bip001\", \"parent\": \"Root\", \"children\": [\"Bip001-Prop1\", \"Bip001-Prop2\", \"Bip001-Pelvis\"]}", "output": "secondary"}
+{"input": "{\"bone_name\": \"Bip001\", \"parent\": \"Root\", \"children\": [\"Bip001-Prop1\", \"Bip001-Prop2\", \"Bip001-Pelvis\"]}", "output": "weapon"}
+{"input": "{\"bone_name\": \"Bone_Weapon_L\", \"parent\": \"Bip001-L-Hand\", \"children\": []}", "output": "weapon"}
+{"input": "{\"bone_name\": \"Bone_Elbow_R\", \"parent\": \"Bip001-R-UpperArm\", \"children\": []}", "output": "helper"}
+{"input": "{\"bone_name\": \"Bone_Weapon_L\", \"parent\": \"Bip001-L-Hand\", \"children\": [\"Bone_Weapon_L_AR_Point001\"]}", "output": "weapon"}
+{"input": "{\"bone_name\": \"Bone_Weapon_L_AR_Point001\", \"parent\": \"Bone_Weapon_L\", \"children\": [\"Bone_Weapon_L_AR_Point002\"]}", "output": "weapon"}
+{"input": "{\"bone_name\": \"Bip001\", \"parent\": \"Root\", \"children\": [\"Bip001-Pelvis\"]}", "output": "helper"}
+{"input": "{\"bone_name\": \"Bip001_B_R-Knee\", \"parent\": \"Bip001-R-Calf\", \"children\": []}", "output": "helper"}
+{"input": "{\"bone_name\": \"Bip001_B_L-Knee\", \"parent\": \"Bip001-L-Calf\", \"children\": []}", "output": "helper"}
+{"input": "{\"bone_name\": \"Bip001_B_R-Elbow\", \"parent\": \"Bip001-R-Forearm\", \"children\": []}", "output": "helper"}
+{"input": "{\"bone_name\": \"Bip001_B_L-Elbow\", \"parent\": \"Bip001-L-Forearm\", \"children\": []}", "output": "helper"}

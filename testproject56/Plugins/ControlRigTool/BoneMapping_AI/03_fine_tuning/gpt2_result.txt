@@ -1,0 +1,37 @@
+C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\huggingface_hub\file_download.py:143: UserWarning: `huggingface_hub` cache-system uses symlinks by default to efficiently store duplicated files but your machine does not support them in C:\Users\Administrator\.cache\huggingface\hub\models--gpt2. Caching files will still work but in a degraded version that might require more space on your disk. This warning can be disabled by setting the `HF_HUB_DISABLE_SYMLINKS_WARNING` environment variable. For more details, see https://huggingface.co/docs/huggingface_hub/how-to-cache#limitations.
+To support symlinks on Windows, you either need to activate Developer Mode or to run Python as an administrator. In order to activate developer mode, see this article: https://docs.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development
+  warnings.warn(message)
+C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+============================================================
+[Bone Mapping AI] Fine-tuning Start (PEFT Mode)
+============================================================
+[OK] GPU: NVIDIA GeForce RTX 4090
+[OK] VRAM: 25.8 GB
+
+[1/6] Loading model...
+[OK] Model loaded: gpt2
+
+[2/6] Adding LoRA adapters...
+Traceback (most recent call last):
+  File "E:\AI\AI_ControlRig_02\BoneMapping_AI\03_fine_tuning\train.py", line 369, in <module>
+    main()
+  File "E:\AI\AI_ControlRig_02\BoneMapping_AI\03_fine_tuning\train.py", line 139, in main
+    model = get_peft_model(model, lora_config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\peft\mapping.py", line 183, in get_peft_model
+    return MODEL_TYPE_TO_PEFT_MODEL_MAPPING[peft_config.task_type](
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\peft\peft_model.py", line 1542, in __init__
+    super().__init__(model, peft_config, adapter_name, **kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\peft\peft_model.py", line 155, in __init__
+    self.base_model = cls(model, {adapter_name: peft_config}, adapter_name)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\peft\tuners\lora\model.py", line 139, in __init__
+    super().__init__(model, config, adapter_name)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\peft\tuners\tuners_utils.py", line 175, in __init__
+    self.inject_adapter(self.model, adapter_name)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\peft\tuners\tuners_utils.py", line 435, in inject_adapter
+    raise ValueError(
+ValueError: Target modules {'down_proj', 'v_proj', 'q_proj', 'k_proj', 'o_proj', 'up_proj', 'gate_proj'} not found in the base model. Please check the target modules and try again.

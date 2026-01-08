@@ -1,0 +1,33 @@
+C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\huggingface_hub\file_download.py:143: UserWarning: `huggingface_hub` cache-system uses symlinks by default to efficiently store duplicated files but your machine does not support them in C:\Users\Administrator\.cache\huggingface\hub\models--Qwen--Qwen2.5-Coder-7B-Instruct. Caching files will still work but in a degraded version that might require more space on your disk. This warning can be disabled by setting the `HF_HUB_DISABLE_SYMLINKS_WARNING` environment variable. For more details, see https://huggingface.co/docs/huggingface_hub/how-to-cache#limitations.
+To support symlinks on Windows, you either need to activate Developer Mode or to run Python as an administrator. In order to activate developer mode, see this article: https://docs.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development
+  warnings.warn(message)
+============================================================
+[Bone Mapping AI] Fine-tuning Start (PEFT Mode)
+============================================================
+[OK] GPU: NVIDIA GeForce RTX 4090
+[OK] VRAM: 25.8 GB
+
+[1/6] Loading model...
+[OK] Using 4-bit quantization
+Downloading shards:   0%|          | 0/4 [00:00<?, ?it/s]Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+Downloading shards:  25%|##5       | 1/4 [00:44<02:14, 44.85s/it]Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+Downloading shards:  50%|#####     | 2/4 [01:30<01:30, 45.10s/it]Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+Downloading shards:  75%|#######5  | 3/4 [02:10<00:42, 42.82s/it]Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+Downloading shards: 100%|##########| 4/4 [02:20<00:00, 29.94s/it]Downloading shards: 100%|##########| 4/4 [02:20<00:00, 35.11s/it]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|##5       | 1/4 [00:02<00:06,  2.27s/it]Loading checkpoint shards:  50%|#####     | 2/4 [00:03<00:03,  1.82s/it]Loading checkpoint shards:  75%|#######5  | 3/4 [00:05<00:01,  1.57s/it]Loading checkpoint shards: 100%|##########| 4/4 [00:05<00:00,  1.11s/it]Loading checkpoint shards: 100%|##########| 4/4 [00:05<00:00,  1.36s/it]
+Traceback (most recent call last):
+  File "E:\AI\AI_ControlRig_02\BoneMapping_AI\03_fine_tuning\train.py", line 372, in <module>
+    main()
+  File "E:\AI\AI_ControlRig_02\BoneMapping_AI\03_fine_tuning\train.py", line 106, in main
+    model = AutoModelForCausalLM.from_pretrained(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\models\auto\auto_factory.py", line 564, in from_pretrained
+    return model_class.from_pretrained(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\modeling_utils.py", line 4015, in from_pretrained
+    dispatch_model(model, **device_map_kwargs)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\accelerate\big_modeling.py", line 502, in dispatch_model
+    model.to(device)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\Lib\site-packages\transformers\modeling_utils.py", line 2861, in to
+    raise ValueError(
+ValueError: `.to` is not supported for `4-bit` or `8-bit` bitsandbytes models. Please use the model as it is, since the model has already been set to the correct devices and casted to the correct `dtype`.

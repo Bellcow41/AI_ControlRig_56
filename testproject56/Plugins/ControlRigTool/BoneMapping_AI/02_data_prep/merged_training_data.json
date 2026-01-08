@@ -1,0 +1,1552 @@
+[
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger21",
+    "input": "Bip001-R-Finger21",
+    "output": "middle_02_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Calf",
+    "input": "Bip001-L-Calf",
+    "output": "calf_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Point_LookAt_01",
+    "input": "Point_LookAt_01",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map the following source bones to UE5 Mannequin standard bones.\nSource skeleton type: 3dsMax_Biped\nSource bones: Root, Bip001, Bip001-Pelvis, Bip001-Spine, Bip001-Spine1, Bip001-Spine2, Bip001-Neck, Bip001-Head, Bip001-HeadNub, Bip001-L-Clavicle, Bip001_PH_L-Clavicle, Bip001-L-UpperArm, Bip001_B_L-UpperArm-Twist, Bip001-L-Forearm, Bip001_B_L-Elbow, Bip001-L-Hand, Dummy-L-Hand_IK, Bip001-L-Thigh, Skirt_L_ThighTwist, Bip001-L-Calf...\n\nFor each bone, output the mapping in format: source_bone -> target_bone\nIf a bone should be skipped (auxiliary bone like Nub, Socket, IK, etc.), output: source_bone -> [SKIP]",
+    "input": "",
+    "output": "Root -> root\nBip001 -> root\nBip001-Pelvis -> pelvis\nBip001-Spine -> spine_01\nBip001-Spine1 -> spine_02\nBip001-Spine2 -> spine_03\nBip001-Neck -> neck_01\nBip001-Head -> head\nBip001-HeadNub -> [SKIP]\nBip001-L-Clavicle -> clavicle_l\nBip001_PH_L-Clavicle -> [SKIP]\nBip001-L-UpperArm -> upperarm_l\nBip001_B_L-UpperArm-Twist -> [SKIP]\nBip001-L-Forearm -> lowerarm_l\nBip001_B_L-Elbow -> [SKIP]\nBip001-L-Hand -> hand_l\nDummy-L-Hand_IK -> [SKIP]\nBip001-L-Thigh -> thigh_l\nSkirt_L_ThighTwist -> [SKIP]\nBip001-L-Calf -> calf_l\nBip001-L-Foot -> foot_l\nBip001-L-Toe0 -> ball_l\nBip001-L-Toe0Nub -> [SKIP]\nBip001-R-Clavicle -> clavicle_r\nBip001_PH_R-Clavicle -> [SKIP]\nBip001-R-UpperArm -> upperarm_r\nBip001_B_R-UpperArm-Twist -> [SKIP]\nBip001-R-Forearm -> lowerarm_r\nBip001_B_R-Elbow -> [SKIP]\nBip001-R-Hand -> hand_r\nDummy-R-Hand_IK -> [SKIP]\nBip001-R-Thigh -> thigh_r\nSkirt_R_ThighTwist -> [SKIP]\nBip001-R-Calf -> calf_r\nBip001-R-Foot -> foot_r\nBip001-R-Toe0 -> ball_r\nBip001-R-Toe0Nub -> [SKIP]\nSkirt_DM_Pelvis -> [SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine2",
+    "input": "Bip001-Spine2",
+    "output": "spine_03"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Toe0",
+    "input": "Bip001-L-Toe0",
+    "output": "ball_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Thigh",
+    "input": "Bip001-L-Thigh",
+    "output": "thigh_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: IK_Foot_L",
+    "input": "IK_Foot_L",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Hand",
+    "input": "Bip001-L-Hand",
+    "output": "hand_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger11",
+    "input": "Bip001-L-Finger11",
+    "output": "index_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Foot",
+    "input": "Bip001-L-Foot",
+    "output": "foot_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Calf",
+    "input": "Bip001-L-Calf",
+    "output": "calf_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Weapon_R",
+    "input": "Weapon_R",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine",
+    "input": "Bip001-Spine",
+    "output": "spine_01"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Thigh",
+    "input": "Bip001-L-Thigh",
+    "output": "thigh_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Weapon_R",
+    "input": "Weapon_R",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine",
+    "input": "Bip001-Spine",
+    "output": "spine_01"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-UpperArm",
+    "input": "Bip001-L-UpperArm",
+    "output": "upperarm_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001_PH_L-Clavicle",
+    "input": "Bip001_PH_L-Clavicle",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Hand",
+    "input": "Bip001-L-Hand",
+    "output": "hand_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Dummy-R-Hand_IK",
+    "input": "Dummy-R-Hand_IK",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine1",
+    "input": "Bip001-Spine1",
+    "output": "spine_02"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Dummy-L-Hand_IK",
+    "input": "Dummy-L-Hand_IK",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger42",
+    "input": "Bip001-L-Finger42",
+    "output": "pinky_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Pelvis",
+    "input": "Bip001-Pelvis",
+    "output": "pelvis"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine",
+    "input": "Bip001-Spine",
+    "output": "spine_01"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Calf",
+    "input": "Bip001-R-Calf",
+    "output": "calf_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Thigh",
+    "input": "Bip001-L-Thigh",
+    "output": "thigh_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger31",
+    "input": "Bip001-R-Finger31",
+    "output": "ring_02_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Socket_Head_Root",
+    "input": "Socket_Head_Root",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Weapon_R",
+    "input": "Weapon_R",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Forearm",
+    "input": "Bip001-L-Forearm",
+    "output": "lowerarm_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger0",
+    "input": "Bip001-L-Finger0",
+    "output": "thumb_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Calf",
+    "input": "Bip001-L-Calf",
+    "output": "calf_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger1Nub",
+    "input": "Bip001-R-Finger1Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger12",
+    "input": "Bip001-L-Finger12",
+    "output": "index_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger02",
+    "input": "Bip001-L-Finger02",
+    "output": "thumb_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger4Nub",
+    "input": "Bip001-L-Finger4Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Forearm",
+    "input": "Bip001-R-Forearm",
+    "output": "lowerarm_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Toe0Nub",
+    "input": "Bip001-R-Toe0Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger11",
+    "input": "Bip001-L-Finger11",
+    "output": "index_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Roll_Forearm_R",
+    "input": "Roll_Forearm_R",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger1",
+    "input": "Bip001-L-Finger1",
+    "output": "index_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Toe0Nub",
+    "input": "Bip001-L-Toe0Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Dummy-L-Hand_IK",
+    "input": "Dummy-L-Hand_IK",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001_B_L-UpperArm-Twist",
+    "input": "Bip001_B_L-UpperArm-Twist",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Toe0",
+    "input": "Bip001-R-Toe0",
+    "output": "ball_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Forearm",
+    "input": "Bip001-R-Forearm",
+    "output": "lowerarm_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Toe0",
+    "input": "Bip001-L-Toe0",
+    "output": "ball_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001_PH_L-Clavicle",
+    "input": "Bip001_PH_L-Clavicle",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Head",
+    "input": "Bip001-Head",
+    "output": "head"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger41",
+    "input": "Bip001-L-Finger41",
+    "output": "pinky_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Forearm",
+    "input": "Bip001-L-Forearm",
+    "output": "lowerarm_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: IK_Foot_L",
+    "input": "IK_Foot_L",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine2",
+    "input": "Bip001-Spine2",
+    "output": "spine_03"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine1",
+    "input": "Bip001-Spine1",
+    "output": "spine_02"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Head",
+    "input": "Bip001-Head",
+    "output": "head"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger12",
+    "input": "Bip001-L-Finger12",
+    "output": "index_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Hand",
+    "input": "Bip001-R-Hand",
+    "output": "hand_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger3",
+    "input": "Bip001-R-Finger3",
+    "output": "ring_01_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger21",
+    "input": "Bip001-L-Finger21",
+    "output": "middle_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Forearm",
+    "input": "Bip001-L-Forearm",
+    "output": "lowerarm_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger01",
+    "input": "Bip001-R-Finger01",
+    "output": "thumb_02_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-HeadNub",
+    "input": "Bip001-HeadNub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger11",
+    "input": "Bip001-L-Finger11",
+    "output": "index_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Calf",
+    "input": "Bip001-L-Calf",
+    "output": "calf_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger31",
+    "input": "Bip001-L-Finger31",
+    "output": "ring_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger12",
+    "input": "Bip001-L-Finger12",
+    "output": "index_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Neck",
+    "input": "Bip001-Neck",
+    "output": "neck_01"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Forearm",
+    "input": "Bip001-L-Forearm",
+    "output": "lowerarm_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Clavicle",
+    "input": "Bip001-L-Clavicle",
+    "output": "clavicle_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Hand",
+    "input": "Bip001-L-Hand",
+    "output": "hand_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001_B_L-Elbow",
+    "input": "Bip001_B_L-Elbow",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Hand",
+    "input": "Bip001-L-Hand",
+    "output": "hand_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger12",
+    "input": "Bip001-L-Finger12",
+    "output": "index_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger4",
+    "input": "Bip001-L-Finger4",
+    "output": "pinky_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine",
+    "input": "Bip001-Spine",
+    "output": "spine_01"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine1",
+    "input": "Bip001-Spine1",
+    "output": "spine_02"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger0Nub",
+    "input": "Bip001-R-Finger0Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger3",
+    "input": "Bip001-R-Finger3",
+    "output": "ring_01_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Forearm",
+    "input": "Bip001-L-Forearm",
+    "output": "lowerarm_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger1",
+    "input": "Bip001-L-Finger1",
+    "output": "index_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Roll_Forearm_R",
+    "input": "Roll_Forearm_R",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Clavicle",
+    "input": "Bip001-L-Clavicle",
+    "output": "clavicle_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Skirt_DM_Pelvis",
+    "input": "Skirt_DM_Pelvis",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Thigh",
+    "input": "Bip001-L-Thigh",
+    "output": "thigh_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: IK_Hand_R",
+    "input": "IK_Hand_R",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger31",
+    "input": "Bip001-R-Finger31",
+    "output": "ring_02_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger12",
+    "input": "Bip001-L-Finger12",
+    "output": "index_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger0Nub",
+    "input": "Bip001-L-Finger0Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Pelvis",
+    "input": "Bip001-Pelvis",
+    "output": "pelvis"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Head",
+    "input": "Bip001-Head",
+    "output": "head"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-HeadNub",
+    "input": "Bip001-HeadNub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger02",
+    "input": "Bip001-R-Finger02",
+    "output": "thumb_03_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger22",
+    "input": "Bip001-L-Finger22",
+    "output": "middle_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Root",
+    "input": "Root",
+    "output": "root"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Clavicle",
+    "input": "Bip001-R-Clavicle",
+    "output": "clavicle_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine2",
+    "input": "Bip001-Spine2",
+    "output": "spine_03"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: IK_Foot_L",
+    "input": "IK_Foot_L",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Hand",
+    "input": "Bip001-R-Hand",
+    "output": "hand_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger4",
+    "input": "Bip001-R-Finger4",
+    "output": "pinky_01_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Clavicle",
+    "input": "Bip001-L-Clavicle",
+    "output": "clavicle_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Hair_01",
+    "input": "Hair_01",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Dummy-L-Hand_IK",
+    "input": "Dummy-L-Hand_IK",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger0",
+    "input": "Bip001-L-Finger0",
+    "output": "thumb_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Forearm",
+    "input": "Bip001-L-Forearm",
+    "output": "lowerarm_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger11",
+    "input": "Bip001-R-Finger11",
+    "output": "index_02_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger2",
+    "input": "Bip001-R-Finger2",
+    "output": "middle_01_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger11",
+    "input": "Bip001-L-Finger11",
+    "output": "index_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger3",
+    "input": "Bip001-L-Finger3",
+    "output": "ring_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-UpperArm",
+    "input": "Bip001-L-UpperArm",
+    "output": "upperarm_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger31",
+    "input": "Bip001-L-Finger31",
+    "output": "ring_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Foot",
+    "input": "Bip001-L-Foot",
+    "output": "foot_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger22",
+    "input": "Bip001-L-Finger22",
+    "output": "middle_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Head",
+    "input": "Bip001-Head",
+    "output": "head"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-HeadNub",
+    "input": "Bip001-HeadNub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Pelvis",
+    "input": "Bip001-Pelvis",
+    "output": "pelvis"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Socket_Head_Root",
+    "input": "Socket_Head_Root",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Twist_UpperArm_L",
+    "input": "Twist_UpperArm_L",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Twist_UpperArm_L",
+    "input": "Twist_UpperArm_L",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger22",
+    "input": "Bip001-R-Finger22",
+    "output": "middle_03_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Clavicle",
+    "input": "Bip001-R-Clavicle",
+    "output": "clavicle_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001_PH_L-Clavicle",
+    "input": "Bip001_PH_L-Clavicle",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger01",
+    "input": "Bip001-L-Finger01",
+    "output": "thumb_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Head",
+    "input": "Bip001-Head",
+    "output": "head"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Hand",
+    "input": "Bip001-L-Hand",
+    "output": "hand_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Toe0",
+    "input": "Bip001-L-Toe0",
+    "output": "ball_l"
+  },
+  {
+    "instruction": "Map the following source bones to UE5 Mannequin standard bones.\nSource skeleton type: 3dsMax_Biped\nSource bones: Root, Bip001-Pelvis, Bip001-Spine, Bip001-Spine1, Bip001-Spine2, Bip001-Neck, Bip001-Head, Point_LookAt_01, Bip001-L-Clavicle, Bip001-L-UpperArm, Bip001-L-Forearm, Bip001-L-Hand, Bip001-L-Finger0, Bip001-L-Finger01, Bip001-L-Finger02, Bip001-L-Finger1, Bip001-L-Finger11, Bip001-L-Finger12, Bip001-L-Finger2, Bip001-L-Finger21...\n\nFor each bone, output the mapping in format: source_bone -> target_bone\nIf a bone should be skipped (auxiliary bone like Nub, Socket, IK, etc.), output: source_bone -> [SKIP]",
+    "input": "",
+    "output": "Root -> root\nBip001-Pelvis -> pelvis\nBip001-Spine -> spine_01\nBip001-Spine1 -> spine_02\nBip001-Spine2 -> spine_03\nBip001-Neck -> neck_01\nBip001-Head -> head\nPoint_LookAt_01 -> [SKIP]\nBip001-L-Clavicle -> clavicle_l\nBip001-L-UpperArm -> upperarm_l\nBip001-L-Forearm -> lowerarm_l\nBip001-L-Hand -> hand_l\nBip001-L-Finger0 -> thumb_01_l\nBip001-L-Finger01 -> thumb_02_l\nBip001-L-Finger02 -> thumb_03_l\nBip001-L-Finger1 -> index_01_l\nBip001-L-Finger11 -> index_02_l\nBip001-L-Finger12 -> index_03_l\nBip001-L-Finger2 -> middle_01_l\nBip001-L-Finger21 -> middle_02_l\nBip001-L-Finger22 -> middle_03_l\nBip001-L-Finger3 -> ring_01_l\nBip001-L-Finger31 -> ring_02_l\nBip001-L-Finger32 -> ring_03_l\nBip001-L-Finger4 -> pinky_01_l\nBip001-L-Finger41 -> pinky_02_l\nBip001-L-Finger42 -> pinky_03_l\nBip001-L-Thigh -> thigh_l\nBip001-L-Calf -> calf_l\nBip001-L-Foot -> foot_l\nBip001-L-Toe0 -> ball_l\nBip001-R-Clavicle -> clavicle_r\nBip001-R-UpperArm -> upperarm_r\nBip001-R-Forearm -> lowerarm_r\nBip001-R-Hand -> hand_r\nBip001-R-Finger0 -> thumb_01_r\nBip001-R-Finger01 -> thumb_02_r\nBip001-R-Finger02 -> thumb_03_r\nBip001-R-Finger1 -> index_01_r\nBip001-R-Finger11 -> index_02_r\nBip001-R-Finger12 -> index_03_r\nBip001-R-Finger2 -> middle_01_r\nBip001-R-Finger21 -> middle_02_r\nBip001-R-Finger22 -> middle_03_r\nBip001-R-Finger3 -> ring_01_r\nBip001-R-Finger31 -> ring_02_r\nBip001-R-Finger32 -> ring_03_r\nBip001-R-Finger4 -> pinky_01_r\nBip001-R-Finger41 -> pinky_02_r\nBip001-R-Finger42 -> pinky_03_r\nBip001-R-Thigh -> thigh_r\nBip001-R-Calf -> calf_r\nBip001-R-Foot -> foot_r\nBip001-R-Toe0 -> ball_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Toe0Nub",
+    "input": "Bip001-L-Toe0Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001_B_L-UpperArm-Twist",
+    "input": "Bip001_B_L-UpperArm-Twist",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Point_LookAt_01",
+    "input": "Point_LookAt_01",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine1",
+    "input": "Bip001-Spine1",
+    "output": "spine_02"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger11",
+    "input": "Bip001-L-Finger11",
+    "output": "index_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-UpperArm",
+    "input": "Bip001-R-UpperArm",
+    "output": "upperarm_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine1",
+    "input": "Bip001-Spine1",
+    "output": "spine_02"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Calf",
+    "input": "Bip001-L-Calf",
+    "output": "calf_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger1",
+    "input": "Bip001-R-Finger1",
+    "output": "index_01_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-UpperArm",
+    "input": "Bip001-L-UpperArm",
+    "output": "upperarm_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Toe0",
+    "input": "Bip001-R-Toe0",
+    "output": "ball_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger32",
+    "input": "Bip001-L-Finger32",
+    "output": "ring_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-UpperArm",
+    "input": "Bip001-L-UpperArm",
+    "output": "upperarm_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger01",
+    "input": "Bip001-L-Finger01",
+    "output": "thumb_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger21",
+    "input": "Bip001-R-Finger21",
+    "output": "middle_02_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: IK_Hand_R",
+    "input": "IK_Hand_R",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Neck",
+    "input": "Bip001-Neck",
+    "output": "neck_01"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger1",
+    "input": "Bip001-R-Finger1",
+    "output": "index_01_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Thigh",
+    "input": "Bip001-L-Thigh",
+    "output": "thigh_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger02",
+    "input": "Bip001-L-Finger02",
+    "output": "thumb_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger41",
+    "input": "Bip001-R-Finger41",
+    "output": "pinky_02_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-UpperArm",
+    "input": "Bip001-L-UpperArm",
+    "output": "upperarm_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger1",
+    "input": "Bip001-L-Finger1",
+    "output": "index_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: IK_Hand_R",
+    "input": "IK_Hand_R",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger2Nub",
+    "input": "Bip001-R-Finger2Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger42",
+    "input": "Bip001-R-Finger42",
+    "output": "pinky_03_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Thigh",
+    "input": "Bip001-R-Thigh",
+    "output": "thigh_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Thigh",
+    "input": "Bip001-L-Thigh",
+    "output": "thigh_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Pelvis",
+    "input": "Bip001-Pelvis",
+    "output": "pelvis"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001",
+    "input": "Bip001",
+    "output": "root"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Point_LookAt_01",
+    "input": "Point_LookAt_01",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-HeadNub",
+    "input": "Bip001-HeadNub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Neck",
+    "input": "Bip001-Neck",
+    "output": "neck_01"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Clavicle",
+    "input": "Bip001-L-Clavicle",
+    "output": "clavicle_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Hand",
+    "input": "Bip001-L-Hand",
+    "output": "hand_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Foot",
+    "input": "Bip001-R-Foot",
+    "output": "foot_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Foot",
+    "input": "Bip001-R-Foot",
+    "output": "foot_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Socket_Head_Root",
+    "input": "Socket_Head_Root",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Cloth_Back_01",
+    "input": "Cloth_Back_01",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger42",
+    "input": "Bip001-R-Finger42",
+    "output": "pinky_03_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger3Nub",
+    "input": "Bip001-R-Finger3Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Skirt_DM_Pelvis",
+    "input": "Skirt_DM_Pelvis",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger2Nub",
+    "input": "Bip001-L-Finger2Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Neck",
+    "input": "Bip001-Neck",
+    "output": "neck_01"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Calf",
+    "input": "Bip001-L-Calf",
+    "output": "calf_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Toe0",
+    "input": "Bip001-L-Toe0",
+    "output": "ball_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Forearm",
+    "input": "Bip001-L-Forearm",
+    "output": "lowerarm_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger0",
+    "input": "Bip001-L-Finger0",
+    "output": "thumb_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Neck",
+    "input": "Bip001-Neck",
+    "output": "neck_01"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Thigh",
+    "input": "Bip001-L-Thigh",
+    "output": "thigh_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001_B_R-Elbow",
+    "input": "Bip001_B_R-Elbow",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger1Nub",
+    "input": "Bip001-L-Finger1Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001_PH_L-Clavicle",
+    "input": "Bip001_PH_L-Clavicle",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger02",
+    "input": "Bip001-L-Finger02",
+    "output": "thumb_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001_B_L-UpperArm-Twist",
+    "input": "Bip001_B_L-UpperArm-Twist",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Toe0",
+    "input": "Bip001-L-Toe0",
+    "output": "ball_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine2",
+    "input": "Bip001-Spine2",
+    "output": "spine_03"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Hair_01",
+    "input": "Hair_01",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger01",
+    "input": "Bip001-L-Finger01",
+    "output": "thumb_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger32",
+    "input": "Bip001-L-Finger32",
+    "output": "ring_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger0",
+    "input": "Bip001-L-Finger0",
+    "output": "thumb_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger02",
+    "input": "Bip001-L-Finger02",
+    "output": "thumb_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Toe0",
+    "input": "Bip001-L-Toe0",
+    "output": "ball_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger12",
+    "input": "Bip001-R-Finger12",
+    "output": "index_03_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-UpperArm",
+    "input": "Bip001-L-UpperArm",
+    "output": "upperarm_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Point_LookAt_01",
+    "input": "Point_LookAt_01",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001_PH_R-Clavicle",
+    "input": "Bip001_PH_R-Clavicle",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map the following source bones to UE5 Mannequin standard bones.\nSource skeleton type: 3dsMax_Biped\nSource bones: Root, Bip001-Pelvis, Bip001-Spine, Bip001-Spine1, Bip001-Spine2, Bip001-Neck, Bip001-Head, Bip001-HeadNub, Socket_Head_Root, Bip001-L-Clavicle, Bip001-L-UpperArm, Bip001-L-Forearm, Bip001-L-Hand, Bip001-L-Finger0, Bip001-L-Finger01, Bip001-L-Finger02, Bip001-L-Finger0Nub, Bip001-L-Finger1, Bip001-L-Finger11, Bip001-L-Finger12...\n\nFor each bone, output the mapping in format: source_bone -> target_bone\nIf a bone should be skipped (auxiliary bone like Nub, Socket, IK, etc.), output: source_bone -> [SKIP]",
+    "input": "",
+    "output": "Root -> root\nBip001-Pelvis -> pelvis\nBip001-Spine -> spine_01\nBip001-Spine1 -> spine_02\nBip001-Spine2 -> spine_03\nBip001-Neck -> neck_01\nBip001-Head -> head\nBip001-HeadNub -> [SKIP]\nSocket_Head_Root -> [SKIP]\nBip001-L-Clavicle -> clavicle_l\nBip001-L-UpperArm -> upperarm_l\nBip001-L-Forearm -> lowerarm_l\nBip001-L-Hand -> hand_l\nBip001-L-Finger0 -> thumb_01_l\nBip001-L-Finger01 -> thumb_02_l\nBip001-L-Finger02 -> thumb_03_l\nBip001-L-Finger0Nub -> [SKIP]\nBip001-L-Finger1 -> index_01_l\nBip001-L-Finger11 -> index_02_l\nBip001-L-Finger12 -> index_03_l\nBip001-L-Finger1Nub -> [SKIP]\nBip001-L-Finger2 -> middle_01_l\nBip001-L-Finger21 -> middle_02_l\nBip001-L-Finger22 -> middle_03_l\nBip001-L-Finger2Nub -> [SKIP]\nBip001-L-Finger3 -> ring_01_l\nBip001-L-Finger31 -> ring_02_l\nBip001-L-Finger32 -> ring_03_l\nBip001-L-Finger3Nub -> [SKIP]\nBip001-L-Finger4 -> pinky_01_l\nBip001-L-Finger41 -> pinky_02_l\nBip001-L-Finger42 -> pinky_03_l\nBip001-L-Finger4Nub -> [SKIP]\nBip001-L-Thigh -> thigh_l\nBip001-L-Calf -> calf_l\nBip001-L-Foot -> foot_l\nBip001-L-Toe0 -> ball_l\nBip001-L-Toe0Nub -> [SKIP]\nBip001-R-Clavicle -> clavicle_r\nBip001-R-UpperArm -> upperarm_r\nBip001-R-Forearm -> lowerarm_r\nBip001-R-Hand -> hand_r\nBip001-R-Finger0 -> thumb_01_r\nBip001-R-Finger01 -> thumb_02_r\nBip001-R-Finger02 -> thumb_03_r\nBip001-R-Finger0Nub -> [SKIP]\nBip001-R-Finger1 -> index_01_r\nBip001-R-Finger11 -> index_02_r\nBip001-R-Finger12 -> index_03_r\nBip001-R-Finger1Nub -> [SKIP]\nBip001-R-Finger2 -> middle_01_r\nBip001-R-Finger21 -> middle_02_r\nBip001-R-Finger22 -> middle_03_r\nBip001-R-Finger2Nub -> [SKIP]\nBip001-R-Finger3 -> ring_01_r\nBip001-R-Finger31 -> ring_02_r\nBip001-R-Finger32 -> ring_03_r\nBip001-R-Finger3Nub -> [SKIP]\nBip001-R-Finger4 -> pinky_01_r\nBip001-R-Finger41 -> pinky_02_r\nBip001-R-Finger42 -> pinky_03_r\nBip001-R-Finger4Nub -> [SKIP]\nBip001-R-Thigh -> thigh_r\nBip001-R-Calf -> calf_r\nBip001-R-Foot -> foot_r\nBip001-R-Toe0 -> ball_r\nBip001-R-Toe0Nub -> [SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Clavicle",
+    "input": "Bip001-L-Clavicle",
+    "output": "clavicle_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Socket_Head_Root",
+    "input": "Socket_Head_Root",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Forearm",
+    "input": "Bip001-R-Forearm",
+    "output": "lowerarm_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Toe0",
+    "input": "Bip001-R-Toe0",
+    "output": "ball_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Pelvis",
+    "input": "Bip001-Pelvis",
+    "output": "pelvis"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger01",
+    "input": "Bip001-L-Finger01",
+    "output": "thumb_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger11",
+    "input": "Bip001-L-Finger11",
+    "output": "index_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger1",
+    "input": "Bip001-L-Finger1",
+    "output": "index_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Cloth_Back_01",
+    "input": "Cloth_Back_01",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger0",
+    "input": "Bip001-R-Finger0",
+    "output": "thumb_01_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Thigh",
+    "input": "Bip001-L-Thigh",
+    "output": "thigh_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger41",
+    "input": "Bip001-R-Finger41",
+    "output": "pinky_02_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Thigh",
+    "input": "Bip001-R-Thigh",
+    "output": "thigh_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Skirt_R_ThighTwist",
+    "input": "Skirt_R_ThighTwist",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Clavicle",
+    "input": "Bip001-R-Clavicle",
+    "output": "clavicle_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger0",
+    "input": "Bip001-L-Finger0",
+    "output": "thumb_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Hand",
+    "input": "Bip001-L-Hand",
+    "output": "hand_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger4",
+    "input": "Bip001-L-Finger4",
+    "output": "pinky_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger01",
+    "input": "Bip001-L-Finger01",
+    "output": "thumb_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-UpperArm",
+    "input": "Bip001-L-UpperArm",
+    "output": "upperarm_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Foot",
+    "input": "Bip001-L-Foot",
+    "output": "foot_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger4",
+    "input": "Bip001-R-Finger4",
+    "output": "pinky_01_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Hand",
+    "input": "Bip001-R-Hand",
+    "output": "hand_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Clavicle",
+    "input": "Bip001-L-Clavicle",
+    "output": "clavicle_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger11",
+    "input": "Bip001-R-Finger11",
+    "output": "index_02_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger02",
+    "input": "Bip001-L-Finger02",
+    "output": "thumb_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Toe0",
+    "input": "Bip001-L-Toe0",
+    "output": "ball_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-UpperArm",
+    "input": "Bip001-L-UpperArm",
+    "output": "upperarm_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Calf",
+    "input": "Bip001-R-Calf",
+    "output": "calf_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Toe0",
+    "input": "Bip001-L-Toe0",
+    "output": "ball_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger11",
+    "input": "Bip001-L-Finger11",
+    "output": "index_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Pelvis",
+    "input": "Bip001-Pelvis",
+    "output": "pelvis"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger12",
+    "input": "Bip001-L-Finger12",
+    "output": "index_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Head",
+    "input": "Bip001-Head",
+    "output": "head"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Skirt_DM_Pelvis",
+    "input": "Skirt_DM_Pelvis",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Root",
+    "input": "Root",
+    "output": "root"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger22",
+    "input": "Bip001-R-Finger22",
+    "output": "middle_03_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger42",
+    "input": "Bip001-L-Finger42",
+    "output": "pinky_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Foot",
+    "input": "Bip001-R-Foot",
+    "output": "foot_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Pelvis",
+    "input": "Bip001-Pelvis",
+    "output": "pelvis"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine",
+    "input": "Bip001-Spine",
+    "output": "spine_01"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Twist_UpperArm_L",
+    "input": "Twist_UpperArm_L",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Skirt_L_ThighTwist",
+    "input": "Skirt_L_ThighTwist",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger1",
+    "input": "Bip001-L-Finger1",
+    "output": "index_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Head",
+    "input": "Bip001-Head",
+    "output": "head"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger41",
+    "input": "Bip001-L-Finger41",
+    "output": "pinky_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger12",
+    "input": "Bip001-R-Finger12",
+    "output": "index_03_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Foot",
+    "input": "Bip001-L-Foot",
+    "output": "foot_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-HeadNub",
+    "input": "Bip001-HeadNub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Neck",
+    "input": "Bip001-Neck",
+    "output": "neck_01"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine",
+    "input": "Bip001-Spine",
+    "output": "spine_01"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Calf",
+    "input": "Bip001-L-Calf",
+    "output": "calf_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger3Nub",
+    "input": "Bip001-L-Finger3Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-UpperArm",
+    "input": "Bip001-R-UpperArm",
+    "output": "upperarm_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger3",
+    "input": "Bip001-L-Finger3",
+    "output": "ring_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger0",
+    "input": "Bip001-R-Finger0",
+    "output": "thumb_01_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Cloth_Back_01",
+    "input": "Cloth_Back_01",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Toe0Nub",
+    "input": "Bip001-L-Toe0Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Root",
+    "input": "Root",
+    "output": "root"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Neck",
+    "input": "Bip001-Neck",
+    "output": "neck_01"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Foot",
+    "input": "Bip001-L-Foot",
+    "output": "foot_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Skirt_DM_Pelvis",
+    "input": "Skirt_DM_Pelvis",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Neck",
+    "input": "Bip001-Neck",
+    "output": "neck_01"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Roll_Forearm_R",
+    "input": "Roll_Forearm_R",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine2",
+    "input": "Bip001-Spine2",
+    "output": "spine_03"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine1",
+    "input": "Bip001-Spine1",
+    "output": "spine_02"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-UpperArm",
+    "input": "Bip001-R-UpperArm",
+    "output": "upperarm_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger01",
+    "input": "Bip001-R-Finger01",
+    "output": "thumb_02_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Calf",
+    "input": "Bip001-R-Calf",
+    "output": "calf_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Hand",
+    "input": "Bip001-L-Hand",
+    "output": "hand_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger02",
+    "input": "Bip001-L-Finger02",
+    "output": "thumb_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger01",
+    "input": "Bip001-L-Finger01",
+    "output": "thumb_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger2",
+    "input": "Bip001-L-Finger2",
+    "output": "middle_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine2",
+    "input": "Bip001-Spine2",
+    "output": "spine_03"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger0Nub",
+    "input": "Bip001-L-Finger0Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger0Nub",
+    "input": "Bip001-L-Finger0Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Toe0Nub",
+    "input": "Bip001-L-Toe0Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine",
+    "input": "Bip001-Spine",
+    "output": "spine_01"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Toe0Nub",
+    "input": "Bip001-R-Toe0Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger4Nub",
+    "input": "Bip001-R-Finger4Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Foot",
+    "input": "Bip001-L-Foot",
+    "output": "foot_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001_B_L-UpperArm-Twist",
+    "input": "Bip001_B_L-UpperArm-Twist",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Head",
+    "input": "Bip001-Head",
+    "output": "head"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Dummy-L-Hand_IK",
+    "input": "Dummy-L-Hand_IK",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine2",
+    "input": "Bip001-Spine2",
+    "output": "spine_03"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger1",
+    "input": "Bip001-L-Finger1",
+    "output": "index_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Clavicle",
+    "input": "Bip001-L-Clavicle",
+    "output": "clavicle_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine2",
+    "input": "Bip001-Spine2",
+    "output": "spine_03"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger2",
+    "input": "Bip001-R-Finger2",
+    "output": "middle_01_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger32",
+    "input": "Bip001-R-Finger32",
+    "output": "ring_03_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger02",
+    "input": "Bip001-L-Finger02",
+    "output": "thumb_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine1",
+    "input": "Bip001-Spine1",
+    "output": "spine_02"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Clavicle",
+    "input": "Bip001-L-Clavicle",
+    "output": "clavicle_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001_B_R-UpperArm-Twist",
+    "input": "Bip001_B_R-UpperArm-Twist",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Thigh",
+    "input": "Bip001-R-Thigh",
+    "output": "thigh_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger2",
+    "input": "Bip001-L-Finger2",
+    "output": "middle_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Pelvis",
+    "input": "Bip001-Pelvis",
+    "output": "pelvis"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Hair_01",
+    "input": "Hair_01",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger02",
+    "input": "Bip001-R-Finger02",
+    "output": "thumb_03_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Calf",
+    "input": "Bip001-L-Calf",
+    "output": "calf_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Forearm",
+    "input": "Bip001-L-Forearm",
+    "output": "lowerarm_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger0",
+    "input": "Bip001-L-Finger0",
+    "output": "thumb_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger0",
+    "input": "Bip001-L-Finger0",
+    "output": "thumb_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine",
+    "input": "Bip001-Spine",
+    "output": "spine_01"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger1",
+    "input": "Bip001-L-Finger1",
+    "output": "index_01_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Foot",
+    "input": "Bip001-L-Foot",
+    "output": "foot_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Toe0Nub",
+    "input": "Bip001-L-Toe0Nub",
+    "output": "[SKIP]"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger21",
+    "input": "Bip001-L-Finger21",
+    "output": "middle_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-R-Finger32",
+    "input": "Bip001-R-Finger32",
+    "output": "ring_03_r"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-Spine1",
+    "input": "Bip001-Spine1",
+    "output": "spine_02"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger01",
+    "input": "Bip001-L-Finger01",
+    "output": "thumb_02_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Foot",
+    "input": "Bip001-L-Foot",
+    "output": "foot_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger12",
+    "input": "Bip001-L-Finger12",
+    "output": "index_03_l"
+  },
+  {
+    "instruction": "Map this bone to UE5 Mannequin: Bip001-L-Finger0Nub",
+    "input": "Bip001-L-Finger0Nub",
+    "output": "[SKIP]"
+  }
+]

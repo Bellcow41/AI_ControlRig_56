@@ -1,0 +1,2096 @@
+[
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Root",
+      "Bip001",
+      "Bip001-Pelvis",
+      "Bip001-Spine",
+      "Bip001-Spine1",
+      "Bip001-Spine2",
+      "Bip001-Neck",
+      "Bip001-Head",
+      "Bip001-HeadNub",
+      "Bip001-L-Clavicle",
+      "Bip001_PH_L-Clavicle",
+      "Bip001-L-UpperArm",
+      "Bip001_B_L-UpperArm-Twist",
+      "Bip001-L-Forearm",
+      "Bip001_B_L-Elbow",
+      "Bip001-L-Hand",
+      "Dummy-L-Hand_IK",
+      "Bip001-L-Thigh",
+      "Skirt_L_ThighTwist",
+      "Bip001-L-Calf",
+      "Bip001-L-Foot",
+      "Bip001-L-Toe0",
+      "Bip001-L-Toe0Nub",
+      "Bip001-R-Clavicle",
+      "Bip001_PH_R-Clavicle",
+      "Bip001-R-UpperArm",
+      "Bip001_B_R-UpperArm-Twist",
+      "Bip001-R-Forearm",
+      "Bip001_B_R-Elbow",
+      "Bip001-R-Hand",
+      "Dummy-R-Hand_IK",
+      "Bip001-R-Thigh",
+      "Skirt_R_ThighTwist",
+      "Bip001-R-Calf",
+      "Bip001-R-Foot",
+      "Bip001-R-Toe0",
+      "Bip001-R-Toe0Nub",
+      "Skirt_DM_Pelvis"
+    ],
+    "mapping": {
+      "Root": "root",
+      "Bip001": "root",
+      "Bip001-Pelvis": "pelvis",
+      "Bip001-Spine": "spine_01",
+      "Bip001-Spine1": "spine_02",
+      "Bip001-Spine2": "spine_03",
+      "Bip001-Neck": "neck_01",
+      "Bip001-Head": "head",
+      "Bip001-HeadNub": "[SKIP]",
+      "Bip001-L-Clavicle": "clavicle_l",
+      "Bip001_PH_L-Clavicle": "[SKIP]",
+      "Bip001-L-UpperArm": "upperarm_l",
+      "Bip001_B_L-UpperArm-Twist": "[SKIP]",
+      "Bip001-L-Forearm": "lowerarm_l",
+      "Bip001_B_L-Elbow": "[SKIP]",
+      "Bip001-L-Hand": "hand_l",
+      "Dummy-L-Hand_IK": "[SKIP]",
+      "Bip001-L-Thigh": "thigh_l",
+      "Skirt_L_ThighTwist": "[SKIP]",
+      "Bip001-L-Calf": "calf_l",
+      "Bip001-L-Foot": "foot_l",
+      "Bip001-L-Toe0": "ball_l",
+      "Bip001-L-Toe0Nub": "[SKIP]",
+      "Bip001-R-Clavicle": "clavicle_r",
+      "Bip001_PH_R-Clavicle": "[SKIP]",
+      "Bip001-R-UpperArm": "upperarm_r",
+      "Bip001_B_R-UpperArm-Twist": "[SKIP]",
+      "Bip001-R-Forearm": "lowerarm_r",
+      "Bip001_B_R-Elbow": "[SKIP]",
+      "Bip001-R-Hand": "hand_r",
+      "Dummy-R-Hand_IK": "[SKIP]",
+      "Bip001-R-Thigh": "thigh_r",
+      "Skirt_R_ThighTwist": "[SKIP]",
+      "Bip001-R-Calf": "calf_r",
+      "Bip001-R-Foot": "foot_r",
+      "Bip001-R-Toe0": "ball_r",
+      "Bip001-R-Toe0Nub": "[SKIP]",
+      "Skirt_DM_Pelvis": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Root"
+    ],
+    "mapping": {
+      "Root": "root"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001"
+    ],
+    "mapping": {
+      "Bip001": "root"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-Pelvis"
+    ],
+    "mapping": {
+      "Bip001-Pelvis": "pelvis"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-Spine"
+    ],
+    "mapping": {
+      "Bip001-Spine": "spine_01"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-Spine1"
+    ],
+    "mapping": {
+      "Bip001-Spine1": "spine_02"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-Spine2"
+    ],
+    "mapping": {
+      "Bip001-Spine2": "spine_03"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-Neck"
+    ],
+    "mapping": {
+      "Bip001-Neck": "neck_01"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-Head"
+    ],
+    "mapping": {
+      "Bip001-Head": "head"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Clavicle"
+    ],
+    "mapping": {
+      "Bip001-L-Clavicle": "clavicle_l"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-UpperArm"
+    ],
+    "mapping": {
+      "Bip001-L-UpperArm": "upperarm_l"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Forearm"
+    ],
+    "mapping": {
+      "Bip001-L-Forearm": "lowerarm_l"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Hand"
+    ],
+    "mapping": {
+      "Bip001-L-Hand": "hand_l"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Thigh"
+    ],
+    "mapping": {
+      "Bip001-L-Thigh": "thigh_l"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Calf"
+    ],
+    "mapping": {
+      "Bip001-L-Calf": "calf_l"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Foot"
+    ],
+    "mapping": {
+      "Bip001-L-Foot": "foot_l"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Toe0"
+    ],
+    "mapping": {
+      "Bip001-L-Toe0": "ball_l"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Clavicle"
+    ],
+    "mapping": {
+      "Bip001-R-Clavicle": "clavicle_r"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-UpperArm"
+    ],
+    "mapping": {
+      "Bip001-R-UpperArm": "upperarm_r"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Forearm"
+    ],
+    "mapping": {
+      "Bip001-R-Forearm": "lowerarm_r"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Hand"
+    ],
+    "mapping": {
+      "Bip001-R-Hand": "hand_r"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Thigh"
+    ],
+    "mapping": {
+      "Bip001-R-Thigh": "thigh_r"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Calf"
+    ],
+    "mapping": {
+      "Bip001-R-Calf": "calf_r"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Foot"
+    ],
+    "mapping": {
+      "Bip001-R-Foot": "foot_r"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Toe0"
+    ],
+    "mapping": {
+      "Bip001-R-Toe0": "ball_r"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-HeadNub"
+    ],
+    "mapping": {
+      "Bip001-HeadNub": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001_PH_L-Clavicle"
+    ],
+    "mapping": {
+      "Bip001_PH_L-Clavicle": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001_B_L-UpperArm-Twist"
+    ],
+    "mapping": {
+      "Bip001_B_L-UpperArm-Twist": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001_B_L-Elbow"
+    ],
+    "mapping": {
+      "Bip001_B_L-Elbow": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Dummy-L-Hand_IK"
+    ],
+    "mapping": {
+      "Dummy-L-Hand_IK": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Skirt_L_ThighTwist"
+    ],
+    "mapping": {
+      "Skirt_L_ThighTwist": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Toe0Nub"
+    ],
+    "mapping": {
+      "Bip001-L-Toe0Nub": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001_PH_R-Clavicle"
+    ],
+    "mapping": {
+      "Bip001_PH_R-Clavicle": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001_B_R-UpperArm-Twist"
+    ],
+    "mapping": {
+      "Bip001_B_R-UpperArm-Twist": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001_B_R-Elbow"
+    ],
+    "mapping": {
+      "Bip001_B_R-Elbow": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Dummy-R-Hand_IK"
+    ],
+    "mapping": {
+      "Dummy-R-Hand_IK": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Skirt_R_ThighTwist"
+    ],
+    "mapping": {
+      "Skirt_R_ThighTwist": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Toe0Nub"
+    ],
+    "mapping": {
+      "Bip001-R-Toe0Nub": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Howzer",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Skirt_DM_Pelvis"
+    ],
+    "mapping": {
+      "Skirt_DM_Pelvis": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Root",
+      "Bip001-Pelvis",
+      "Bip001-Spine",
+      "Bip001-Spine1",
+      "Bip001-Spine2",
+      "Bip001-Neck",
+      "Bip001-Head",
+      "Bip001-HeadNub",
+      "Socket_Head_Root",
+      "Bip001-L-Clavicle",
+      "Bip001-L-UpperArm",
+      "Bip001-L-Forearm",
+      "Bip001-L-Hand",
+      "Bip001-L-Finger0",
+      "Bip001-L-Finger01",
+      "Bip001-L-Finger02",
+      "Bip001-L-Finger0Nub",
+      "Bip001-L-Finger1",
+      "Bip001-L-Finger11",
+      "Bip001-L-Finger12",
+      "Bip001-L-Finger1Nub",
+      "Bip001-L-Finger2",
+      "Bip001-L-Finger21",
+      "Bip001-L-Finger22",
+      "Bip001-L-Finger2Nub",
+      "Bip001-L-Finger3",
+      "Bip001-L-Finger31",
+      "Bip001-L-Finger32",
+      "Bip001-L-Finger3Nub",
+      "Bip001-L-Finger4",
+      "Bip001-L-Finger41",
+      "Bip001-L-Finger42",
+      "Bip001-L-Finger4Nub",
+      "Bip001-L-Thigh",
+      "Bip001-L-Calf",
+      "Bip001-L-Foot",
+      "Bip001-L-Toe0",
+      "Bip001-L-Toe0Nub",
+      "Bip001-R-Clavicle",
+      "Bip001-R-UpperArm",
+      "Bip001-R-Forearm",
+      "Bip001-R-Hand",
+      "Bip001-R-Finger0",
+      "Bip001-R-Finger01",
+      "Bip001-R-Finger02",
+      "Bip001-R-Finger0Nub",
+      "Bip001-R-Finger1",
+      "Bip001-R-Finger11",
+      "Bip001-R-Finger12",
+      "Bip001-R-Finger1Nub",
+      "Bip001-R-Finger2",
+      "Bip001-R-Finger21",
+      "Bip001-R-Finger22",
+      "Bip001-R-Finger2Nub",
+      "Bip001-R-Finger3",
+      "Bip001-R-Finger31",
+      "Bip001-R-Finger32",
+      "Bip001-R-Finger3Nub",
+      "Bip001-R-Finger4",
+      "Bip001-R-Finger41",
+      "Bip001-R-Finger42",
+      "Bip001-R-Finger4Nub",
+      "Bip001-R-Thigh",
+      "Bip001-R-Calf",
+      "Bip001-R-Foot",
+      "Bip001-R-Toe0",
+      "Bip001-R-Toe0Nub"
+    ],
+    "mapping": {
+      "Root": "root",
+      "Bip001-Pelvis": "pelvis",
+      "Bip001-Spine": "spine_01",
+      "Bip001-Spine1": "spine_02",
+      "Bip001-Spine2": "spine_03",
+      "Bip001-Neck": "neck_01",
+      "Bip001-Head": "head",
+      "Bip001-HeadNub": "[SKIP]",
+      "Socket_Head_Root": "[SKIP]",
+      "Bip001-L-Clavicle": "clavicle_l",
+      "Bip001-L-UpperArm": "upperarm_l",
+      "Bip001-L-Forearm": "lowerarm_l",
+      "Bip001-L-Hand": "hand_l",
+      "Bip001-L-Finger0": "thumb_01_l",
+      "Bip001-L-Finger01": "thumb_02_l",
+      "Bip001-L-Finger02": "thumb_03_l",
+      "Bip001-L-Finger0Nub": "[SKIP]",
+      "Bip001-L-Finger1": "index_01_l",
+      "Bip001-L-Finger11": "index_02_l",
+      "Bip001-L-Finger12": "index_03_l",
+      "Bip001-L-Finger1Nub": "[SKIP]",
+      "Bip001-L-Finger2": "middle_01_l",
+      "Bip001-L-Finger21": "middle_02_l",
+      "Bip001-L-Finger22": "middle_03_l",
+      "Bip001-L-Finger2Nub": "[SKIP]",
+      "Bip001-L-Finger3": "ring_01_l",
+      "Bip001-L-Finger31": "ring_02_l",
+      "Bip001-L-Finger32": "ring_03_l",
+      "Bip001-L-Finger3Nub": "[SKIP]",
+      "Bip001-L-Finger4": "pinky_01_l",
+      "Bip001-L-Finger41": "pinky_02_l",
+      "Bip001-L-Finger42": "pinky_03_l",
+      "Bip001-L-Finger4Nub": "[SKIP]",
+      "Bip001-L-Thigh": "thigh_l",
+      "Bip001-L-Calf": "calf_l",
+      "Bip001-L-Foot": "foot_l",
+      "Bip001-L-Toe0": "ball_l",
+      "Bip001-L-Toe0Nub": "[SKIP]",
+      "Bip001-R-Clavicle": "clavicle_r",
+      "Bip001-R-UpperArm": "upperarm_r",
+      "Bip001-R-Forearm": "lowerarm_r",
+      "Bip001-R-Hand": "hand_r",
+      "Bip001-R-Finger0": "thumb_01_r",
+      "Bip001-R-Finger01": "thumb_02_r",
+      "Bip001-R-Finger02": "thumb_03_r",
+      "Bip001-R-Finger0Nub": "[SKIP]",
+      "Bip001-R-Finger1": "index_01_r",
+      "Bip001-R-Finger11": "index_02_r",
+      "Bip001-R-Finger12": "index_03_r",
+      "Bip001-R-Finger1Nub": "[SKIP]",
+      "Bip001-R-Finger2": "middle_01_r",
+      "Bip001-R-Finger21": "middle_02_r",
+      "Bip001-R-Finger22": "middle_03_r",
+      "Bip001-R-Finger2Nub": "[SKIP]",
+      "Bip001-R-Finger3": "ring_01_r",
+      "Bip001-R-Finger31": "ring_02_r",
+      "Bip001-R-Finger32": "ring_03_r",
+      "Bip001-R-Finger3Nub": "[SKIP]",
+      "Bip001-R-Finger4": "pinky_01_r",
+      "Bip001-R-Finger41": "pinky_02_r",
+      "Bip001-R-Finger42": "pinky_03_r",
+      "Bip001-R-Finger4Nub": "[SKIP]",
+      "Bip001-R-Thigh": "thigh_r",
+      "Bip001-R-Calf": "calf_r",
+      "Bip001-R-Foot": "foot_r",
+      "Bip001-R-Toe0": "ball_r",
+      "Bip001-R-Toe0Nub": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Root"
+    ],
+    "mapping": {
+      "Root": "root"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-Pelvis"
+    ],
+    "mapping": {
+      "Bip001-Pelvis": "pelvis"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-Spine"
+    ],
+    "mapping": {
+      "Bip001-Spine": "spine_01"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-Spine1"
+    ],
+    "mapping": {
+      "Bip001-Spine1": "spine_02"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-Spine2"
+    ],
+    "mapping": {
+      "Bip001-Spine2": "spine_03"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-Neck"
+    ],
+    "mapping": {
+      "Bip001-Neck": "neck_01"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-Head"
+    ],
+    "mapping": {
+      "Bip001-Head": "head"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Clavicle"
+    ],
+    "mapping": {
+      "Bip001-L-Clavicle": "clavicle_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-UpperArm"
+    ],
+    "mapping": {
+      "Bip001-L-UpperArm": "upperarm_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Forearm"
+    ],
+    "mapping": {
+      "Bip001-L-Forearm": "lowerarm_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Hand"
+    ],
+    "mapping": {
+      "Bip001-L-Hand": "hand_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger0"
+    ],
+    "mapping": {
+      "Bip001-L-Finger0": "thumb_01_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger01"
+    ],
+    "mapping": {
+      "Bip001-L-Finger01": "thumb_02_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger02"
+    ],
+    "mapping": {
+      "Bip001-L-Finger02": "thumb_03_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger1"
+    ],
+    "mapping": {
+      "Bip001-L-Finger1": "index_01_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger11"
+    ],
+    "mapping": {
+      "Bip001-L-Finger11": "index_02_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger12"
+    ],
+    "mapping": {
+      "Bip001-L-Finger12": "index_03_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger2"
+    ],
+    "mapping": {
+      "Bip001-L-Finger2": "middle_01_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger21"
+    ],
+    "mapping": {
+      "Bip001-L-Finger21": "middle_02_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger22"
+    ],
+    "mapping": {
+      "Bip001-L-Finger22": "middle_03_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger3"
+    ],
+    "mapping": {
+      "Bip001-L-Finger3": "ring_01_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger31"
+    ],
+    "mapping": {
+      "Bip001-L-Finger31": "ring_02_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger32"
+    ],
+    "mapping": {
+      "Bip001-L-Finger32": "ring_03_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger4"
+    ],
+    "mapping": {
+      "Bip001-L-Finger4": "pinky_01_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger41"
+    ],
+    "mapping": {
+      "Bip001-L-Finger41": "pinky_02_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger42"
+    ],
+    "mapping": {
+      "Bip001-L-Finger42": "pinky_03_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Thigh"
+    ],
+    "mapping": {
+      "Bip001-L-Thigh": "thigh_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Calf"
+    ],
+    "mapping": {
+      "Bip001-L-Calf": "calf_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Foot"
+    ],
+    "mapping": {
+      "Bip001-L-Foot": "foot_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Toe0"
+    ],
+    "mapping": {
+      "Bip001-L-Toe0": "ball_l"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Clavicle"
+    ],
+    "mapping": {
+      "Bip001-R-Clavicle": "clavicle_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-UpperArm"
+    ],
+    "mapping": {
+      "Bip001-R-UpperArm": "upperarm_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Forearm"
+    ],
+    "mapping": {
+      "Bip001-R-Forearm": "lowerarm_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Hand"
+    ],
+    "mapping": {
+      "Bip001-R-Hand": "hand_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger0"
+    ],
+    "mapping": {
+      "Bip001-R-Finger0": "thumb_01_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger01"
+    ],
+    "mapping": {
+      "Bip001-R-Finger01": "thumb_02_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger02"
+    ],
+    "mapping": {
+      "Bip001-R-Finger02": "thumb_03_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger1"
+    ],
+    "mapping": {
+      "Bip001-R-Finger1": "index_01_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger11"
+    ],
+    "mapping": {
+      "Bip001-R-Finger11": "index_02_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger12"
+    ],
+    "mapping": {
+      "Bip001-R-Finger12": "index_03_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger2"
+    ],
+    "mapping": {
+      "Bip001-R-Finger2": "middle_01_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger21"
+    ],
+    "mapping": {
+      "Bip001-R-Finger21": "middle_02_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger22"
+    ],
+    "mapping": {
+      "Bip001-R-Finger22": "middle_03_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger3"
+    ],
+    "mapping": {
+      "Bip001-R-Finger3": "ring_01_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger31"
+    ],
+    "mapping": {
+      "Bip001-R-Finger31": "ring_02_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger32"
+    ],
+    "mapping": {
+      "Bip001-R-Finger32": "ring_03_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger4"
+    ],
+    "mapping": {
+      "Bip001-R-Finger4": "pinky_01_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger41"
+    ],
+    "mapping": {
+      "Bip001-R-Finger41": "pinky_02_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger42"
+    ],
+    "mapping": {
+      "Bip001-R-Finger42": "pinky_03_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Thigh"
+    ],
+    "mapping": {
+      "Bip001-R-Thigh": "thigh_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Calf"
+    ],
+    "mapping": {
+      "Bip001-R-Calf": "calf_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Foot"
+    ],
+    "mapping": {
+      "Bip001-R-Foot": "foot_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Toe0"
+    ],
+    "mapping": {
+      "Bip001-R-Toe0": "ball_r"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-HeadNub"
+    ],
+    "mapping": {
+      "Bip001-HeadNub": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Socket_Head_Root"
+    ],
+    "mapping": {
+      "Socket_Head_Root": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger0Nub"
+    ],
+    "mapping": {
+      "Bip001-L-Finger0Nub": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger1Nub"
+    ],
+    "mapping": {
+      "Bip001-L-Finger1Nub": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger2Nub"
+    ],
+    "mapping": {
+      "Bip001-L-Finger2Nub": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger3Nub"
+    ],
+    "mapping": {
+      "Bip001-L-Finger3Nub": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger4Nub"
+    ],
+    "mapping": {
+      "Bip001-L-Finger4Nub": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Toe0Nub"
+    ],
+    "mapping": {
+      "Bip001-L-Toe0Nub": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger0Nub"
+    ],
+    "mapping": {
+      "Bip001-R-Finger0Nub": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger1Nub"
+    ],
+    "mapping": {
+      "Bip001-R-Finger1Nub": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger2Nub"
+    ],
+    "mapping": {
+      "Bip001-R-Finger2Nub": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger3Nub"
+    ],
+    "mapping": {
+      "Bip001-R-Finger3Nub": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger4Nub"
+    ],
+    "mapping": {
+      "Bip001-R-Finger4Nub": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Merlin",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Toe0Nub"
+    ],
+    "mapping": {
+      "Bip001-R-Toe0Nub": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Root",
+      "Bip001-Pelvis",
+      "Bip001-Spine",
+      "Bip001-Spine1",
+      "Bip001-Spine2",
+      "Bip001-Neck",
+      "Bip001-Head",
+      "Point_LookAt_01",
+      "Bip001-L-Clavicle",
+      "Bip001-L-UpperArm",
+      "Bip001-L-Forearm",
+      "Bip001-L-Hand",
+      "Bip001-L-Finger0",
+      "Bip001-L-Finger01",
+      "Bip001-L-Finger02",
+      "Bip001-L-Finger1",
+      "Bip001-L-Finger11",
+      "Bip001-L-Finger12",
+      "Bip001-L-Finger2",
+      "Bip001-L-Finger21",
+      "Bip001-L-Finger22",
+      "Bip001-L-Finger3",
+      "Bip001-L-Finger31",
+      "Bip001-L-Finger32",
+      "Bip001-L-Finger4",
+      "Bip001-L-Finger41",
+      "Bip001-L-Finger42",
+      "Bip001-L-Thigh",
+      "Bip001-L-Calf",
+      "Bip001-L-Foot",
+      "Bip001-L-Toe0",
+      "Bip001-R-Clavicle",
+      "Bip001-R-UpperArm",
+      "Bip001-R-Forearm",
+      "Bip001-R-Hand",
+      "Bip001-R-Finger0",
+      "Bip001-R-Finger01",
+      "Bip001-R-Finger02",
+      "Bip001-R-Finger1",
+      "Bip001-R-Finger11",
+      "Bip001-R-Finger12",
+      "Bip001-R-Finger2",
+      "Bip001-R-Finger21",
+      "Bip001-R-Finger22",
+      "Bip001-R-Finger3",
+      "Bip001-R-Finger31",
+      "Bip001-R-Finger32",
+      "Bip001-R-Finger4",
+      "Bip001-R-Finger41",
+      "Bip001-R-Finger42",
+      "Bip001-R-Thigh",
+      "Bip001-R-Calf",
+      "Bip001-R-Foot",
+      "Bip001-R-Toe0"
+    ],
+    "mapping": {
+      "Root": "root",
+      "Bip001-Pelvis": "pelvis",
+      "Bip001-Spine": "spine_01",
+      "Bip001-Spine1": "spine_02",
+      "Bip001-Spine2": "spine_03",
+      "Bip001-Neck": "neck_01",
+      "Bip001-Head": "head",
+      "Point_LookAt_01": "[SKIP]",
+      "Bip001-L-Clavicle": "clavicle_l",
+      "Bip001-L-UpperArm": "upperarm_l",
+      "Bip001-L-Forearm": "lowerarm_l",
+      "Bip001-L-Hand": "hand_l",
+      "Bip001-L-Finger0": "thumb_01_l",
+      "Bip001-L-Finger01": "thumb_02_l",
+      "Bip001-L-Finger02": "thumb_03_l",
+      "Bip001-L-Finger1": "index_01_l",
+      "Bip001-L-Finger11": "index_02_l",
+      "Bip001-L-Finger12": "index_03_l",
+      "Bip001-L-Finger2": "middle_01_l",
+      "Bip001-L-Finger21": "middle_02_l",
+      "Bip001-L-Finger22": "middle_03_l",
+      "Bip001-L-Finger3": "ring_01_l",
+      "Bip001-L-Finger31": "ring_02_l",
+      "Bip001-L-Finger32": "ring_03_l",
+      "Bip001-L-Finger4": "pinky_01_l",
+      "Bip001-L-Finger41": "pinky_02_l",
+      "Bip001-L-Finger42": "pinky_03_l",
+      "Bip001-L-Thigh": "thigh_l",
+      "Bip001-L-Calf": "calf_l",
+      "Bip001-L-Foot": "foot_l",
+      "Bip001-L-Toe0": "ball_l",
+      "Bip001-R-Clavicle": "clavicle_r",
+      "Bip001-R-UpperArm": "upperarm_r",
+      "Bip001-R-Forearm": "lowerarm_r",
+      "Bip001-R-Hand": "hand_r",
+      "Bip001-R-Finger0": "thumb_01_r",
+      "Bip001-R-Finger01": "thumb_02_r",
+      "Bip001-R-Finger02": "thumb_03_r",
+      "Bip001-R-Finger1": "index_01_r",
+      "Bip001-R-Finger11": "index_02_r",
+      "Bip001-R-Finger12": "index_03_r",
+      "Bip001-R-Finger2": "middle_01_r",
+      "Bip001-R-Finger21": "middle_02_r",
+      "Bip001-R-Finger22": "middle_03_r",
+      "Bip001-R-Finger3": "ring_01_r",
+      "Bip001-R-Finger31": "ring_02_r",
+      "Bip001-R-Finger32": "ring_03_r",
+      "Bip001-R-Finger4": "pinky_01_r",
+      "Bip001-R-Finger41": "pinky_02_r",
+      "Bip001-R-Finger42": "pinky_03_r",
+      "Bip001-R-Thigh": "thigh_r",
+      "Bip001-R-Calf": "calf_r",
+      "Bip001-R-Foot": "foot_r",
+      "Bip001-R-Toe0": "ball_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Root"
+    ],
+    "mapping": {
+      "Root": "root"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-Pelvis"
+    ],
+    "mapping": {
+      "Bip001-Pelvis": "pelvis"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-Spine"
+    ],
+    "mapping": {
+      "Bip001-Spine": "spine_01"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-Spine1"
+    ],
+    "mapping": {
+      "Bip001-Spine1": "spine_02"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-Spine2"
+    ],
+    "mapping": {
+      "Bip001-Spine2": "spine_03"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-Neck"
+    ],
+    "mapping": {
+      "Bip001-Neck": "neck_01"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-Head"
+    ],
+    "mapping": {
+      "Bip001-Head": "head"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Point_LookAt_01"
+    ],
+    "mapping": {
+      "Point_LookAt_01": "[SKIP]"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Clavicle"
+    ],
+    "mapping": {
+      "Bip001-L-Clavicle": "clavicle_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-UpperArm"
+    ],
+    "mapping": {
+      "Bip001-L-UpperArm": "upperarm_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Forearm"
+    ],
+    "mapping": {
+      "Bip001-L-Forearm": "lowerarm_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Hand"
+    ],
+    "mapping": {
+      "Bip001-L-Hand": "hand_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger0"
+    ],
+    "mapping": {
+      "Bip001-L-Finger0": "thumb_01_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger01"
+    ],
+    "mapping": {
+      "Bip001-L-Finger01": "thumb_02_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger02"
+    ],
+    "mapping": {
+      "Bip001-L-Finger02": "thumb_03_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger1"
+    ],
+    "mapping": {
+      "Bip001-L-Finger1": "index_01_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger11"
+    ],
+    "mapping": {
+      "Bip001-L-Finger11": "index_02_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger12"
+    ],
+    "mapping": {
+      "Bip001-L-Finger12": "index_03_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger2"
+    ],
+    "mapping": {
+      "Bip001-L-Finger2": "middle_01_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger21"
+    ],
+    "mapping": {
+      "Bip001-L-Finger21": "middle_02_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger22"
+    ],
+    "mapping": {
+      "Bip001-L-Finger22": "middle_03_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger3"
+    ],
+    "mapping": {
+      "Bip001-L-Finger3": "ring_01_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger31"
+    ],
+    "mapping": {
+      "Bip001-L-Finger31": "ring_02_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger32"
+    ],
+    "mapping": {
+      "Bip001-L-Finger32": "ring_03_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger4"
+    ],
+    "mapping": {
+      "Bip001-L-Finger4": "pinky_01_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger41"
+    ],
+    "mapping": {
+      "Bip001-L-Finger41": "pinky_02_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Finger42"
+    ],
+    "mapping": {
+      "Bip001-L-Finger42": "pinky_03_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Thigh"
+    ],
+    "mapping": {
+      "Bip001-L-Thigh": "thigh_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Calf"
+    ],
+    "mapping": {
+      "Bip001-L-Calf": "calf_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Foot"
+    ],
+    "mapping": {
+      "Bip001-L-Foot": "foot_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-L-Toe0"
+    ],
+    "mapping": {
+      "Bip001-L-Toe0": "ball_l"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Clavicle"
+    ],
+    "mapping": {
+      "Bip001-R-Clavicle": "clavicle_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-UpperArm"
+    ],
+    "mapping": {
+      "Bip001-R-UpperArm": "upperarm_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Forearm"
+    ],
+    "mapping": {
+      "Bip001-R-Forearm": "lowerarm_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Hand"
+    ],
+    "mapping": {
+      "Bip001-R-Hand": "hand_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger0"
+    ],
+    "mapping": {
+      "Bip001-R-Finger0": "thumb_01_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger01"
+    ],
+    "mapping": {
+      "Bip001-R-Finger01": "thumb_02_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger02"
+    ],
+    "mapping": {
+      "Bip001-R-Finger02": "thumb_03_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger1"
+    ],
+    "mapping": {
+      "Bip001-R-Finger1": "index_01_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger11"
+    ],
+    "mapping": {
+      "Bip001-R-Finger11": "index_02_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger12"
+    ],
+    "mapping": {
+      "Bip001-R-Finger12": "index_03_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger2"
+    ],
+    "mapping": {
+      "Bip001-R-Finger2": "middle_01_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger21"
+    ],
+    "mapping": {
+      "Bip001-R-Finger21": "middle_02_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger22"
+    ],
+    "mapping": {
+      "Bip001-R-Finger22": "middle_03_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger3"
+    ],
+    "mapping": {
+      "Bip001-R-Finger3": "ring_01_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger31"
+    ],
+    "mapping": {
+      "Bip001-R-Finger31": "ring_02_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger32"
+    ],
+    "mapping": {
+      "Bip001-R-Finger32": "ring_03_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger4"
+    ],
+    "mapping": {
+      "Bip001-R-Finger4": "pinky_01_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger41"
+    ],
+    "mapping": {
+      "Bip001-R-Finger41": "pinky_02_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Finger42"
+    ],
+    "mapping": {
+      "Bip001-R-Finger42": "pinky_03_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Thigh"
+    ],
+    "mapping": {
+      "Bip001-R-Thigh": "thigh_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Calf"
+    ],
+    "mapping": {
+      "Bip001-R-Calf": "calf_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Foot"
+    ],
+    "mapping": {
+      "Bip001-R-Foot": "foot_r"
+    }
+  },
+  {
+    "source_skeleton": "Jishuka",
+    "source_type": "3dsMax_Biped",
+    "target_type": "UE5_Mannequin",
+    "source_bones": [
+      "Bip001-R-Toe0"
+    ],
+    "mapping": {
+      "Bip001-R-Toe0": "ball_r"
+    }
+  }
+]

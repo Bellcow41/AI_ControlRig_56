@@ -1,0 +1,19 @@
+﻿==================================================
+Environment Check
+==================================================
+[OK] PyTorch: 2.5.1+cu121
+[OK] CUDA: True
+[OK] GPU: NVIDIA GeForce RTX 4090
+[OK] VRAM: 25.8 GB
+python.exe : Traceback (most recent call last):
+위치 줄:1 문자:1
++ & "C:\Users\Administrator\AppData\Local\Programs\Python\Python311\pyt ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last) 
+   ::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "E:\AI\AI_ControlRig_02\BoneMapping_AI\test_env.py", line 13, in <module
+>
+    import transformers
+ModuleNotFoundError: No module named 'transformers'
