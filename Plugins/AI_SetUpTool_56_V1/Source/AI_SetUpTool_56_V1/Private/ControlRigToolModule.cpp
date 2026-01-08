@@ -45,6 +45,12 @@ void FControlRigToolModule::StartAPIServer()
 {
 	UE_LOG(LogTemp, Log, TEXT("[ControlRigTool] ========== Starting API Server =========="));
 	
+	// 포트 8000 사용 중인 기존 프로세스 정리
+	FString KillCmd = TEXT("powershell -Command \"Get-NetTCPConnection -LocalPort 8000 -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue }\"");
+	FPlatformProcess::CreateProc(TEXT("cmd.exe"), *FString::Printf(TEXT("/c %s"), *KillCmd), true, true, true, nullptr, 0, nullptr, nullptr);
+	FPlatformProcess::Sleep(0.5f);  // 프로세스 종료 대기
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigTool] Cleaned up port 8000"));
+	
 	FString PluginDir;
 	FString ServerScript;
 	FString EmbeddedPython;
