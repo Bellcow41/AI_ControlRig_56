@@ -10035,254 +10035,477 @@ TSharedRef<SWidget> SControlRigToolWidget::CreateControlRigSecTab()
 {
 	// 기본값 설정
 	SecDefaultOutputFolder = TEXT("/Game/ControlRigs");
+	bSecMultipleMode = false;
 	
 	return SNew(SScrollBox)
 		+ SScrollBox::Slot().Padding(5)
 		[
 			SNew(SVerticalBox)
 			
-			// ========== 섹션 1: Skeletal Mesh 선택 ==========
+			// ========== 모드 선택 버튼 (Single / Multiple) ==========
 			+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
 			[
 				SNew(SBorder)
 				.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
-				.BorderBackgroundColor(FLinearColor(0.02f, 0.02f, 0.05f, 1.0f))
+				.BorderBackgroundColor(FLinearColor(0.04f, 0.04f, 0.06f, 1.0f))
 				.Padding(FMargin(12, 8))
 				[
-					SNew(SVerticalBox)
-					// 헤더
-					+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
+					SNew(SHorizontalBox)
+					+ SHorizontalBox::Slot().FillWidth(1.0f).Padding(0, 0, 5, 0)
 					[
-						SNew(SHorizontalBox)
-						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
-						[
-							SNew(SImage)
-							.Image(FAppStyle::GetBrush("ClassIcon.SkeletalMesh"))
-							.ColorAndOpacity(FLinearColor(0.4f, 0.7f, 1.0f))
-							.DesiredSizeOverride(FVector2D(16, 16))
-						]
-						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(8, 0, 0, 0)
-						[
-							SNew(STextBlock)
-							.Text(LOCTEXT("SecMeshSection", "Skeletal Mesh"))
-							.Font(FCoreStyle::GetDefaultFontStyle("Bold", 11))
-							.ColorAndOpacity(FLinearColor(0.8f, 0.85f, 0.9f))
-						]
-					]
-					// 콤보박스 + 버튼
-					+ SVerticalBox::Slot().AutoHeight()
-					[
-						SNew(SHorizontalBox)
-						+ SHorizontalBox::Slot().FillWidth(1.0f).Padding(0, 0, 5, 0)
-						[
-							SAssignNew(SecMeshComboBox, SComboBox<TSharedPtr<FString>>)
-							.OptionsSource(&MeshOptions)
-							.OnSelectionChanged(this, &SControlRigToolWidget::OnSecMeshSelectionChanged)
-							.OnGenerateWidget(this, &SControlRigToolWidget::OnGenerateSecMeshWidget)
-							.Content()
-							[
-								SNew(STextBlock)
-								.Text(this, &SControlRigToolWidget::GetSelectedSecMeshName)
-								.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
-							]
-						]
-						+ SHorizontalBox::Slot().AutoWidth()
-						[
-							SNew(SButton)
-							.Text(LOCTEXT("SecUseSelected", "←"))
-							.ToolTipText(LOCTEXT("SecUseSelectedTooltip", "Use selected asset from Content Browser"))
-							.OnClicked(this, &SControlRigToolWidget::OnUseSelectedSecMeshClicked)
-						]
-					]
-					// 썸네일
-					+ SVerticalBox::Slot().AutoHeight().Padding(0, 8, 0, 0).HAlign(HAlign_Center)
-					[
-						SAssignNew(SecMeshThumbnailBox, SBox)
-						.WidthOverride(ThumbnailSize)
-						.HeightOverride(ThumbnailSize)
-					]
-				]
-			]
-			
-			// ========== 섹션 2: AI Bone Mapping ==========
-			+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
-			[
-				SNew(SBorder)
-				.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
-				.BorderBackgroundColor(FLinearColor(0.05f, 0.02f, 0.02f, 1.0f))
-				.Padding(FMargin(12, 8))
-				[
-					SNew(SVerticalBox)
-					// 헤더
-					+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
-					[
-						SNew(SHorizontalBox)
-						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
-						[
-							SNew(SImage)
-							.Image(FAppStyle::GetBrush("Icons.Search"))
-							.ColorAndOpacity(FLinearColor(1.0f, 0.6f, 0.3f))
-							.DesiredSizeOverride(FVector2D(16, 16))
-						]
-						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(8, 0, 0, 0)
-						[
-							SNew(STextBlock)
-							.Text(LOCTEXT("SecBoneMappingSection", "Bone Selection"))
-							.Font(FCoreStyle::GetDefaultFontStyle("Bold", 11))
-							.ColorAndOpacity(FLinearColor(0.8f, 0.85f, 0.9f))
-						]
-					]
-					// AI 본 매핑 버튼
-					+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
-					[
-						SNew(SButton)
+						SAssignNew(SecSingleModeButton, SButton)
 						.HAlign(HAlign_Center)
 						.ContentPadding(FMargin(20, 8))
-						.OnClicked(this, &SControlRigToolWidget::OnSecBoneMappingClicked)
-						[
-							SNew(SHorizontalBox)
-							+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 8, 0)
-							[
-								SNew(SImage)
-								.Image(FAppStyle::GetBrush("Persona.ImportAnimation"))
-								.DesiredSizeOverride(FVector2D(16, 16))
-							]
-							+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
-							[
-								SNew(STextBlock)
-								.Text(LOCTEXT("SecAIMapping", "AI Bone Mapping"))
-								.Font(FCoreStyle::GetDefaultFontStyle("Bold", 10))
-							]
-						]
-					]
-					// 본 목록 스크롤 박스
-					+ SVerticalBox::Slot().AutoHeight().MaxHeight(400.0f)
-					[
-						SAssignNew(SecBoneScrollBox, SScrollBox)
-						+ SScrollBox::Slot()
-						[
-							SAssignNew(SecBoneListBox, SVerticalBox)
-						]
-					]
-				]
-			]
-			
-			// ========== 섹션 3: Output Settings ==========
-			+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
-			[
-				SNew(SBorder)
-				.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
-				.BorderBackgroundColor(FLinearColor(0.02f, 0.04f, 0.02f, 1.0f))
-				.Padding(FMargin(12, 8))
-				[
-					SNew(SVerticalBox)
-					// 헤더
-					+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
-					[
-						SNew(SHorizontalBox)
-						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
-						[
-							SNew(SImage)
-							.Image(FAppStyle::GetBrush("Icons.Save"))
-							.ColorAndOpacity(FLinearColor(0.3f, 0.8f, 0.4f))
-							.DesiredSizeOverride(FVector2D(16, 16))
-						]
-						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(8, 0, 0, 0)
+						.OnClicked(this, &SControlRigToolWidget::OnSecSingleModeClicked)
 						[
 							SNew(STextBlock)
-							.Text(LOCTEXT("SecOutputSection", "Output Settings"))
+							.Text(LOCTEXT("SecSingleMode", "Single"))
 							.Font(FCoreStyle::GetDefaultFontStyle("Bold", 11))
-							.ColorAndOpacity(FLinearColor(0.8f, 0.85f, 0.9f))
 						]
 					]
-					// 이름
-					+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 5)
+					+ SHorizontalBox::Slot().FillWidth(1.0f).Padding(5, 0, 0, 0)
 					[
-						SNew(SHorizontalBox)
-						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 10, 0)
+						SAssignNew(SecMultipleModeButton, SButton)
+						.HAlign(HAlign_Center)
+						.ContentPadding(FMargin(20, 8))
+						.OnClicked(this, &SControlRigToolWidget::OnSecMultipleModeClicked)
 						[
 							SNew(STextBlock)
-							.Text(LOCTEXT("SecOutputName", "Name:"))
-							.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
-							.ColorAndOpacity(FLinearColor(0.6f, 0.65f, 0.7f))
-						]
-						+ SHorizontalBox::Slot().FillWidth(1.0f)
-						[
-							SAssignNew(SecOutputNameBox, SEditableTextBox)
-							.Text(FText::FromString(TEXT("CTR_NewRig_Rig")))
-							.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
-						]
-					]
-					// 폴더
-					+ SVerticalBox::Slot().AutoHeight()
-					[
-						SNew(SHorizontalBox)
-						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 10, 0)
-						[
-							SNew(STextBlock)
-							.Text(LOCTEXT("SecOutputFolder", "Folder:"))
-							.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
-							.ColorAndOpacity(FLinearColor(0.6f, 0.65f, 0.7f))
-						]
-						+ SHorizontalBox::Slot().FillWidth(1.0f).Padding(0, 0, 5, 0)
-						[
-							SAssignNew(SecOutputFolderBox, SEditableTextBox)
-							.Text(FText::FromString(SecDefaultOutputFolder))
-							.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
-						]
-						+ SHorizontalBox::Slot().AutoWidth()
-						[
-							SNew(SButton)
-							.Text(LOCTEXT("SecBrowse", "..."))
-							.OnClicked(this, &SControlRigToolWidget::OnSecBrowseFolderClicked)
+							.Text(LOCTEXT("SecMultipleMode", "Multiple"))
+							.Font(FCoreStyle::GetDefaultFontStyle("Bold", 11))
 						]
 					]
 				]
 			]
 			
-			// ========== 섹션 4: Create Button ==========
-			+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
+			// ========== 모드별 콘텐츠 (SWidgetSwitcher) ==========
+			+ SVerticalBox::Slot().FillHeight(1.0f)
 			[
-				SNew(SBorder)
-				.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
-				.BorderBackgroundColor(FLinearColor(0.03f, 0.05f, 0.08f, 1.0f))
-				.Padding(FMargin(12, 8))
+				SAssignNew(SecModeSwitcher, SWidgetSwitcher)
+				.WidgetIndex_Lambda([this]() { return bSecMultipleMode ? 1 : 0; })
+				
+				// ===== Index 0: Single 모드 =====
+				+ SWidgetSwitcher::Slot()
 				[
 					SNew(SVerticalBox)
-					+ SVerticalBox::Slot().AutoHeight()
+					
+					// ========== 섹션 1: Skeletal Mesh 선택 ==========
+					+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
 					[
-						SAssignNew(SecCreateButton, SButton)
-						.HAlign(HAlign_Center)
-						.ContentPadding(FMargin(30, 12))
-						.IsEnabled(false)
-						.OnClicked(this, &SControlRigToolWidget::OnCreateSecControlRigClicked)
+						SNew(SBorder)
+						.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+						.BorderBackgroundColor(FLinearColor(0.02f, 0.02f, 0.05f, 1.0f))
+						.Padding(FMargin(12, 8))
 						[
-							SNew(SHorizontalBox)
-							+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 10, 0)
+							SNew(SVerticalBox)
+							// 헤더
+							+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
 							[
-								SNew(SImage)
-								.Image(FAppStyle::GetBrush("Icons.Plus"))
-								.DesiredSizeOverride(FVector2D(18, 18))
+								SNew(SHorizontalBox)
+								+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+								[
+									SNew(SImage)
+									.Image(FAppStyle::GetBrush("ClassIcon.SkeletalMesh"))
+									.ColorAndOpacity(FLinearColor(0.4f, 0.7f, 1.0f))
+									.DesiredSizeOverride(FVector2D(16, 16))
+								]
+								+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(8, 0, 0, 0)
+								[
+									SNew(STextBlock)
+									.Text(LOCTEXT("SecMeshSection", "Skeletal Mesh"))
+									.Font(FCoreStyle::GetDefaultFontStyle("Bold", 11))
+									.ColorAndOpacity(FLinearColor(0.8f, 0.85f, 0.9f))
+								]
 							]
-							+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+							// 콤보박스 + 버튼
+							+ SVerticalBox::Slot().AutoHeight()
 							[
-								SNew(STextBlock)
-								.Text(LOCTEXT("SecCreateBtn", "Create Secondary Control Rig"))
-								.Font(FCoreStyle::GetDefaultFontStyle("Bold", 11))
+								SNew(SHorizontalBox)
+								+ SHorizontalBox::Slot().FillWidth(1.0f).Padding(0, 0, 5, 0)
+								[
+									SAssignNew(SecMeshComboBox, SComboBox<TSharedPtr<FString>>)
+									.OptionsSource(&MeshOptions)
+									.OnSelectionChanged(this, &SControlRigToolWidget::OnSecMeshSelectionChanged)
+									.OnGenerateWidget(this, &SControlRigToolWidget::OnGenerateSecMeshWidget)
+									.Content()
+									[
+										SNew(STextBlock)
+										.Text(this, &SControlRigToolWidget::GetSelectedSecMeshName)
+										.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
+									]
+								]
+								+ SHorizontalBox::Slot().AutoWidth()
+								[
+									SNew(SButton)
+									.Text(LOCTEXT("SecUseSelected", "←"))
+									.ToolTipText(LOCTEXT("SecUseSelectedTooltip", "Use selected asset from Content Browser"))
+									.OnClicked(this, &SControlRigToolWidget::OnUseSelectedSecMeshClicked)
+								]
+							]
+							// 썸네일
+							+ SVerticalBox::Slot().AutoHeight().Padding(0, 8, 0, 0).HAlign(HAlign_Center)
+							[
+								SAssignNew(SecMeshThumbnailBox, SBox)
+								.WidthOverride(ThumbnailSize)
+								.HeightOverride(ThumbnailSize)
 							]
 						]
 					]
-				]
-			]
-			
-			// ========== 상태 표시 ==========
-			+ SVerticalBox::Slot().AutoHeight()
-			[
-				SAssignNew(SecStatusText, STextBlock)
-				.Text(LOCTEXT("SecStatusInit", "Select a Skeletal Mesh and load bone structure"))
-				.Font(FCoreStyle::GetDefaultFontStyle("Italic", 9))
-				.ColorAndOpacity(FLinearColor(0.5f, 0.55f, 0.6f))
-			]
+					
+					// ========== Single 모드 - 섹션 2: AI Bone Mapping ==========
+					+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
+					[
+						SNew(SBorder)
+						.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+						.BorderBackgroundColor(FLinearColor(0.05f, 0.02f, 0.02f, 1.0f))
+						.Padding(FMargin(12, 8))
+						[
+							SNew(SVerticalBox)
+							// 헤더
+							+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
+							[
+								SNew(SHorizontalBox)
+								+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+								[
+									SNew(SImage)
+									.Image(FAppStyle::GetBrush("Icons.Search"))
+									.ColorAndOpacity(FLinearColor(1.0f, 0.6f, 0.3f))
+									.DesiredSizeOverride(FVector2D(16, 16))
+								]
+								+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(8, 0, 0, 0)
+								[
+									SNew(STextBlock)
+									.Text(LOCTEXT("SecBoneMappingSection", "Bone Selection"))
+									.Font(FCoreStyle::GetDefaultFontStyle("Bold", 11))
+									.ColorAndOpacity(FLinearColor(0.8f, 0.85f, 0.9f))
+								]
+							]
+							// AI 본 매핑 버튼
+							+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
+							[
+								SNew(SButton)
+								.HAlign(HAlign_Center)
+								.ContentPadding(FMargin(20, 8))
+								.OnClicked(this, &SControlRigToolWidget::OnSecBoneMappingClicked)
+								[
+									SNew(SHorizontalBox)
+									+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 8, 0)
+									[
+										SNew(SImage)
+										.Image(FAppStyle::GetBrush("Persona.ImportAnimation"))
+										.DesiredSizeOverride(FVector2D(16, 16))
+									]
+									+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+									[
+										SNew(STextBlock)
+										.Text(LOCTEXT("SecAIMapping", "AI Bone Mapping"))
+										.Font(FCoreStyle::GetDefaultFontStyle("Bold", 10))
+									]
+								]
+							]
+							// 본 목록 스크롤 박스
+							+ SVerticalBox::Slot().AutoHeight().MaxHeight(400.0f)
+							[
+								SAssignNew(SecBoneScrollBox, SScrollBox)
+								+ SScrollBox::Slot()
+								[
+									SAssignNew(SecBoneListBox, SVerticalBox)
+								]
+							]
+						]
+					]
+					
+					// ========== Single 모드 - 섹션 3: Output Settings ==========
+					+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
+					[
+						SNew(SBorder)
+						.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+						.BorderBackgroundColor(FLinearColor(0.02f, 0.04f, 0.02f, 1.0f))
+						.Padding(FMargin(12, 8))
+						[
+							SNew(SVerticalBox)
+							// 헤더
+							+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
+							[
+								SNew(SHorizontalBox)
+								+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+								[
+									SNew(SImage)
+									.Image(FAppStyle::GetBrush("Icons.Save"))
+									.ColorAndOpacity(FLinearColor(0.3f, 0.8f, 0.4f))
+									.DesiredSizeOverride(FVector2D(16, 16))
+								]
+								+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(8, 0, 0, 0)
+								[
+									SNew(STextBlock)
+									.Text(LOCTEXT("SecOutputSection", "Output Settings"))
+									.Font(FCoreStyle::GetDefaultFontStyle("Bold", 11))
+									.ColorAndOpacity(FLinearColor(0.8f, 0.85f, 0.9f))
+								]
+							]
+							// 이름
+							+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 5)
+							[
+								SNew(SHorizontalBox)
+								+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 10, 0)
+								[
+									SNew(STextBlock)
+									.Text(LOCTEXT("SecOutputName", "Name:"))
+									.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
+									.ColorAndOpacity(FLinearColor(0.6f, 0.65f, 0.7f))
+								]
+								+ SHorizontalBox::Slot().FillWidth(1.0f)
+								[
+									SAssignNew(SecOutputNameBox, SEditableTextBox)
+									.Text(FText::FromString(TEXT("CTR_NewRig_Rig")))
+									.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
+								]
+							]
+							// 폴더
+							+ SVerticalBox::Slot().AutoHeight()
+							[
+								SNew(SHorizontalBox)
+								+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 10, 0)
+								[
+									SNew(STextBlock)
+									.Text(LOCTEXT("SecOutputFolder", "Folder:"))
+									.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
+									.ColorAndOpacity(FLinearColor(0.6f, 0.65f, 0.7f))
+								]
+								+ SHorizontalBox::Slot().FillWidth(1.0f).Padding(0, 0, 5, 0)
+								[
+									SAssignNew(SecOutputFolderBox, SEditableTextBox)
+									.Text(FText::FromString(SecDefaultOutputFolder))
+									.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
+								]
+								+ SHorizontalBox::Slot().AutoWidth()
+								[
+									SNew(SButton)
+									.Text(LOCTEXT("SecBrowse", "..."))
+									.OnClicked(this, &SControlRigToolWidget::OnSecBrowseFolderClicked)
+								]
+							]
+						]
+					]
+					
+					// ========== Single 모드 - 섹션 4: Create Button ==========
+					+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
+					[
+						SNew(SBorder)
+						.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+						.BorderBackgroundColor(FLinearColor(0.03f, 0.05f, 0.08f, 1.0f))
+						.Padding(FMargin(12, 8))
+						[
+							SNew(SVerticalBox)
+							+ SVerticalBox::Slot().AutoHeight()
+							[
+								SAssignNew(SecCreateButton, SButton)
+								.HAlign(HAlign_Center)
+								.ContentPadding(FMargin(30, 12))
+								.IsEnabled(false)
+								.OnClicked(this, &SControlRigToolWidget::OnCreateSecControlRigClicked)
+								[
+									SNew(SHorizontalBox)
+									+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 10, 0)
+									[
+										SNew(SImage)
+										.Image(FAppStyle::GetBrush("Icons.Plus"))
+										.DesiredSizeOverride(FVector2D(18, 18))
+									]
+									+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+									[
+										SNew(STextBlock)
+										.Text(LOCTEXT("SecCreateBtn", "Create Secondary Control Rig"))
+										.Font(FCoreStyle::GetDefaultFontStyle("Bold", 11))
+									]
+								]
+							]
+						]
+					]
+					
+					// ========== Single 모드 - 상태 표시 ==========
+					+ SVerticalBox::Slot().AutoHeight()
+					[
+						SAssignNew(SecStatusText, STextBlock)
+						.Text(LOCTEXT("SecStatusInit", "Select a Skeletal Mesh and load bone structure"))
+						.Font(FCoreStyle::GetDefaultFontStyle("Italic", 9))
+						.ColorAndOpacity(FLinearColor(0.5f, 0.55f, 0.6f))
+					]
+				]  // Single 모드 SVerticalBox 끝
+				
+				// ===== Index 1: Multiple 모드 =====
+				+ SWidgetSwitcher::Slot()
+				[
+					SNew(SVerticalBox)
+					
+					// ========== Multiple 모드 - 섹션 1: 메쉬 목록 ==========
+					+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
+					[
+						SNew(SBorder)
+						.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+						.BorderBackgroundColor(FLinearColor(0.02f, 0.02f, 0.05f, 1.0f))
+						.Padding(FMargin(12, 8))
+						[
+							SNew(SVerticalBox)
+							// 헤더
+							+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
+							[
+								SNew(SHorizontalBox)
+								+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+								[
+									SNew(SImage)
+									.Image(FAppStyle::GetBrush("ClassIcon.SkeletalMesh"))
+									.ColorAndOpacity(FLinearColor(0.4f, 0.7f, 1.0f))
+									.DesiredSizeOverride(FVector2D(16, 16))
+								]
+								+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(8, 0, 0, 0)
+								[
+									SNew(STextBlock)
+									.Text(LOCTEXT("SecMultipleMeshList", "Skeletal Meshes"))
+									.Font(FCoreStyle::GetDefaultFontStyle("Bold", 11))
+									.ColorAndOpacity(FLinearColor(0.8f, 0.85f, 0.9f))
+								]
+								+ SHorizontalBox::Slot().FillWidth(1.0f)
+								[
+									SNullWidget::NullWidget
+								]
+								// 추가 버튼
+								+ SHorizontalBox::Slot().AutoWidth()
+								[
+									SNew(SButton)
+									.Text(LOCTEXT("SecMultipleAdd", "+ Add Selected"))
+									.ToolTipText(LOCTEXT("SecMultipleAddTooltip", "Add selected meshes from Content Browser"))
+									.OnClicked(this, &SControlRigToolWidget::OnSecMultipleAddMeshClicked)
+								]
+							]
+							// 메쉬 목록 (스크롤)
+							+ SVerticalBox::Slot().AutoHeight().MaxHeight(300.0f)
+							[
+								SNew(SScrollBox)
+								+ SScrollBox::Slot()
+								[
+									SAssignNew(SecMultipleMeshListBox, SVerticalBox)
+								]
+							]
+						]
+					]
+					
+					// ========== Multiple 모드 - 섹션 2: Output Folder ==========
+					+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
+					[
+						SNew(SBorder)
+						.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+						.BorderBackgroundColor(FLinearColor(0.02f, 0.04f, 0.02f, 1.0f))
+						.Padding(FMargin(12, 8))
+						[
+							SNew(SVerticalBox)
+							// 헤더
+							+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
+							[
+								SNew(SHorizontalBox)
+								+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+								[
+									SNew(SImage)
+									.Image(FAppStyle::GetBrush("Icons.Save"))
+									.ColorAndOpacity(FLinearColor(0.3f, 0.8f, 0.4f))
+									.DesiredSizeOverride(FVector2D(16, 16))
+								]
+								+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(8, 0, 0, 0)
+								[
+									SNew(STextBlock)
+									.Text(LOCTEXT("SecMultipleOutputSection", "Output Folder"))
+									.Font(FCoreStyle::GetDefaultFontStyle("Bold", 11))
+									.ColorAndOpacity(FLinearColor(0.8f, 0.85f, 0.9f))
+								]
+							]
+							// 폴더
+							+ SVerticalBox::Slot().AutoHeight()
+							[
+								SNew(SHorizontalBox)
+								+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 10, 0)
+								[
+									SNew(STextBlock)
+									.Text(LOCTEXT("SecMultipleFolder", "Folder:"))
+									.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
+									.ColorAndOpacity(FLinearColor(0.6f, 0.65f, 0.7f))
+								]
+								+ SHorizontalBox::Slot().FillWidth(1.0f).Padding(0, 0, 5, 0)
+								[
+									SNew(SEditableTextBox)
+									.Text(FText::FromString(SecDefaultOutputFolder))
+									.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
+									.OnTextCommitted_Lambda([this](const FText& NewText, ETextCommit::Type)
+									{
+										SecDefaultOutputFolder = NewText.ToString();
+									})
+								]
+								+ SHorizontalBox::Slot().AutoWidth()
+								[
+									SNew(SButton)
+									.Text(LOCTEXT("SecMultipleBrowse", "..."))
+									.OnClicked(this, &SControlRigToolWidget::OnSecBrowseFolderClicked)
+								]
+							]
+							// 설명
+							+ SVerticalBox::Slot().AutoHeight().Padding(0, 8, 0, 0)
+							[
+								SNew(STextBlock)
+								.Text(LOCTEXT("SecMultipleNamingInfo", "Output: CTR_[MeshName]_Rig (auto-generated)"))
+								.Font(FCoreStyle::GetDefaultFontStyle("Italic", 8))
+								.ColorAndOpacity(FLinearColor(0.5f, 0.55f, 0.6f))
+							]
+						]
+					]
+					
+					// ========== Multiple 모드 - 섹션 3: Create All Button ==========
+					+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
+					[
+						SNew(SBorder)
+						.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+						.BorderBackgroundColor(FLinearColor(0.03f, 0.05f, 0.08f, 1.0f))
+						.Padding(FMargin(12, 8))
+						[
+							SNew(SVerticalBox)
+							+ SVerticalBox::Slot().AutoHeight()
+							[
+								SAssignNew(SecMultipleCreateButton, SButton)
+								.HAlign(HAlign_Center)
+								.ContentPadding(FMargin(30, 12))
+								.IsEnabled_Lambda([this]() { return SecMultipleMeshPaths.Num() > 0; })
+								.OnClicked(this, &SControlRigToolWidget::OnSecMultipleCreateClicked)
+								[
+									SNew(SHorizontalBox)
+									+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 10, 0)
+									[
+										SNew(SImage)
+										.Image(FAppStyle::GetBrush("Icons.Plus"))
+										.DesiredSizeOverride(FVector2D(18, 18))
+									]
+									+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+									[
+										SNew(STextBlock)
+										.Text_Lambda([this]() 
+										{
+											return FText::Format(LOCTEXT("SecMultipleCreateBtn", "Create All ({0} meshes)"), 
+												FText::AsNumber(SecMultipleMeshPaths.Num()));
+										})
+										.Font(FCoreStyle::GetDefaultFontStyle("Bold", 11))
+									]
+								]
+							]
+						]
+					]
+					
+					// ========== Multiple 모드 - 상태 표시 ==========
+					+ SVerticalBox::Slot().AutoHeight()
+					[
+						SNew(STextBlock)
+						.Text(LOCTEXT("SecMultipleStatusInit", "Add skeletal meshes and click Create All"))
+						.Font(FCoreStyle::GetDefaultFontStyle("Italic", 9))
+						.ColorAndOpacity(FLinearColor(0.5f, 0.55f, 0.6f))
+					]
+				]  // Multiple 모드 SVerticalBox 끝
+			]  // SWidgetSwitcher 끝
 		];
 }
 
@@ -11621,6 +11844,405 @@ void SControlRigToolWidget::ConnectSecondaryFunctionsSimple(UControlRigBlueprint
 	}
 	
 	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] === Done (swapped Forward<->Setup) ==="));
+}
+
+// ============================================================================
+// Control Rig Sec - Single 모드 버튼 클릭
+// ============================================================================
+FReply SControlRigToolWidget::OnSecSingleModeClicked()
+{
+	bSecMultipleMode = false;
+	SetSecStatus(TEXT("Single mode: Select a mesh and configure bone selection"));
+	return FReply::Handled();
+}
+
+// ============================================================================
+// Control Rig Sec - Multiple 모드 버튼 클릭
+// ============================================================================
+FReply SControlRigToolWidget::OnSecMultipleModeClicked()
+{
+	bSecMultipleMode = true;
+	SetSecStatus(TEXT("Multiple mode: Add meshes and create all at once"));
+	return FReply::Handled();
+}
+
+// ============================================================================
+// Control Rig Sec - Multiple 모드에서 메쉬 추가
+// ============================================================================
+FReply SControlRigToolWidget::OnSecMultipleAddMeshClicked()
+{
+	// 콘텐츠 브라우저에서 선택된 에셋들 가져오기
+	TArray<FAssetData> SelectedAssets;
+	FContentBrowserModule& ContentBrowserModule = FModuleManager::LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
+	ContentBrowserModule.Get().GetSelectedAssets(SelectedAssets);
+	
+	int32 AddedCount = 0;
+	for (const FAssetData& AssetData : SelectedAssets)
+	{
+		if (AssetData.GetClass() == USkeletalMesh::StaticClass())
+		{
+			FString MeshPath = AssetData.GetSoftObjectPath().ToString();
+			if (!SecMultipleMeshPaths.Contains(MeshPath))
+			{
+				SecMultipleMeshPaths.Add(MeshPath);
+				AddedCount++;
+			}
+		}
+	}
+	
+	if (AddedCount > 0)
+	{
+		UpdateSecMultipleMeshListUI();
+		SetSecStatus(FString::Printf(TEXT("Added %d mesh(es). Total: %d"), AddedCount, SecMultipleMeshPaths.Num()));
+	}
+	else
+	{
+		SetSecStatus(TEXT("No new skeletal meshes selected in Content Browser"));
+	}
+	
+	return FReply::Handled();
+}
+
+// ============================================================================
+// Control Rig Sec - Multiple 모드에서 메쉬 제거
+// ============================================================================
+FReply SControlRigToolWidget::OnSecMultipleRemoveMeshClicked(int32 Index)
+{
+	if (SecMultipleMeshPaths.IsValidIndex(Index))
+	{
+		SecMultipleMeshPaths.RemoveAt(Index);
+		UpdateSecMultipleMeshListUI();
+		SetSecStatus(FString::Printf(TEXT("Removed mesh. Remaining: %d"), SecMultipleMeshPaths.Num()));
+	}
+	return FReply::Handled();
+}
+
+// ============================================================================
+// Control Rig Sec - Multiple 모드에서 AI 매핑 (현재는 사용 안함, 자동 판별 사용)
+// ============================================================================
+FReply SControlRigToolWidget::OnSecMultipleAIMappingClicked()
+{
+	// Multiple 모드에서는 자동 판별을 사용하므로 별도 AI 매핑 불필요
+	SetSecStatus(TEXT("Multiple mode uses automatic bone classification"));
+	return FReply::Handled();
+}
+
+// ============================================================================
+// Control Rig Sec - Multiple 모드에서 일괄 생성
+// ============================================================================
+FReply SControlRigToolWidget::OnSecMultipleCreateClicked()
+{
+	if (SecMultipleMeshPaths.Num() == 0)
+	{
+		SetSecStatus(TEXT("ERROR: No meshes added"));
+		return FReply::Handled();
+	}
+	
+	CreateMultipleSecondaryControlRigs();
+	return FReply::Handled();
+}
+
+// ============================================================================
+// Control Rig Sec - Multiple 모드 메쉬 목록 UI 업데이트
+// ============================================================================
+void SControlRigToolWidget::UpdateSecMultipleMeshListUI()
+{
+	if (!SecMultipleMeshListBox.IsValid())
+		return;
+	
+	SecMultipleMeshListBox->ClearChildren();
+	
+	for (int32 i = 0; i < SecMultipleMeshPaths.Num(); i++)
+	{
+		const FString& MeshPath = SecMultipleMeshPaths[i];
+		FString MeshName = FPackageName::GetShortName(MeshPath);
+		
+		SecMultipleMeshListBox->AddSlot()
+		.AutoHeight()
+		.Padding(2)
+		[
+			SNew(SBorder)
+			.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+			.BorderBackgroundColor(FLinearColor(0.03f, 0.03f, 0.05f, 1.0f))
+			.Padding(FMargin(8, 4))
+			[
+				SNew(SHorizontalBox)
+				+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 8, 0)
+				[
+					SNew(STextBlock)
+					.Text(FText::AsNumber(i + 1))
+					.Font(FCoreStyle::GetDefaultFontStyle("Bold", 9))
+					.ColorAndOpacity(FLinearColor(0.5f, 0.5f, 0.6f))
+				]
+				+ SHorizontalBox::Slot().FillWidth(1.0f).VAlign(VAlign_Center)
+				[
+					SNew(STextBlock)
+					.Text(FText::FromString(MeshName))
+					.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
+					.ColorAndOpacity(FLinearColor(0.8f, 0.85f, 0.9f))
+				]
+				+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+				[
+					SNew(SButton)
+					.Text(LOCTEXT("SecMultipleRemove", "X"))
+					.ButtonStyle(FAppStyle::Get(), "FlatButton.Danger")
+					.ContentPadding(FMargin(4, 2))
+					.OnClicked_Lambda([this, i]() { return OnSecMultipleRemoveMeshClicked(i); })
+				]
+			]
+		];
+	}
+}
+
+// ============================================================================
+// Control Rig Sec - Multiple 모드 일괄 생성 로직
+// ============================================================================
+bool SControlRigToolWidget::CreateMultipleSecondaryControlRigs()
+{
+	if (SecMultipleMeshPaths.Num() == 0)
+	{
+		SetSecStatus(TEXT("ERROR: No meshes to process"));
+		return false;
+	}
+	
+	int32 SuccessCount = 0;
+	int32 FailCount = 0;
+	
+	for (const FString& MeshPath : SecMultipleMeshPaths)
+	{
+		UE_LOG(LogTemp, Log, TEXT("[ControlRigSec Multiple] Processing: %s"), *MeshPath);
+		
+		if (CreateSingleSecondaryControlRigAuto(MeshPath))
+		{
+			SuccessCount++;
+		}
+		else
+		{
+			FailCount++;
+			UE_LOG(LogTemp, Warning, TEXT("[ControlRigSec Multiple] Failed: %s"), *MeshPath);
+		}
+	}
+	
+	FString ResultMsg = FString::Printf(TEXT("Created %d Control Rigs. Failed: %d"), SuccessCount, FailCount);
+	SetSecStatus(ResultMsg);
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec Multiple] %s"), *ResultMsg);
+	
+	// 완료 후 목록 초기화
+	SecMultipleMeshPaths.Empty();
+	UpdateSecMultipleMeshListUI();
+	
+	return SuccessCount > 0;
+}
+
+// ============================================================================
+// Control Rig Sec - 단일 메쉬에 대해 자동 세컨더리 판별로 Control Rig 생성
+// ============================================================================
+bool SControlRigToolWidget::CreateSingleSecondaryControlRigAuto(const FString& MeshPath)
+{
+	// 1. 메쉬 로드
+	USkeletalMesh* Mesh = LoadObject<USkeletalMesh>(nullptr, *MeshPath);
+	if (!Mesh)
+	{
+		UE_LOG(LogTemp, Error, TEXT("[ControlRigSec Auto] Failed to load mesh: %s"), *MeshPath);
+		return false;
+	}
+	
+	FString MeshName = Mesh->GetName();
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec Auto] Processing mesh: %s"), *MeshName);
+	
+	// 2. AI 본 매핑 요청 (동기식으로 처리 - LastBoneMapping 업데이트)
+	// 여기서는 기존 규칙 기반 + AI 매핑 결과를 사용
+	// 임시로 CachedMesh와 LastBoneMapping을 설정
+	SecCachedMesh = Mesh;
+	
+	// 본 매핑 API 호출 (동기식)
+	const FReferenceSkeleton& RefSkel = Mesh->GetRefSkeleton();
+	TArray<TSharedPtr<FJsonValue>> BoneArray;
+	
+	for (int32 i = 0; i < RefSkel.GetNum(); i++)
+	{
+		TSharedPtr<FJsonObject> BoneObj = MakeShareable(new FJsonObject);
+		BoneObj->SetStringField(TEXT("name"), RefSkel.GetBoneName(i).ToString());
+		
+		int32 ParentIdx = RefSkel.GetParentIndex(i);
+		if (ParentIdx != INDEX_NONE)
+			BoneObj->SetStringField(TEXT("parent"), RefSkel.GetBoneName(ParentIdx).ToString());
+		else
+			BoneObj->SetStringField(TEXT("parent"), TEXT(""));
+		
+		TArray<TSharedPtr<FJsonValue>> ChildArray;
+		for (int32 j = 0; j < RefSkel.GetNum(); j++)
+		{
+			if (RefSkel.GetParentIndex(j) == i)
+				ChildArray.Add(MakeShareable(new FJsonValueString(RefSkel.GetBoneName(j).ToString())));
+		}
+		BoneObj->SetArrayField(TEXT("children"), ChildArray);
+		
+		BoneArray.Add(MakeShareable(new FJsonValueObject(BoneObj)));
+	}
+	
+	TSharedPtr<FJsonObject> RequestObj = MakeShareable(new FJsonObject);
+	RequestObj->SetArrayField(TEXT("bones"), BoneArray);
+	RequestObj->SetStringField(TEXT("mesh_name"), MeshName);
+	
+	FString RequestBody;
+	TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&RequestBody);
+	FJsonSerializer::Serialize(RequestObj.ToSharedRef(), Writer);
+	
+	// 동기식 HTTP 요청은 불가능하므로, 여기서는 규칙 기반으로만 처리
+	// (실제로는 비동기 처리 필요하지만, 단순화를 위해 규칙 기반 사용)
+	LastBoneMapping.Empty();
+	
+	// 규칙 기반으로 메인 본 찾기 (ZeroBones 기준)
+	for (int32 i = 0; i < RefSkel.GetNum(); i++)
+	{
+		FString BoneNameStr = RefSkel.GetBoneName(i).ToString().ToLower();
+		
+		// ZeroBones에 있는 키워드와 매칭
+		for (const FString& ZeroBone : ZeroBones)
+		{
+			if (BoneNameStr.Contains(ZeroBone.ToLower()))
+			{
+				LastBoneMapping.Add(FName(*ZeroBone), RefSkel.GetBoneName(i));
+				break;
+			}
+		}
+	}
+	
+	// 3. 출력 경로 설정
+	FString OutputPath = SecDefaultOutputFolder / FString::Printf(TEXT("CTR_%s_Rig"), *MeshName);
+	
+	// 4. 세컨더리 본 자동 판별하여 체인 구성
+	TMap<FName, TArray<FName>> ChainsBySpace;
+	
+	for (int32 i = 0; i < RefSkel.GetNum(); i++)
+	{
+		FName BoneName = RefSkel.GetBoneName(i);
+		FString BoneNameStr = BoneName.ToString();
+		
+		// 제로본(메인본)은 제외
+		if (IsZeroBone(BoneNameStr))
+			continue;
+		
+		// bip01 계열도 제외
+		if (BoneNameStr.ToLower().Contains(TEXT("bip01")) || BoneNameStr.ToLower().Contains(TEXT("bip001")))
+			continue;
+		
+		// 스킨 웨이트 없는 본 제외
+		if (!HasSkinWeight(Mesh, BoneName))
+			continue;
+		
+		// 헬퍼 본 제외
+		if (IsHelperBone(BoneNameStr))
+			continue;
+		
+		// 세컨더리 본으로 판정 - 부모 메인본 찾기
+		FName ParentZeroBone = FindZeroBoneParent(BoneName, RefSkel);
+		if (ParentZeroBone != NAME_None)
+		{
+			ChainsBySpace.FindOrAdd(ParentZeroBone).Add(BoneName);
+		}
+	}
+	
+	if (ChainsBySpace.Num() == 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[ControlRigSec Auto] No secondary bones found for: %s"), *MeshName);
+		return false;
+	}
+	
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec Auto] Found %d secondary chains"), ChainsBySpace.Num());
+	
+	// 5. 템플릿 로드
+	FString TemplatePath = TEXT("/Game/00_CooT/Template/CTR_Template");
+	UControlRigBlueprint* TemplateRig = LoadObject<UControlRigBlueprint>(nullptr, *TemplatePath);
+	if (!TemplateRig)
+	{
+		UE_LOG(LogTemp, Error, TEXT("[ControlRigSec Auto] Failed to load template: %s"), *TemplatePath);
+		return false;
+	}
+	
+	// 6. 템플릿 복제
+	UPackage* Package = CreatePackage(*OutputPath);
+	if (!Package)
+	{
+		UE_LOG(LogTemp, Error, TEXT("[ControlRigSec Auto] Failed to create package: %s"), *OutputPath);
+		return false;
+	}
+	
+	FString AssetName = FPackageName::GetLongPackageAssetName(OutputPath);
+	UControlRigBlueprint* NewRig = Cast<UControlRigBlueprint>(
+		StaticDuplicateObject(TemplateRig, Package, FName(*AssetName))
+	);
+	
+	if (!NewRig)
+	{
+		UE_LOG(LogTemp, Error, TEXT("[ControlRigSec Auto] Failed to duplicate template"));
+		return false;
+	}
+	
+	// 7. 메쉬 설정
+	NewRig->SetPreviewMesh(Mesh);
+	
+	// 8. 본 가져오기 및 Shape 정보 계산
+	URigHierarchy* Hierarchy = NewRig->GetHierarchy();
+	URigHierarchyController* HierarchyController = Hierarchy->GetController();
+	
+	HierarchyController->ImportBones(RefSkel, NAME_None, false, false, false);
+	CalculateBoneShapeInfos(Mesh);
+	
+	// 9. 기존 템플릿의 요소들 정리
+	TArray<FRigElementKey> AllElements = Hierarchy->GetAllKeys();
+	for (const FRigElementKey& Key : AllElements)
+	{
+		if (Key.Type == ERigElementType::Control || Key.Type == ERigElementType::Null)
+		{
+			HierarchyController->RemoveElement(Key, true);
+		}
+	}
+	
+	// 10. Space와 Control 생성
+	for (const auto& Pair : ChainsBySpace)
+	{
+		FName SpaceParentName = Pair.Key;
+		const TArray<FName>& ChainBones = Pair.Value;
+		
+		// 실제 본 이름 찾기
+		FName ActualParentBone = SpaceParentName;
+		if (const FName* FoundBone = LastBoneMapping.Find(SpaceParentName))
+		{
+			ActualParentBone = *FoundBone;
+		}
+		
+		// Space 이름 및 Transform
+		FString SpaceNameStr = SpaceParentName.ToString() + TEXT("_space");
+		FName SpaceName(*SpaceNameStr);
+		
+		int32 ParentBoneIdx = RefSkel.FindBoneIndex(ActualParentBone);
+		FTransform SpaceTransform = (ParentBoneIdx != INDEX_NONE) ? 
+			RefSkel.GetRefBonePose()[ParentBoneIdx] : FTransform::Identity;
+		
+		// Space 생성
+		CreateSpaceNull(HierarchyController, SpaceName, SpaceTransform);
+		
+		// Control 생성
+		CreateChainControls(HierarchyController, Hierarchy, SpaceName, ChainBones, RefSkel);
+	}
+	
+	// 11. RigVM 함수 노드 연결
+	ConnectSecondaryFunctionsSimple(NewRig, ChainsBySpace);
+	
+	// 12. 컴파일 및 저장
+	NewRig->RecompileVM();
+	NewRig->MarkPackageDirty();
+	
+	FAssetRegistryModule::AssetCreated(NewRig);
+	
+	FSavePackageArgs SaveArgs;
+	SaveArgs.TopLevelFlags = RF_Public | RF_Standalone;
+	UPackage::SavePackage(Package, NewRig, *FPackageName::LongPackageNameToFilename(OutputPath, FPackageName::GetAssetPackageExtension()), SaveArgs);
+	
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec Auto] Created: %s"), *OutputPath);
+	return true;
 }
 
 #undef LOCTEXT_NAMESPACE

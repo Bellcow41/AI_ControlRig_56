@@ -508,4 +508,26 @@ private:
 	// Control Rig Sec 탭용 간단한 함수 연결
 	void ConnectSecondaryFunctionsSimple(class UControlRigBlueprint* Rig,
 		const TMap<FName, TArray<FName>>& ChainsBySpace);
+	
+	// ============================================================================
+	// Control Rig Sec - Multiple 모드 관련
+	// ============================================================================
+	bool bSecMultipleMode = false;                          // Multiple 모드 여부
+	TArray<FString> SecMultipleMeshPaths;                   // Multiple 모드에서 선택된 메쉬 경로 목록
+	TSharedPtr<SVerticalBox> SecMultipleMeshListBox;        // Multiple 모드 메쉬 목록 UI
+	TSharedPtr<SWidgetSwitcher> SecModeSwitcher;            // Single/Multiple 모드 전환용
+	TSharedPtr<SButton> SecSingleModeButton;
+	TSharedPtr<SButton> SecMultipleModeButton;
+	TSharedPtr<SButton> SecMultipleCreateButton;
+	
+	// Multiple 모드 UI 함수
+	FReply OnSecSingleModeClicked();
+	FReply OnSecMultipleModeClicked();
+	FReply OnSecMultipleAddMeshClicked();
+	FReply OnSecMultipleRemoveMeshClicked(int32 Index);
+	FReply OnSecMultipleAIMappingClicked();
+	FReply OnSecMultipleCreateClicked();
+	void UpdateSecMultipleMeshListUI();
+	bool CreateMultipleSecondaryControlRigs();
+	bool CreateSingleSecondaryControlRigAuto(const FString& MeshPath);  // 자동 세컨더리 판별로 생성
 };
