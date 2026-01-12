@@ -410,19 +410,25 @@ void SControlRigToolWidget::Construct(const FArguments& InArgs)
 					CreateControlRigTab()
 				]
 				
-				// Tab 1: IK Rig
+				// Tab 1: Control Rig Sec (세컨더리 전용)
+				+ SWidgetSwitcher::Slot()
+				[
+					CreateControlRigSecTab()
+				]
+				
+				// Tab 2: IK Rig
 				+ SWidgetSwitcher::Slot()
 				[
 					CreateIKRigTab()
 				]
 				
-				// Tab 2: Kawaii Physics
+				// Tab 3: Kawaii Physics
 				+ SWidgetSwitcher::Slot()
 				[
 					CreateKawaiiPhysicsTab()
 				]
 				
-				// Tab 3: Physics Asset
+				// Tab 4: Physics Asset
 				+ SWidgetSwitcher::Slot()
 				[
 					CreatePhysicsAssetTab()
@@ -522,15 +528,19 @@ TSharedRef<SWidget> SControlRigToolWidget::CreateTabBar()
 				]
 				+ SHorizontalBox::Slot().AutoWidth().Padding(2, 0, 0, 0)
 				[
-					MakeTabButton(1, LOCTEXT("Tab_IKRig", "IK Rig"), FAppStyle::GetBrush("ClassIcon.IKRigDefinition"))
+					MakeTabButton(1, LOCTEXT("Tab_ControlRigSec", "Control Rig Sec"), FAppStyle::GetBrush("ControlRig.RigUnit"))
 				]
 				+ SHorizontalBox::Slot().AutoWidth().Padding(2, 0, 0, 0)
 				[
-					MakeTabButton(2, LOCTEXT("Tab_KawaiiPhysics", "Kawaii Physics"), FAppStyle::GetBrush("PhysicsAssetEditor.Tabs.Profiles"))
+					MakeTabButton(2, LOCTEXT("Tab_IKRig", "IK Rig"), FAppStyle::GetBrush("ClassIcon.IKRigDefinition"))
 				]
 				+ SHorizontalBox::Slot().AutoWidth().Padding(2, 0, 0, 0)
 				[
-					MakeTabButton(3, LOCTEXT("Tab_PhysicsAsset", "Physics Asset"), FAppStyle::GetBrush("PhysicsAssetEditor.Tabs.Body"))
+					MakeTabButton(3, LOCTEXT("Tab_KawaiiPhysics", "Kawaii Physics"), FAppStyle::GetBrush("PhysicsAssetEditor.Tabs.Profiles"))
+				]
+				+ SHorizontalBox::Slot().AutoWidth().Padding(2, 0, 0, 0)
+				[
+					MakeTabButton(4, LOCTEXT("Tab_PhysicsAsset", "Physics Asset"), FAppStyle::GetBrush("PhysicsAssetEditor.Tabs.Body"))
 				]
 				// 나머지 공간 채우기
 				+ SHorizontalBox::Slot().FillWidth(1.0f)
@@ -560,7 +570,7 @@ void SControlRigToolWidget::OnTabChanged(int32 NewTabIndex)
 	// TabContentSwitcher는 WidgetIndex_Lambda로 자동 업데이트됨
 	
 	// Kawaii Physics 탭으로 전환 시 Secondary 데이터 가져오기
-	if (NewTabIndex == 2)
+	if (NewTabIndex == 3)
 	{
 		TransferSecondaryDataToKawaii();
 	}
@@ -3198,40 +3208,25 @@ void SControlRigToolWidget::CreateChainControls(URigHierarchyController* HC, URi
 		ControlSettings.DisplayName = BoneName;
 		ControlSettings.AnimationType = ERigControlAnimationType::AnimationControl;
 		
-		// Space 이름으로 Shape 결정
+		// Shape 설정: Box_Solid, 작은 스케일, 노멀 방향 오프셋
 		FTransform ShapeTransform = FTransform::Identity;
 		FBoneShapeInfo ShapeInfo = GetBoneShapeInfo(BoneName);
 		
-		// head_space 밑의 컨트롤러들 = Sphere_Solid, 크기 0.1
-		bool bIsHeadSpace = SpaceName.ToString().ToLower().Contains(TEXT("head"));
+		// 모든 세컨더리 컨트롤러: Box_Solid, 스케일 0.2, 메쉬에서 적당히 떨어뜨림
+		ControlSettings.ShapeName = FName(TEXT("Box_Solid"));
 		
-		if (bIsHeadSpace)
-		{
-			// head_space: Sphere_Solid, 크기 0.1, 위치 이동
-			ControlSettings.ShapeName = FName(TEXT("Sphere_Solid"));
-			ShapeTransform.SetLocation(ShapeInfo.Offset);
-			ShapeTransform.SetScale3D(FVector(0.1f, 0.1f, 0.1f));
-			UE_LOG(LogTemp, Log, TEXT("    [HEAD_SPACE] %s: Sphere_Solid, Scale=0.1"), *BoneNameStr);
-		}
-		else
-		{
-			// 그 외 세컨더리: Box_Solid, 크기 0.2, 노멀 방향으로 이동 (메쉬 표면 바깥으로)
-			ControlSettings.ShapeName = FName(TEXT("Box_Solid"));
-			
-			// 노멀 방향으로 오프셋 (메쉬 표면 바깥으로)
-			float OffsetDistance = ShapeInfo.Offset.Size() * 0.5f + 8.0f;
-			FVector NormalOffset = ShapeInfo.AverageNormal * OffsetDistance * 0.6f;
-			ShapeTransform.SetLocation(NormalOffset);
-			ShapeTransform.SetScale3D(FVector(0.2f, 0.2f, 0.2f));
-			
-			UE_LOG(LogTemp, Log, TEXT("    [NORMAL] %s: Normal=(%.2f, %.2f, %.2f)"), 
-				*BoneNameStr, ShapeInfo.AverageNormal.X, ShapeInfo.AverageNormal.Y, ShapeInfo.AverageNormal.Z);
-		}
+		// 노멀 방향으로 오프셋 (메쉬에서 조금 떨어뜨림)
+		float OffsetDistance = 5.0f;  // 메쉬에서 적당히 떨어뜨림
+		FVector NormalOffset = ShapeInfo.AverageNormal * OffsetDistance;
+		ShapeTransform.SetLocation(NormalOffset);
 		
-		UE_LOG(LogTemp, Log, TEXT("    %s: Shape=%s, Scale=%.2f, Offset=(%.1f, %.1f, %.1f)"), 
-			*BoneNameStr, *ControlSettings.ShapeName.ToString(),
-			ShapeTransform.GetScale3D().X, ShapeTransform.GetLocation().X, 
-			ShapeTransform.GetLocation().Y, ShapeTransform.GetLocation().Z);
+		// 스케일: XYZ 모두 0.2 (큐브)
+		ShapeTransform.SetScale3D(FVector(0.2f, 0.2f, 0.2f));
+		
+		UE_LOG(LogTemp, Log, TEXT("    %s: Default, Scale=0.05, Normal=(%.2f, %.2f, %.2f), Offset=(%.1f, %.1f, %.1f)"), 
+			*BoneNameStr, 
+			ShapeInfo.AverageNormal.X, ShapeInfo.AverageNormal.Y, ShapeInfo.AverageNormal.Z,
+			NormalOffset.X, NormalOffset.Y, NormalOffset.Z);
 		
 		// 컨트롤러 추가
 		FRigElementKey NewControlKey = HC->AddControl(
@@ -10031,6 +10026,1601 @@ bool SControlRigToolWidget::CreatePhysicsAsset()
 	SetPhysAssetStatus(FString::Printf(TEXT("Created: %s (%d bodies)"), *OutputName, BodiesCreated));
 	
 	return true;
+}
+
+// ============================================================================
+// Control Rig Sec 탭 (세컨더리 전용 Control Rig)
+// ============================================================================
+TSharedRef<SWidget> SControlRigToolWidget::CreateControlRigSecTab()
+{
+	// 기본값 설정
+	SecDefaultOutputFolder = TEXT("/Game/ControlRigs");
+	
+	return SNew(SScrollBox)
+		+ SScrollBox::Slot().Padding(5)
+		[
+			SNew(SVerticalBox)
+			
+			// ========== 섹션 1: Skeletal Mesh 선택 ==========
+			+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
+			[
+				SNew(SBorder)
+				.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+				.BorderBackgroundColor(FLinearColor(0.02f, 0.02f, 0.05f, 1.0f))
+				.Padding(FMargin(12, 8))
+				[
+					SNew(SVerticalBox)
+					// 헤더
+					+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
+					[
+						SNew(SHorizontalBox)
+						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+						[
+							SNew(SImage)
+							.Image(FAppStyle::GetBrush("ClassIcon.SkeletalMesh"))
+							.ColorAndOpacity(FLinearColor(0.4f, 0.7f, 1.0f))
+							.DesiredSizeOverride(FVector2D(16, 16))
+						]
+						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(8, 0, 0, 0)
+						[
+							SNew(STextBlock)
+							.Text(LOCTEXT("SecMeshSection", "Skeletal Mesh"))
+							.Font(FCoreStyle::GetDefaultFontStyle("Bold", 11))
+							.ColorAndOpacity(FLinearColor(0.8f, 0.85f, 0.9f))
+						]
+					]
+					// 콤보박스 + 버튼
+					+ SVerticalBox::Slot().AutoHeight()
+					[
+						SNew(SHorizontalBox)
+						+ SHorizontalBox::Slot().FillWidth(1.0f).Padding(0, 0, 5, 0)
+						[
+							SAssignNew(SecMeshComboBox, SComboBox<TSharedPtr<FString>>)
+							.OptionsSource(&MeshOptions)
+							.OnSelectionChanged(this, &SControlRigToolWidget::OnSecMeshSelectionChanged)
+							.OnGenerateWidget(this, &SControlRigToolWidget::OnGenerateSecMeshWidget)
+							.Content()
+							[
+								SNew(STextBlock)
+								.Text(this, &SControlRigToolWidget::GetSelectedSecMeshName)
+								.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
+							]
+						]
+						+ SHorizontalBox::Slot().AutoWidth()
+						[
+							SNew(SButton)
+							.Text(LOCTEXT("SecUseSelected", "←"))
+							.ToolTipText(LOCTEXT("SecUseSelectedTooltip", "Use selected asset from Content Browser"))
+							.OnClicked(this, &SControlRigToolWidget::OnUseSelectedSecMeshClicked)
+						]
+					]
+					// 썸네일
+					+ SVerticalBox::Slot().AutoHeight().Padding(0, 8, 0, 0).HAlign(HAlign_Center)
+					[
+						SAssignNew(SecMeshThumbnailBox, SBox)
+						.WidthOverride(ThumbnailSize)
+						.HeightOverride(ThumbnailSize)
+					]
+				]
+			]
+			
+			// ========== 섹션 2: AI Bone Mapping ==========
+			+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
+			[
+				SNew(SBorder)
+				.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+				.BorderBackgroundColor(FLinearColor(0.05f, 0.02f, 0.02f, 1.0f))
+				.Padding(FMargin(12, 8))
+				[
+					SNew(SVerticalBox)
+					// 헤더
+					+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
+					[
+						SNew(SHorizontalBox)
+						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+						[
+							SNew(SImage)
+							.Image(FAppStyle::GetBrush("Icons.Search"))
+							.ColorAndOpacity(FLinearColor(1.0f, 0.6f, 0.3f))
+							.DesiredSizeOverride(FVector2D(16, 16))
+						]
+						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(8, 0, 0, 0)
+						[
+							SNew(STextBlock)
+							.Text(LOCTEXT("SecBoneMappingSection", "Bone Selection"))
+							.Font(FCoreStyle::GetDefaultFontStyle("Bold", 11))
+							.ColorAndOpacity(FLinearColor(0.8f, 0.85f, 0.9f))
+						]
+					]
+					// AI 본 매핑 버튼
+					+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
+					[
+						SNew(SButton)
+						.HAlign(HAlign_Center)
+						.ContentPadding(FMargin(20, 8))
+						.OnClicked(this, &SControlRigToolWidget::OnSecBoneMappingClicked)
+						[
+							SNew(SHorizontalBox)
+							+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 8, 0)
+							[
+								SNew(SImage)
+								.Image(FAppStyle::GetBrush("Persona.ImportAnimation"))
+								.DesiredSizeOverride(FVector2D(16, 16))
+							]
+							+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+							[
+								SNew(STextBlock)
+								.Text(LOCTEXT("SecAIMapping", "AI Bone Mapping"))
+								.Font(FCoreStyle::GetDefaultFontStyle("Bold", 10))
+							]
+						]
+					]
+					// 본 목록 스크롤 박스
+					+ SVerticalBox::Slot().AutoHeight().MaxHeight(400.0f)
+					[
+						SAssignNew(SecBoneScrollBox, SScrollBox)
+						+ SScrollBox::Slot()
+						[
+							SAssignNew(SecBoneListBox, SVerticalBox)
+						]
+					]
+				]
+			]
+			
+			// ========== 섹션 3: Output Settings ==========
+			+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
+			[
+				SNew(SBorder)
+				.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+				.BorderBackgroundColor(FLinearColor(0.02f, 0.04f, 0.02f, 1.0f))
+				.Padding(FMargin(12, 8))
+				[
+					SNew(SVerticalBox)
+					// 헤더
+					+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
+					[
+						SNew(SHorizontalBox)
+						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+						[
+							SNew(SImage)
+							.Image(FAppStyle::GetBrush("Icons.Save"))
+							.ColorAndOpacity(FLinearColor(0.3f, 0.8f, 0.4f))
+							.DesiredSizeOverride(FVector2D(16, 16))
+						]
+						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(8, 0, 0, 0)
+						[
+							SNew(STextBlock)
+							.Text(LOCTEXT("SecOutputSection", "Output Settings"))
+							.Font(FCoreStyle::GetDefaultFontStyle("Bold", 11))
+							.ColorAndOpacity(FLinearColor(0.8f, 0.85f, 0.9f))
+						]
+					]
+					// 이름
+					+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 5)
+					[
+						SNew(SHorizontalBox)
+						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 10, 0)
+						[
+							SNew(STextBlock)
+							.Text(LOCTEXT("SecOutputName", "Name:"))
+							.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
+							.ColorAndOpacity(FLinearColor(0.6f, 0.65f, 0.7f))
+						]
+						+ SHorizontalBox::Slot().FillWidth(1.0f)
+						[
+							SAssignNew(SecOutputNameBox, SEditableTextBox)
+							.Text(FText::FromString(TEXT("CTR_NewRig_Rig")))
+							.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
+						]
+					]
+					// 폴더
+					+ SVerticalBox::Slot().AutoHeight()
+					[
+						SNew(SHorizontalBox)
+						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 10, 0)
+						[
+							SNew(STextBlock)
+							.Text(LOCTEXT("SecOutputFolder", "Folder:"))
+							.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
+							.ColorAndOpacity(FLinearColor(0.6f, 0.65f, 0.7f))
+						]
+						+ SHorizontalBox::Slot().FillWidth(1.0f).Padding(0, 0, 5, 0)
+						[
+							SAssignNew(SecOutputFolderBox, SEditableTextBox)
+							.Text(FText::FromString(SecDefaultOutputFolder))
+							.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
+						]
+						+ SHorizontalBox::Slot().AutoWidth()
+						[
+							SNew(SButton)
+							.Text(LOCTEXT("SecBrowse", "..."))
+							.OnClicked(this, &SControlRigToolWidget::OnSecBrowseFolderClicked)
+						]
+					]
+				]
+			]
+			
+			// ========== 섹션 4: Create Button ==========
+			+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
+			[
+				SNew(SBorder)
+				.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+				.BorderBackgroundColor(FLinearColor(0.03f, 0.05f, 0.08f, 1.0f))
+				.Padding(FMargin(12, 8))
+				[
+					SNew(SVerticalBox)
+					+ SVerticalBox::Slot().AutoHeight()
+					[
+						SAssignNew(SecCreateButton, SButton)
+						.HAlign(HAlign_Center)
+						.ContentPadding(FMargin(30, 12))
+						.IsEnabled(false)
+						.OnClicked(this, &SControlRigToolWidget::OnCreateSecControlRigClicked)
+						[
+							SNew(SHorizontalBox)
+							+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 10, 0)
+							[
+								SNew(SImage)
+								.Image(FAppStyle::GetBrush("Icons.Plus"))
+								.DesiredSizeOverride(FVector2D(18, 18))
+							]
+							+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+							[
+								SNew(STextBlock)
+								.Text(LOCTEXT("SecCreateBtn", "Create Secondary Control Rig"))
+								.Font(FCoreStyle::GetDefaultFontStyle("Bold", 11))
+							]
+						]
+					]
+				]
+			]
+			
+			// ========== 상태 표시 ==========
+			+ SVerticalBox::Slot().AutoHeight()
+			[
+				SAssignNew(SecStatusText, STextBlock)
+				.Text(LOCTEXT("SecStatusInit", "Select a Skeletal Mesh and load bone structure"))
+				.Font(FCoreStyle::GetDefaultFontStyle("Italic", 9))
+				.ColorAndOpacity(FLinearColor(0.5f, 0.55f, 0.6f))
+			]
+		];
+}
+
+// ============================================================================
+// Control Rig Sec - Mesh 콤보박스 위젯 생성
+// ============================================================================
+TSharedRef<SWidget> SControlRigToolWidget::OnGenerateSecMeshWidget(TSharedPtr<FString> InItem)
+{
+	return SNew(STextBlock)
+		.Text(FText::FromString(InItem.IsValid() ? *InItem : TEXT("")))
+		.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9));
+}
+
+void SControlRigToolWidget::OnSecMeshSelectionChanged(TSharedPtr<FString> NewValue, ESelectInfo::Type SelectInfo)
+{
+	SelectedSecMesh = NewValue;
+	UpdateSecMeshThumbnail();
+	
+	// 메쉬가 변경되면 본 목록 초기화
+	SecBoneDisplayList.Empty();
+	if (SecBoneListBox.IsValid())
+	{
+		SecBoneListBox->ClearChildren();
+	}
+	if (SecCreateButton.IsValid())
+	{
+		SecCreateButton->SetEnabled(false);
+	}
+	
+	// 메쉬 이름으로 출력 이름 자동 설정
+	if (NewValue.IsValid() && SecOutputNameBox.IsValid())
+	{
+		FString MeshName = FPaths::GetBaseFilename(*NewValue);
+		SecOutputNameBox->SetText(FText::FromString(FString::Printf(TEXT("CTR_%s_Rig"), *MeshName)));
+	}
+	
+	SetSecStatus(TEXT("Mesh selected. Click 'Load Bone Structure' to continue."));
+}
+
+FText SControlRigToolWidget::GetSelectedSecMeshName() const
+{
+	if (SelectedSecMesh.IsValid())
+		return FText::FromString(FPaths::GetBaseFilename(*SelectedSecMesh));
+	return LOCTEXT("SecSelectMesh", "-- Select Mesh --");
+}
+
+FReply SControlRigToolWidget::OnUseSelectedSecMeshClicked()
+{
+	TArray<FAssetData> SelectedAssets;
+	FContentBrowserModule& ContentBrowserModule = FModuleManager::LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
+	ContentBrowserModule.Get().GetSelectedAssets(SelectedAssets);
+	
+	for (const FAssetData& Asset : SelectedAssets)
+	{
+		if (Asset.GetClass()->IsChildOf(USkeletalMesh::StaticClass()))
+		{
+			FString Path = Asset.GetObjectPathString();
+			
+			// 옵션에 추가 (없으면)
+			bool bFound = false;
+			for (const TSharedPtr<FString>& Option : MeshOptions)
+			{
+				if (Option.IsValid() && *Option == Path)
+				{
+					bFound = true;
+					SelectedSecMesh = Option;
+					break;
+				}
+			}
+			if (!bFound)
+			{
+				TSharedPtr<FString> NewOption = MakeShared<FString>(Path);
+				MeshOptions.Add(NewOption);
+				SelectedSecMesh = NewOption;
+			}
+			
+			if (SecMeshComboBox.IsValid())
+			{
+				SecMeshComboBox->SetSelectedItem(SelectedSecMesh);
+				SecMeshComboBox->RefreshOptions();
+			}
+			
+			OnSecMeshSelectionChanged(SelectedSecMesh, ESelectInfo::Direct);
+			break;
+		}
+	}
+	
+	return FReply::Handled();
+}
+
+void SControlRigToolWidget::UpdateSecMeshThumbnail()
+{
+	if (!SecMeshThumbnailBox.IsValid() || !ThumbnailPool.IsValid())
+		return;
+	
+	FString Path;
+	if (SelectedSecMesh.IsValid())
+		Path = *SelectedSecMesh;
+	
+	if (!Path.IsEmpty())
+	{
+		SecMeshThumbnail = MakeShared<FAssetThumbnail>(
+			LoadObject<UObject>(nullptr, *Path),
+			ThumbnailSize, ThumbnailSize, ThumbnailPool);
+		
+		SecMeshThumbnailBox->SetContent(SecMeshThumbnail->MakeThumbnailWidget());
+	}
+	else
+	{
+		SecMeshThumbnailBox->SetContent(SNullWidget::NullWidget);
+	}
+}
+
+void SControlRigToolWidget::SetSecStatus(const FString& Status)
+{
+	if (SecStatusText.IsValid())
+	{
+		SecStatusText->SetText(FText::FromString(Status));
+	}
+}
+
+// ============================================================================
+// Control Rig Sec - AI 본 매핑 요청
+// ============================================================================
+FReply SControlRigToolWidget::OnSecBoneMappingClicked()
+{
+	if (!SelectedSecMesh.IsValid())
+	{
+		SetSecStatus(TEXT("ERROR: Select a Skeletal Mesh first"));
+		return FReply::Handled();
+	}
+	
+	USkeletalMesh* Mesh = LoadObject<USkeletalMesh>(nullptr, **SelectedSecMesh);
+	if (!Mesh)
+	{
+		SetSecStatus(TEXT("ERROR: Failed to load mesh"));
+		return FReply::Handled();
+	}
+	
+	SecCachedMesh = Mesh;
+	SetSecStatus(TEXT("Requesting AI Bone Mapping..."));
+	
+	// AI 서버에 본 매핑 요청 (기존 RequestAIBoneMapping과 동일한 로직)
+	const FReferenceSkeleton& RefSkel = Mesh->GetRefSkeleton();
+	
+	// JSON 요청 생성
+	TSharedPtr<FJsonObject> RequestObj = MakeShareable(new FJsonObject);
+	TArray<TSharedPtr<FJsonValue>> BonesArray;
+	
+	for (int32 i = 0; i < RefSkel.GetNum(); ++i)
+	{
+		TSharedPtr<FJsonObject> BoneObj = MakeShareable(new FJsonObject);
+		BoneObj->SetStringField(TEXT("name"), RefSkel.GetBoneName(i).ToString());
+		
+		int32 ParentIdx = RefSkel.GetParentIndex(i);
+		if (ParentIdx != INDEX_NONE)
+			BoneObj->SetStringField(TEXT("parent"), RefSkel.GetBoneName(ParentIdx).ToString());
+		else
+			BoneObj->SetStringField(TEXT("parent"), TEXT(""));
+		
+		// 자식 본 수집
+		TArray<TSharedPtr<FJsonValue>> ChildrenArray;
+		for (int32 j = 0; j < RefSkel.GetNum(); ++j)
+		{
+			if (RefSkel.GetParentIndex(j) == i)
+			{
+				ChildrenArray.Add(MakeShareable(new FJsonValueString(RefSkel.GetBoneName(j).ToString())));
+			}
+		}
+		BoneObj->SetArrayField(TEXT("children"), ChildrenArray);
+		
+		BonesArray.Add(MakeShareable(new FJsonValueObject(BoneObj)));
+	}
+	
+	RequestObj->SetArrayField(TEXT("bones"), BonesArray);
+	
+	FString RequestBody;
+	TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&RequestBody);
+	FJsonSerializer::Serialize(RequestObj.ToSharedRef(), Writer);
+	
+	// HTTP 요청
+	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> HttpRequest = FHttpModule::Get().CreateRequest();
+	HttpRequest->SetURL(TEXT("http://localhost:8000/predict"));
+	HttpRequest->SetVerb(TEXT("POST"));
+	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
+	HttpRequest->SetContentAsString(RequestBody);
+	
+	HttpRequest->OnProcessRequestComplete().BindLambda(
+		[this, Mesh](FHttpRequestPtr Request, FHttpResponsePtr Response, bool bSuccess)
+		{
+			if (!bSuccess || !Response.IsValid())
+			{
+				SetSecStatus(TEXT("ERROR: AI Server not responding. Check if server is running."));
+				return;
+			}
+			
+			if (Response->GetResponseCode() != 200)
+			{
+				SetSecStatus(FString::Printf(TEXT("ERROR: Server returned %d"), Response->GetResponseCode()));
+				return;
+			}
+			
+			// 응답 파싱
+			TSharedPtr<FJsonObject> JsonResponse;
+			TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
+			if (!FJsonSerializer::Deserialize(Reader, JsonResponse))
+			{
+				SetSecStatus(TEXT("ERROR: Failed to parse response"));
+				return;
+			}
+			
+			// 매핑 결과 저장
+			LastBoneMapping.Empty();
+			const TSharedPtr<FJsonObject>* MappingObj;
+			if (JsonResponse->TryGetObjectField(TEXT("mapping"), MappingObj))
+			{
+				for (const auto& Pair : (*MappingObj)->Values)
+				{
+					FString TargetBone = Pair.Key;  // UE5 표준 이름
+					FString SourceBone = Pair.Value->AsString();  // 실제 본 이름
+					LastBoneMapping.Add(FName(*TargetBone), FName(*SourceBone));
+				}
+			}
+			
+			// 본 목록 구축 및 UI 업데이트
+			BuildSecBoneDisplayList();
+			UpdateSecBoneListUI();
+			
+			// 세컨더리 본 개수 확인
+			int32 SecondaryCount = 0;
+			for (const FBoneDisplayInfo& Info : SecBoneDisplayList)
+			{
+				if (Info.Classification == EBoneClassification::Secondary)
+					SecondaryCount++;
+			}
+			
+			if (SecCreateButton.IsValid())
+			{
+				SecCreateButton->SetEnabled(SecondaryCount > 0);
+			}
+			
+			SetSecStatus(FString::Printf(TEXT("AI Mapping complete! %d bones, %d secondary selected"), 
+				SecBoneDisplayList.Num(), SecondaryCount));
+		}
+	);
+	
+	HttpRequest->ProcessRequest();
+	return FReply::Handled();
+}
+
+// ============================================================================
+// Control Rig Sec - 본 목록 구축 (AI 매핑 결과 기반)
+// ============================================================================
+void SControlRigToolWidget::BuildSecBoneDisplayList()
+{
+	SecBoneDisplayList.Empty();
+	
+	if (!SecCachedMesh.IsValid())
+		return;
+	
+	USkeletalMesh* Mesh = SecCachedMesh.Get();
+	const FReferenceSkeleton& RefSkel = Mesh->GetRefSkeleton();
+	
+	// AI 매핑 결과에서 메인본 목록 수집 (Value가 실제 본 이름)
+	TSet<FName> MappedMainBones;
+	for (const auto& Pair : LastBoneMapping)
+	{
+		MappedMainBones.Add(Pair.Value);  // 실제 본 이름
+	}
+	
+	for (int32 i = 0; i < RefSkel.GetNum(); ++i)
+	{
+		FBoneDisplayInfo Info;
+		Info.BoneName = RefSkel.GetBoneName(i);
+		Info.BoneIndex = i;
+		Info.ParentIndex = RefSkel.GetParentIndex(i);
+		
+		// 깊이 계산
+		int32 Depth = 0;
+		int32 ParentIdx = Info.ParentIndex;
+		while (ParentIdx != INDEX_NONE)
+		{
+			Depth++;
+			ParentIdx = RefSkel.GetParentIndex(ParentIdx);
+		}
+		Info.Depth = Depth;
+		
+		// AI 매핑 결과로 메인본 여부 판별
+		bool bIsMappedMainBone = MappedMainBones.Contains(Info.BoneName);
+		
+		// bip01 계열도 메인본으로 처리
+		FString BoneNameLower = Info.BoneName.ToString().ToLower();
+		bool bIsBip01 = BoneNameLower.Contains(TEXT("bip01")) || BoneNameLower.Contains(TEXT("bip001"));
+		
+		Info.bIsZeroBone = bIsMappedMainBone || IsZeroBone(Info.BoneName.ToString()) || bIsBip01;
+		
+		// 스킨 웨이트 여부
+		Info.bHasSkinWeight = HasSkinWeight(Mesh, Info.BoneName);
+		
+		// 메인본, bip01, 웨이트 없는 본은 X로 고정
+		// 나머지만 Secondary로 선택 가능
+		if (Info.bIsZeroBone || !Info.bHasSkinWeight)
+		{
+			Info.Classification = EBoneClassification::Helper;  // X (고정)
+		}
+		else
+		{
+			Info.Classification = EBoneClassification::Secondary;
+		}
+		
+		SecBoneDisplayList.Add(Info);
+	}
+}
+
+// ============================================================================
+// Control Rig Sec - 본 목록 UI 업데이트
+// ============================================================================
+void SControlRigToolWidget::UpdateSecBoneListUI()
+{
+	if (!SecBoneListBox.IsValid())
+		return;
+	
+	SecBoneListBox->ClearChildren();
+	
+	for (int32 i = 0; i < SecBoneDisplayList.Num(); ++i)
+	{
+		SecBoneListBox->AddSlot()
+		.AutoHeight()
+		.Padding(0, 1)
+		[
+			CreateSecBoneRow(i)
+		];
+	}
+}
+
+// ============================================================================
+// Control Rig Sec - 본 행 생성 (색상 바 포함)
+// ============================================================================
+TSharedRef<SWidget> SControlRigToolWidget::CreateSecBoneRow(int32 Index)
+{
+	if (Index < 0 || Index >= SecBoneDisplayList.Num())
+		return SNullWidget::NullWidget;
+	
+	const FBoneDisplayInfo& Info = SecBoneDisplayList[Index];
+	
+	// 색상 결정 (분류에 따른 색상)
+	FLinearColor BarColor;
+	FLinearColor TextColor;
+	
+	if (Info.bIsZeroBone)
+	{
+		BarColor = FLinearColor(1.0f, 0.3f, 0.3f);   // 빨강: 메인본(제로본)
+		TextColor = FLinearColor(1.0f, 0.3f, 0.3f);
+	}
+	else if (!Info.bHasSkinWeight)
+	{
+		BarColor = FLinearColor(0.5f, 0.5f, 0.5f);   // 회색: 웨이트 없음
+		TextColor = FLinearColor(0.5f, 0.5f, 0.5f);
+	}
+	else if (Info.Classification == EBoneClassification::Secondary)
+	{
+		BarColor = FLinearColor(0.3f, 1.0f, 0.5f);   // 녹색: Secondary 선택됨
+		TextColor = FLinearColor(0.3f, 1.0f, 0.5f);
+	}
+	else
+	{
+		BarColor = FLinearColor(0.7f, 0.7f, 0.7f);   // 밝은 회색: X (제외)
+		TextColor = FLinearColor(0.7f, 0.7f, 0.7f);
+	}
+	
+	// 들여쓰기
+	float Indent = Info.Depth * 15.0f;
+	
+	return SNew(SBorder)
+		.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+		.BorderBackgroundColor(Info.Classification == EBoneClassification::Secondary ? 
+			FLinearColor(0.05f, 0.1f, 0.05f, 1.0f) : FLinearColor(0.03f, 0.03f, 0.03f, 1.0f))
+		.Padding(FMargin(2))
+		[
+			SNew(SHorizontalBox)
+			// 들여쓰기 공간
+			+ SHorizontalBox::Slot().AutoWidth()
+			[
+				SNew(SBox).WidthOverride(Indent)
+			]
+			// 색상 바 (분류 표시)
+			+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Fill).Padding(0, 2, 5, 2)
+			[
+				SNew(SBox)
+				.WidthOverride(4)
+				[
+					SNew(SBorder)
+					.BorderImage(FAppStyle::GetBrush("WhiteBrush"))
+					.BorderBackgroundColor(BarColor)
+				]
+			]
+			// 본 이름
+			+ SHorizontalBox::Slot().FillWidth(1.0f).VAlign(VAlign_Center).Padding(5, 2)
+			[
+				SNew(STextBlock)
+				.Text(FText::FromName(Info.BoneName))
+				.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
+				.ColorAndOpacity(TextColor)
+			]
+			// 분류 라디오 버튼들
+			+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(5, 0)
+			[
+				SNew(SHorizontalBox)
+				// X 라디오 (제외)
+				+ SHorizontalBox::Slot().AutoWidth().Padding(0, 0, 10, 0)
+				[
+					SNew(SCheckBox)
+					.Style(FCoreStyle::Get(), "RadioButton")
+					.IsChecked_Lambda([this, Index]()
+					{
+						if (Index < SecBoneDisplayList.Num())
+							return SecBoneDisplayList[Index].Classification == EBoneClassification::Helper ? 
+								ECheckBoxState::Checked : ECheckBoxState::Unchecked;
+						return ECheckBoxState::Unchecked;
+					})
+					.OnCheckStateChanged_Lambda([this, Index](ECheckBoxState NewState)
+					{
+						if (NewState == ECheckBoxState::Checked)
+							OnSecBoneClassificationChanged(EBoneClassification::Helper, Index);
+					})
+					[
+						SNew(STextBlock)
+						.Text(LOCTEXT("SecExclude", "X"))
+						.Font(FCoreStyle::GetDefaultFontStyle("Bold", 9))
+						.ColorAndOpacity(FLinearColor(1.0f, 0.3f, 0.3f))
+					]
+				]
+				// Secondary 라디오 (메인본 또는 웨이트 없는 본은 비활성화)
+				+ SHorizontalBox::Slot().AutoWidth()
+				[
+					SNew(SCheckBox)
+					.Style(FCoreStyle::Get(), "RadioButton")
+					.IsEnabled_Lambda([this, Index]()
+					{
+						// 메인본 또는 웨이트 없는 본은 Secondary 선택 불가
+						if (Index < SecBoneDisplayList.Num())
+						{
+							const FBoneDisplayInfo& BoneInfo = SecBoneDisplayList[Index];
+							return !BoneInfo.bIsZeroBone && BoneInfo.bHasSkinWeight;
+						}
+						return false;
+					})
+					.IsChecked_Lambda([this, Index]()
+					{
+						if (Index < SecBoneDisplayList.Num())
+							return SecBoneDisplayList[Index].Classification == EBoneClassification::Secondary ? 
+								ECheckBoxState::Checked : ECheckBoxState::Unchecked;
+						return ECheckBoxState::Unchecked;
+					})
+					.OnCheckStateChanged_Lambda([this, Index](ECheckBoxState NewState)
+					{
+						if (NewState == ECheckBoxState::Checked)
+							OnSecBoneClassificationChanged(EBoneClassification::Secondary, Index);
+					})
+					[
+						SNew(STextBlock)
+						.Text(LOCTEXT("SecSecondary", "Secondary"))
+						.Font(FCoreStyle::GetDefaultFontStyle("Regular", 8))
+						.ColorAndOpacity(FLinearColor(0.3f, 0.9f, 0.5f))
+					]
+				]
+			]
+		];
+}
+
+// ============================================================================
+// Control Rig Sec - 분류 변경 처리
+// ============================================================================
+void SControlRigToolWidget::OnSecBoneClassificationChanged(EBoneClassification NewClassification, int32 BoneIndex)
+{
+	if (BoneIndex < 0 || BoneIndex >= SecBoneDisplayList.Num())
+		return;
+	
+	SecBoneDisplayList[BoneIndex].Classification = NewClassification;
+	UpdateSecBoneListUI();
+	
+	// 세컨더리 본 개수 카운트
+	int32 SecondaryCount = 0;
+	for (const FBoneDisplayInfo& Info : SecBoneDisplayList)
+	{
+		if (Info.Classification == EBoneClassification::Secondary)
+			SecondaryCount++;
+	}
+	
+	// Create 버튼 활성화/비활성화
+	if (SecCreateButton.IsValid())
+	{
+		SecCreateButton->SetEnabled(SecondaryCount > 0);
+	}
+	
+	SetSecStatus(FString::Printf(TEXT("%d Secondary bones selected"), SecondaryCount));
+}
+
+// ============================================================================
+// Control Rig Sec - 폴더 찾아보기
+// ============================================================================
+FReply SControlRigToolWidget::OnSecBrowseFolderClicked()
+{
+	IDesktopPlatform* DesktopPlatform = FDesktopPlatformModule::Get();
+	if (DesktopPlatform)
+	{
+		FString SelectedFolder;
+		const FString DefaultPath = FPaths::ProjectContentDir();
+		
+		if (DesktopPlatform->OpenDirectoryDialog(
+			FSlateApplication::Get().FindBestParentWindowHandleForDialogs(nullptr),
+			TEXT("Select Output Folder"),
+			DefaultPath,
+			SelectedFolder))
+		{
+			// 프로젝트 Content 폴더 기준 상대 경로로 변환
+			FString ContentDir = FPaths::ProjectContentDir();
+			FPaths::MakePathRelativeTo(SelectedFolder, *ContentDir);
+			
+			FString GamePath = TEXT("/Game/") + SelectedFolder;
+			GamePath.ReplaceInline(TEXT("\\"), TEXT("/"));
+			
+			if (SecOutputFolderBox.IsValid())
+			{
+				SecOutputFolderBox->SetText(FText::FromString(GamePath));
+			}
+		}
+	}
+	
+	return FReply::Handled();
+}
+
+// ============================================================================
+// Control Rig Sec - Create 버튼 클릭
+// ============================================================================
+FReply SControlRigToolWidget::OnCreateSecControlRigClicked()
+{
+	if (CreateSecondaryOnlyControlRigFromSecTab())
+	{
+		SetSecStatus(TEXT("Secondary Control Rig created successfully!"));
+	}
+	return FReply::Handled();
+}
+
+// ============================================================================
+// Control Rig Sec - 세컨더리 전용 Control Rig 생성 (템플릿 복제 후 메인본 노드 삭제)
+// ============================================================================
+bool SControlRigToolWidget::CreateSecondaryOnlyControlRigFromSecTab()
+{
+	// 1. 메쉬 확인
+	if (!SecCachedMesh.IsValid())
+	{
+		SetSecStatus(TEXT("ERROR: Select a mesh first and load bone structure"));
+		return false;
+	}
+	
+	USkeletalMesh* Mesh = SecCachedMesh.Get();
+	const FReferenceSkeleton& RefSkel = Mesh->GetRefSkeleton();
+	
+	// 2. 세컨더리로 선택된 본 수집
+	TArray<FName> SelectedSecondaryBones;
+	for (const FBoneDisplayInfo& Info : SecBoneDisplayList)
+	{
+		if (Info.Classification == EBoneClassification::Secondary)
+		{
+			SelectedSecondaryBones.Add(Info.BoneName);
+		}
+	}
+	
+	if (SelectedSecondaryBones.Num() == 0)
+	{
+		SetSecStatus(TEXT("ERROR: No secondary bones selected"));
+		return false;
+	}
+	
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Creating Control Rig with %d secondary bones"), SelectedSecondaryBones.Num());
+	
+	// 3. 템플릿 로드
+	const FString TemplatePath = TEXT("/Game/00_CooT/Template/CTR_Template.CTR_Template");
+	UControlRigBlueprint* TemplateRig = LoadObject<UControlRigBlueprint>(nullptr, *TemplatePath);
+	if (!TemplateRig)
+	{
+		SetSecStatus(TEXT("ERROR: Template not found at /Game/00_CooT/Template/CTR_Template"));
+		UE_LOG(LogTemp, Error, TEXT("[ControlRigSec] Template not found: %s"), *TemplatePath);
+		return false;
+	}
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Loaded template: %s"), *TemplatePath);
+	
+	// 4. 출력 경로 설정
+	FString OutputName = SecOutputNameBox.IsValid() ? SecOutputNameBox->GetText().ToString() : TEXT("CTR_NewRig_Rig");
+	FString OutputFolder = SecOutputFolderBox.IsValid() ? SecOutputFolderBox->GetText().ToString() : SecDefaultOutputFolder;
+	FString OutputPath = OutputFolder / OutputName;
+	
+	// 기존 에셋 삭제
+	if (UEditorAssetLibrary::DoesAssetExist(OutputPath))
+	{
+		UEditorAssetLibrary::DeleteAsset(OutputPath);
+	}
+	
+	// 5. 템플릿 복제
+	UControlRigBlueprint* NewRig = Cast<UControlRigBlueprint>(
+		UEditorAssetLibrary::DuplicateAsset(TemplateRig->GetPathName(), OutputPath)
+	);
+	
+	if (!NewRig)
+	{
+		SetSecStatus(TEXT("ERROR: Failed to duplicate template"));
+		return false;
+	}
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Duplicated template to: %s"), *OutputPath);
+	
+	// 6. Preview Mesh 설정
+	NewRig->SetPreviewMesh(Mesh, true);
+	
+	URigHierarchyController* HC = NewRig->GetHierarchyController();
+	URigHierarchy* Hierarchy = NewRig->Hierarchy;
+	
+	if (!HC || !Hierarchy)
+	{
+		SetSecStatus(TEXT("ERROR: Failed to get hierarchy controller"));
+		return false;
+	}
+	
+	// 7. 템플릿의 기존 본/컨트롤러/스페이스 모두 삭제
+	TArray<FRigElementKey> AllElements = Hierarchy->GetAllKeys();
+	for (const FRigElementKey& Key : AllElements)
+	{
+		if (Key.Type == ERigElementType::Bone || 
+			Key.Type == ERigElementType::Null || 
+			Key.Type == ERigElementType::Control)
+		{
+			HC->RemoveElement(Key, false);
+		}
+	}
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Removed template elements"));
+	
+	// 8. 새 메쉬의 본 임포트
+	USkeleton* Skeleton = Mesh->GetSkeleton();
+	if (!Skeleton)
+	{
+		SetSecStatus(TEXT("ERROR: No skeleton"));
+		return false;
+	}
+	
+	TArray<FRigElementKey> ImportedBones = HC->ImportBones(
+		Skeleton, NAME_None, true, false, false, true, false
+	);
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Imported %d bones"), ImportedBones.Num());
+	
+	// 9. 버텍스 기반 Shape Info 계산
+	CalculateBoneShapeInfos(Mesh);
+	
+	// 10. Space별로 세컨더리 본 그룹화 (AI 매핑 결과 사용)
+	TMap<FName, TArray<FName>> ChainsBySpace;
+	
+	// 세컨더리 본의 부모 중 매핑된 제로본 찾기
+	auto FindMappedZeroBoneParent = [&](const FName& BoneName) -> FName
+	{
+		int32 BoneIndex = RefSkel.FindBoneIndex(BoneName);
+		if (BoneIndex == INDEX_NONE) return FName(TEXT("root"));
+		
+		// 부모를 따라 올라가며 매핑된 제로본 찾기
+		int32 ParentIndex = RefSkel.GetParentIndex(BoneIndex);
+		while (ParentIndex != INDEX_NONE)
+		{
+			FName ParentBoneName = RefSkel.GetBoneName(ParentIndex);
+			
+			// LastBoneMapping에서 이 본이 매핑되어 있는지 확인 (source -> target)
+			for (const auto& Pair : LastBoneMapping)
+			{
+				if (Pair.Value == ParentBoneName)
+				{
+					// 매핑된 UE5 표준 이름 반환
+					return Pair.Key;
+				}
+			}
+			
+			ParentIndex = RefSkel.GetParentIndex(ParentIndex);
+		}
+		return FName(TEXT("root"));
+	};
+	
+	for (const FName& BoneName : SelectedSecondaryBones)
+	{
+		FName SpaceParent = FindMappedZeroBoneParent(BoneName);
+		ChainsBySpace.FindOrAdd(SpaceParent).Add(BoneName);
+	}
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Grouped into %d spaces (using AI mapping)"), ChainsBySpace.Num());
+	
+	// 11. Space 및 Control 생성
+	LastSecondaryControlCount = 0;
+	for (const auto& Pair : ChainsBySpace)
+	{
+		FName SpaceParentName = Pair.Key;  // UE5 표준 이름 (head, pelvis 등)
+		const TArray<FName>& ChainBones = Pair.Value;
+		
+		// Space 이름: head_space, pelvis_space 등
+		FString SpaceNameStr = SpaceParentName.ToString() + TEXT("_space");
+		FName SpaceFName(*SpaceNameStr);
+		
+		// Space Transform: 첫 번째 세컨더리 본의 부모 위치 사용
+		FTransform SpaceTransform = FTransform::Identity;
+		if (ChainBones.Num() > 0)
+		{
+			int32 FirstBoneIdx = RefSkel.FindBoneIndex(ChainBones[0]);
+			if (FirstBoneIdx != INDEX_NONE)
+			{
+				int32 ParentIdx = RefSkel.GetParentIndex(FirstBoneIdx);
+				if (ParentIdx != INDEX_NONE)
+				{
+					SpaceTransform = RefSkel.GetRefBonePose()[ParentIdx];
+				}
+			}
+		}
+		
+		CreateSpaceNull(HC, SpaceFName, SpaceTransform);
+		CreateChainControls(HC, Hierarchy, SpaceFName, ChainBones, RefSkel);
+		
+		UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Created space '%s' with %d controls"), *SpaceNameStr, ChainBones.Num());
+	}
+	
+	// 12. AI 함수 노드 연결 (정답 구조: 각 Event → 각 AI 함수 직접 연결)
+	ConnectSecondaryFunctionsSimple(NewRig, ChainsBySpace);
+	
+	// 13. 컴파일 및 저장
+	FBlueprintEditorUtils::MarkBlueprintAsModified(NewRig);
+	NewRig->MarkPackageDirty();
+	
+	UPackage* Package = NewRig->GetPackage();
+	FSavePackageArgs SaveArgs;
+	SaveArgs.TopLevelFlags = RF_Public | RF_Standalone;
+	UPackage::SavePackage(Package, NewRig, *FPackageName::LongPackageNameToFilename(OutputPath, FPackageName::GetAssetPackageExtension()), SaveArgs);
+	
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Saved: %s"), *OutputPath);
+	
+	// 에셋 에디터에서 열기
+	GEditor->GetEditorSubsystem<UAssetEditorSubsystem>()->OpenEditorForAsset(NewRig);
+	
+	TArray<UObject*> ObjectsToSync;
+	ObjectsToSync.Add(NewRig);
+	GEditor->SyncBrowserToObjects(ObjectsToSync);
+	
+	FString Msg = FString::Printf(TEXT("Secondary Control Rig Created!\n\nPath: %s\nSpaces: %d\nControls: %d"), 
+		*OutputPath, ChainsBySpace.Num(), LastSecondaryControlCount);
+	FMessageDialog::Open(EAppMsgType::Ok, FText::FromString(Msg));
+	
+	return true;
+}
+
+// ============================================================================
+// Control Rig Sec - 템플릿 없이 AI 함수 노드 직접 연결
+// Construction Event -> AI_Setup
+// Forward Solve Event -> AI_Forward  
+// Backward Solve Event -> AI_Backward
+// ============================================================================
+void SControlRigToolWidget::ConnectSecondaryFunctionNodesFromScratch(UControlRigBlueprint* Rig, 
+	const TMap<FName, TArray<FName>>& ChainsBySpace)
+{
+	if (!Rig)
+	{
+		UE_LOG(LogTemp, Error, TEXT("[ControlRigSec] Control Rig Blueprint is NULL!"));
+		return;
+	}
+	
+	if (ChainsBySpace.Num() == 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[ControlRigSec] No secondary bones selected!"));
+		return;
+	}
+	
+	TArray<URigVMGraph*> AllGraphs = Rig->GetAllModels();
+	URigVMGraph* MainGraph = nullptr;
+	
+	for (URigVMGraph* Graph : AllGraphs)
+	{
+		if (Graph && Graph->GetName().Equals(TEXT("RigVMModel")))
+		{
+			MainGraph = Graph;
+			break;
+		}
+	}
+	
+	if (!MainGraph)
+	{
+		UE_LOG(LogTemp, Error, TEXT("[ControlRigSec] Main graph not found!"));
+		return;
+	}
+	
+	URigVMController* Controller = Rig->GetController(MainGraph);
+	if (!Controller)
+	{
+		UE_LOG(LogTemp, Error, TEXT("[ControlRigSec] Controller not found!"));
+		return;
+	}
+	
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Connecting AI function nodes for %d spaces"), ChainsBySpace.Num());
+	
+	// Event 노드들 찾기
+	URigVMNode* ConstructionEvent = nullptr;
+	URigVMNode* ForwardEvent = nullptr;
+	URigVMNode* BackwardEvent = nullptr;
+	
+	for (URigVMNode* Node : MainGraph->GetNodes())
+	{
+		FString NodeName = Node->GetName();
+		if (NodeName.Contains(TEXT("RigUnit_BeginExecution")) || NodeName.Contains(TEXT("Construction")))
+		{
+			ConstructionEvent = Node;
+		}
+		else if (NodeName.Contains(TEXT("RigUnit_PrepareForExecute")) || NodeName.Contains(TEXT("Forwards")))
+		{
+			ForwardEvent = Node;
+		}
+		else if (NodeName.Contains(TEXT("RigUnit_InverseExecution")) || NodeName.Contains(TEXT("Backwards")))
+		{
+			BackwardEvent = Node;
+		}
+	}
+	
+	// 노드 위치 설정
+	FVector2D SetupStartPos(600.0f, 200.0f);
+	FVector2D ForwardStartPos(600.0f, 400.0f);
+	FVector2D BackwardStartPos(600.0f, 600.0f);
+	
+	const float XSpacing = 350.0f;
+	
+	URigVMNode* LastSetupNode = ConstructionEvent;
+	URigVMNode* LastForwardNode = ForwardEvent;
+	URigVMNode* LastBackwardNode = BackwardEvent;
+	
+	FString DebugInfo;
+	int32 SpaceIndex = 0;
+	
+	// 각 Space에 대해 함수 노드 추가
+	for (const auto& Pair : ChainsBySpace)
+	{
+		FName SpaceParentName = Pair.Key;
+		const TArray<FName>& ChainBones = Pair.Value;
+		
+		FString SpaceNameStr = SpaceParentName.ToString() + TEXT("_space");
+		FName SpaceName(*SpaceNameStr);
+		
+		TArray<FName> ControlNames;
+		for (const FName& BoneName : ChainBones)
+		{
+			ControlNames.Add(FName(*(BoneName.ToString() + TEXT("_ctrl"))));
+		}
+		
+		// 실제 본 이름 찾기 (매핑된 이름이 있으면 사용)
+		FName ActualBoneName = SpaceParentName;
+		
+		UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Processing space: %s with %d bones"), *SpaceNameStr, ChainBones.Num());
+		
+		// AI_Setup 노드 추가
+		{
+			URigVMNode* FuncNode = AddFunctionReferenceNode(Controller, TEXT("AI_Setup"), 
+				FVector2D(SetupStartPos.X + SpaceIndex * XSpacing, SetupStartPos.Y), DebugInfo);
+			if (FuncNode)
+			{
+				SetFunctionNodePins(Controller, FuncNode, ActualBoneName, SpaceName, ChainBones, ControlNames);
+				
+				if (LastSetupNode)
+				{
+					bool bLinked = Controller->AddLink(LastSetupNode->GetName() + TEXT(".ExecuteContext"), FuncNode->GetName() + TEXT(".ExecuteContext"), false);
+					if (!bLinked)
+						bLinked = Controller->AddLink(LastSetupNode->GetName() + TEXT(".Execute"), FuncNode->GetName() + TEXT(".Execute"), false);
+					UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Setup: %s -> %s (%s)"), *LastSetupNode->GetName(), *FuncNode->GetName(), bLinked ? TEXT("OK") : TEXT("FAIL"));
+				}
+				LastSetupNode = FuncNode;
+			}
+		}
+		
+		// AI_Forward 노드 추가
+		{
+			URigVMNode* FuncNode = AddFunctionReferenceNode(Controller, TEXT("AI_Forward"), 
+				FVector2D(ForwardStartPos.X + SpaceIndex * XSpacing, ForwardStartPos.Y), DebugInfo);
+			if (FuncNode)
+			{
+				SetFunctionNodePins(Controller, FuncNode, ActualBoneName, SpaceName, ChainBones, ControlNames);
+				
+				if (LastForwardNode)
+				{
+					bool bLinked = Controller->AddLink(LastForwardNode->GetName() + TEXT(".ExecuteContext"), FuncNode->GetName() + TEXT(".ExecuteContext"), false);
+					if (!bLinked)
+						bLinked = Controller->AddLink(LastForwardNode->GetName() + TEXT(".Execute"), FuncNode->GetName() + TEXT(".Execute"), false);
+					UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Forward: %s -> %s (%s)"), *LastForwardNode->GetName(), *FuncNode->GetName(), bLinked ? TEXT("OK") : TEXT("FAIL"));
+				}
+				LastForwardNode = FuncNode;
+			}
+		}
+		
+		// AI_Backward 노드 추가
+		{
+			URigVMNode* FuncNode = AddFunctionReferenceNode(Controller, TEXT("AI_Backward"), 
+				FVector2D(BackwardStartPos.X + SpaceIndex * XSpacing, BackwardStartPos.Y), DebugInfo);
+			if (FuncNode)
+			{
+				SetFunctionNodePins(Controller, FuncNode, ActualBoneName, SpaceName, ChainBones, ControlNames);
+				
+				if (LastBackwardNode)
+				{
+					bool bLinked = Controller->AddLink(LastBackwardNode->GetName() + TEXT(".ExecuteContext"), FuncNode->GetName() + TEXT(".ExecuteContext"), false);
+					if (!bLinked)
+						bLinked = Controller->AddLink(LastBackwardNode->GetName() + TEXT(".Execute"), FuncNode->GetName() + TEXT(".Execute"), false);
+					UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Backward: %s -> %s (%s)"), *LastBackwardNode->GetName(), *FuncNode->GetName(), bLinked ? TEXT("OK") : TEXT("FAIL"));
+				}
+				LastBackwardNode = FuncNode;
+			}
+		}
+		
+		SpaceIndex++;
+	}
+	
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Function nodes connected: %d spaces processed"), ChainsBySpace.Num());
+}
+
+// ============================================================================
+// Control Rig Sec - 모든 기존 노드 삭제 후 AI 함수만 깔끔하게 연결
+// Construction Script → AI_Setup
+// Forward Solve → AI_Forward
+// Backward Solve → AI_Backward
+// ============================================================================
+void SControlRigToolWidget::CleanupMainBoneNodesAndConnectSecondary(UControlRigBlueprint* Rig,
+	const TMap<FName, TArray<FName>>& ChainsBySpace)
+{
+	if (!Rig || ChainsBySpace.Num() == 0)
+		return;
+	
+	TArray<URigVMGraph*> AllGraphs = Rig->GetAllModels();
+	URigVMGraph* MainGraph = nullptr;
+	
+	for (URigVMGraph* Graph : AllGraphs)
+	{
+		if (Graph && Graph->GetName().Equals(TEXT("RigVMModel")))
+		{
+			MainGraph = Graph;
+			break;
+		}
+	}
+	
+	if (!MainGraph)
+	{
+		UE_LOG(LogTemp, Error, TEXT("[ControlRigSec] Main graph not found"));
+		return;
+	}
+	
+	URigVMController* Controller = Rig->GetController(MainGraph);
+	if (!Controller)
+	{
+		UE_LOG(LogTemp, Error, TEXT("[ControlRigSec] Controller not found"));
+		return;
+	}
+	
+	// 1. 모든 노드 로깅 (디버그용)
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] === All nodes in graph ==="));
+	for (URigVMNode* Node : MainGraph->GetNodes())
+	{
+		UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Node: %s"), *Node->GetName());
+	}
+	
+	// 2. Event 노드 찾기 - "Forwards Solve"가 실제 이름
+	URigVMNode* ConstructionEvent = nullptr;
+	URigVMNode* ForwardEvent = nullptr;
+	URigVMNode* BackwardEvent = nullptr;
+	
+	for (URigVMNode* Node : MainGraph->GetNodes())
+	{
+		FString NodeName = Node->GetName();
+		
+		// Construction Script Event
+		if (NodeName.Contains(TEXT("RigUnit_BeginExecution")) || 
+			NodeName.Contains(TEXT("Construction")))
+		{
+			ConstructionEvent = Node;
+		}
+		// Forward Solve Event - "Forwards Solve" 또는 "RigUnit_PrepareForExecute"
+		else if (NodeName.Contains(TEXT("Forwards")) || 
+				 NodeName.Contains(TEXT("Forward")) ||
+				 NodeName.Contains(TEXT("RigUnit_PrepareForExecute")))
+		{
+			ForwardEvent = Node;
+		}
+		// Backward Solve Event - "Backwards Solve" 또는 "RigUnit_InverseExecution"
+		else if (NodeName.Contains(TEXT("Backwards")) || 
+				 NodeName.Contains(TEXT("Backward")) ||
+				 NodeName.Contains(TEXT("RigUnit_InverseExecution")))
+		{
+			BackwardEvent = Node;
+		}
+	}
+	
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Found - Construction: %s, Forward: %s, Backward: %s"),
+		ConstructionEvent ? *ConstructionEvent->GetName() : TEXT("NULL"),
+		ForwardEvent ? *ForwardEvent->GetName() : TEXT("NULL"),
+		BackwardEvent ? *BackwardEvent->GetName() : TEXT("NULL"));
+	
+	// 2. AI 함수 노드만 삭제 (Event 노드와 기타 필요한 노드는 유지)
+	TArray<URigVMNode*> NodesToRemove;
+	for (URigVMNode* Node : MainGraph->GetNodes())
+	{
+		FString NodeName = Node->GetName();
+		// AI 관련 함수 노드만 삭제 (기존 템플릿의 메인본용 노드들)
+		if (NodeName.Contains(TEXT("AI_Setup")) || 
+			NodeName.Contains(TEXT("AI_Forward")) || 
+			NodeName.Contains(TEXT("AI_Backward")) ||
+			NodeName.Contains(TEXT("Make Array")))
+		{
+			NodesToRemove.Add(Node);
+			UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Will remove: %s"), *NodeName);
+		}
+	}
+	
+	for (URigVMNode* Node : NodesToRemove)
+	{
+		Controller->RemoveNode(Node, false, false);
+	}
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Removed %d AI function nodes"), NodesToRemove.Num());
+	
+	// 3. Forward Solve 이벤트가 있으면, 그것을 기준으로 3가지 함수 연결
+	// Construction Script/Backward Solve가 없으면 Forward Solve만 사용
+	if (!ConstructionEvent && !BackwardEvent && ForwardEvent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[ControlRigSec] Only Forward Solve exists. Connecting all functions to Forward Solve."));
+		// Forward Solve에 AI_Setup → AI_Forward → AI_Backward 순서로 연결
+	}
+	
+	// 4. AI 함수 노드 생성 및 연결
+	FString DebugInfo;
+	int32 SpaceIndex = 0;
+	const float XSpacing = 400.0f;
+	
+	// Forward Solve만 있는 경우: Forward → AI_Setup → AI_Forward → AI_Backward 순서로 연결
+	bool bOnlyForwardSolve = ForwardEvent && !ConstructionEvent && !BackwardEvent;
+	
+	URigVMNode* LastChainNode = ForwardEvent;  // 모든 함수가 이어지는 체인
+	
+	// Event 노드 위치 기준으로 함수 노드 배치
+	FVector2D StartPos = ForwardEvent ? ForwardEvent->GetPosition() + FVector2D(300, 0) : FVector2D(400, 200);
+	
+	for (const auto& Pair : ChainsBySpace)
+	{
+		FName SpaceParentName = Pair.Key;  // UE5 표준 이름 (head, pelvis 등)
+		const TArray<FName>& ChainBones = Pair.Value;
+		
+		// Space 이름: head_space, pelvis_space 등
+		FString SpaceNameStr = SpaceParentName.ToString() + TEXT("_space");
+		FName SpaceName(*SpaceNameStr);
+		
+		// 실제 본 이름 찾기 (LastBoneMapping에서 UE5 표준 이름 -> 실제 본 이름)
+		FName ActualBoneName = SpaceParentName;
+		if (const FName* FoundBone = LastBoneMapping.Find(SpaceParentName))
+		{
+			ActualBoneName = *FoundBone;
+		}
+		UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Space: %s -> Actual Bone: %s"), *SpaceParentName.ToString(), *ActualBoneName.ToString());
+		
+		// Control 이름: bone_ctrl
+		TArray<FName> ControlNames;
+		for (const FName& BoneName : ChainBones)
+			ControlNames.Add(FName(*(BoneName.ToString() + TEXT("_ctrl"))));
+		
+		UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Processing space: %s with %d bones"), *SpaceNameStr, ChainBones.Num());
+		
+		// Forward Solve만 있는 경우: 하나의 체인으로 연결
+		// Forward Solve → AI_Setup → AI_Forward → AI_Backward
+		
+		// AI_Setup 노드
+		{
+			URigVMNode* FuncNode = AddFunctionReferenceNode(Controller, TEXT("AI_Setup"),
+				FVector2D(StartPos.X + SpaceIndex * XSpacing, StartPos.Y), DebugInfo);
+			if (FuncNode)
+			{
+				SetFunctionNodePins(Controller, FuncNode, ActualBoneName, SpaceName, ChainBones, ControlNames);
+				if (LastChainNode)
+				{
+					// Execute 핀 이름 시도 (ExecuteContext 또는 Execute)
+					bool bLinked = Controller->AddLink(LastChainNode->GetName() + TEXT(".ExecuteContext"), 
+						FuncNode->GetName() + TEXT(".ExecuteContext"), false);
+					if (!bLinked)
+					{
+						bLinked = Controller->AddLink(LastChainNode->GetName() + TEXT(".Execute"), 
+							FuncNode->GetName() + TEXT(".Execute"), false);
+					}
+					UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] %s -> %s (%s)"), 
+						*LastChainNode->GetName(), *FuncNode->GetName(), bLinked ? TEXT("OK") : TEXT("FAIL"));
+				}
+				LastChainNode = FuncNode;
+			}
+		}
+		
+		// AI_Forward 노드
+		{
+			URigVMNode* FuncNode = AddFunctionReferenceNode(Controller, TEXT("AI_Forward"),
+				FVector2D(StartPos.X + SpaceIndex * XSpacing, StartPos.Y + 200), DebugInfo);
+			if (FuncNode)
+			{
+				SetFunctionNodePins(Controller, FuncNode, ActualBoneName, SpaceName, ChainBones, ControlNames);
+				if (LastChainNode)
+				{
+					bool bLinked = Controller->AddLink(LastChainNode->GetName() + TEXT(".ExecuteContext"),
+						FuncNode->GetName() + TEXT(".ExecuteContext"), false);
+					if (!bLinked)
+					{
+						bLinked = Controller->AddLink(LastChainNode->GetName() + TEXT(".Execute"),
+							FuncNode->GetName() + TEXT(".Execute"), false);
+					}
+					UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] %s -> %s (%s)"), 
+						*LastChainNode->GetName(), *FuncNode->GetName(), bLinked ? TEXT("OK") : TEXT("FAIL"));
+				}
+				LastChainNode = FuncNode;
+			}
+		}
+		
+		// AI_Backward 노드
+		{
+			URigVMNode* FuncNode = AddFunctionReferenceNode(Controller, TEXT("AI_Backward"),
+				FVector2D(StartPos.X + SpaceIndex * XSpacing, StartPos.Y + 400), DebugInfo);
+			if (FuncNode)
+			{
+				SetFunctionNodePins(Controller, FuncNode, ActualBoneName, SpaceName, ChainBones, ControlNames);
+				if (LastChainNode)
+				{
+					bool bLinked = Controller->AddLink(LastChainNode->GetName() + TEXT(".ExecuteContext"),
+						FuncNode->GetName() + TEXT(".ExecuteContext"), false);
+					if (!bLinked)
+					{
+						bLinked = Controller->AddLink(LastChainNode->GetName() + TEXT(".Execute"),
+							FuncNode->GetName() + TEXT(".Execute"), false);
+					}
+					UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] %s -> %s (%s)"), 
+						*LastChainNode->GetName(), *FuncNode->GetName(), bLinked ? TEXT("OK") : TEXT("FAIL"));
+				}
+				LastChainNode = FuncNode;
+			}
+		}
+		
+		SpaceIndex++;
+	}
+	
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Created and connected AI functions for %d spaces"), ChainsBySpace.Num());
+}
+
+// ============================================================================
+// Control Rig Sec - 정답 구조로 AI 함수 연결
+// Backwards Solve → AI_Backward
+// Construction Event → AI_Setup
+// Forwards Solve → AI_Forward
+// ============================================================================
+void SControlRigToolWidget::ConnectSecondaryFunctionsSimple(UControlRigBlueprint* Rig,
+	const TMap<FName, TArray<FName>>& ChainsBySpace)
+{
+	if (!Rig || ChainsBySpace.Num() == 0)
+		return;
+	
+	TArray<URigVMGraph*> AllGraphs = Rig->GetAllModels();
+	URigVMGraph* MainGraph = nullptr;
+	
+	for (URigVMGraph* Graph : AllGraphs)
+	{
+		if (Graph && Graph->GetName().Equals(TEXT("RigVMModel")))
+		{
+			MainGraph = Graph;
+			break;
+		}
+	}
+	
+	if (!MainGraph)
+	{
+		UE_LOG(LogTemp, Error, TEXT("[ControlRigSec] Main graph not found"));
+		return;
+	}
+	
+	URigVMController* Controller = Rig->GetController(MainGraph);
+	if (!Controller)
+	{
+		UE_LOG(LogTemp, Error, TEXT("[ControlRigSec] Controller not found"));
+		return;
+	}
+	
+	// 1. 모든 노드 로깅 및 Event 노드 찾기
+	URigVMNode* ConstructionEvent = nullptr;  // RigUnit_BeginExecution -> AI_Setup
+	URigVMNode* ForwardEvent = nullptr;       // PrepareForExecution -> AI_Forward
+	URigVMNode* BackwardEvent = nullptr;      // InverseExecution -> AI_Backward
+	
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] === All nodes in graph ==="));
+	for (URigVMNode* Node : MainGraph->GetNodes())
+	{
+		FString NodeName = Node->GetName();
+		FVector2D Pos = Node->GetPosition();
+		UE_LOG(LogTemp, Log, TEXT("  Node: %s at (%.0f, %.0f)"), *NodeName, Pos.X, Pos.Y);
+		
+		// Construction Event (RigUnit_BeginExecution)
+		if (NodeName.Contains(TEXT("BeginExecution")))
+		{
+			ConstructionEvent = Node;
+			UE_LOG(LogTemp, Log, TEXT("    -> This is CONSTRUCTION EVENT"));
+		}
+		// Forward Solve (PrepareForExecution)
+		else if (NodeName.Contains(TEXT("PrepareForExecution")) || NodeName.Contains(TEXT("PrepareFor")))
+		{
+			ForwardEvent = Node;
+			UE_LOG(LogTemp, Log, TEXT("    -> This is FORWARD SOLVE"));
+		}
+		// Backward Solve (InverseExecution)
+		else if (NodeName.Contains(TEXT("InverseExecution")))
+		{
+			BackwardEvent = Node;
+			UE_LOG(LogTemp, Log, TEXT("    -> This is BACKWARD SOLVE"));
+		}
+	}
+	
+	// 2. Event 3개 제외하고 모든 노드 삭제 (기존 AI 함수 포함!)
+	TArray<URigVMNode*> NodesToRemove;
+	for (URigVMNode* Node : MainGraph->GetNodes())
+	{
+		if (Node == ConstructionEvent || Node == ForwardEvent || Node == BackwardEvent)
+			continue;
+		NodesToRemove.Add(Node);
+	}
+	
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Removing %d nodes (including existing AI functions)"), NodesToRemove.Num());
+	for (URigVMNode* Node : NodesToRemove)
+	{
+		UE_LOG(LogTemp, Log, TEXT("  Removing: %s"), *Node->GetName());
+		Controller->RemoveNode(Node, true, true);
+	}
+	
+	// 확인: 남은 노드 출력
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] Remaining nodes after cleanup:"));
+	for (URigVMNode* Node : MainGraph->GetNodes())
+	{
+		UE_LOG(LogTemp, Log, TEXT("  %s at (%.0f, %.0f)"), *Node->GetName(), Node->GetPosition().X, Node->GetPosition().Y);
+	}
+	
+	// 3. 캡쳐 기준 연결 (ForwardEvent와 ConstructionEvent 스왑!)
+	// 캡쳐에서:
+	// - Backwards Solve → AI_Backward ✓
+	// - Construction Event → AI_Setup (현재 코드에서 ForwardEvent가 이걸 가리킴)
+	// - Forwards Solve → AI_Forward (현재 코드에서 ConstructionEvent가 이걸 가리킴)
+	
+	FString DebugInfo;
+	int32 SpaceIndex = 0;
+	const float FuncXOffset = 400.0f;
+	const float FuncXSpacing = 350.0f;
+	
+	URigVMNode* LastBackwardFunc = nullptr;
+	URigVMNode* LastForwardFunc = nullptr;
+	URigVMNode* LastSetupFunc = nullptr;
+	
+	for (const auto& Pair : ChainsBySpace)
+	{
+		FName SpaceParentName = Pair.Key;
+		const TArray<FName>& ChainBones = Pair.Value;
+		
+		FString SpaceNameStr = SpaceParentName.ToString() + TEXT("_space");
+		FName SpaceName(*SpaceNameStr);
+		
+		FName ActualBoneName = SpaceParentName;
+		if (const FName* FoundBone = LastBoneMapping.Find(SpaceParentName))
+		{
+			ActualBoneName = *FoundBone;
+		}
+		
+		TArray<FName> ControlNames;
+		for (const FName& BoneName : ChainBones)
+			ControlNames.Add(FName(*(BoneName.ToString() + TEXT("_ctrl"))));
+		
+		// Event의 실제 위치 기준으로 AI 함수 배치
+		FVector2D BackwardPos = BackwardEvent ? BackwardEvent->GetPosition() : FVector2D(0, 0);
+		FVector2D ForwardPos = ForwardEvent ? ForwardEvent->GetPosition() : FVector2D(0, 300);
+		FVector2D ConstructionPos = ConstructionEvent ? ConstructionEvent->GetPosition() : FVector2D(0, 600);
+		
+		float XOffset = FuncXOffset + SpaceIndex * FuncXSpacing;
+		
+		// AI_Backward - Backward Solve(InverseExecution) 옆에 배치, 연결
+		if (BackwardEvent)
+		{
+			FVector2D FuncPos(BackwardPos.X + XOffset, BackwardPos.Y);
+			URigVMNode* FuncNode = AddFunctionReferenceNode(Controller, TEXT("AI_Backward"), FuncPos, DebugInfo);
+			if (FuncNode)
+			{
+				Controller->SetNodePosition(FuncNode, FuncPos, false, false);
+				SetFunctionNodePins(Controller, FuncNode, ActualBoneName, SpaceName, ChainBones, ControlNames);
+				
+				FString SrcPin = (SpaceIndex == 0) ? 
+					BackwardEvent->GetName() + TEXT(".ExecuteContext") : 
+					LastBackwardFunc->GetName() + TEXT(".ExecuteContext");
+				
+				bool bLinked = Controller->AddLink(SrcPin, FuncNode->GetName() + TEXT(".ExecuteContext"), false);
+				UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] %s -> AI_Backward [%s]"), *SrcPin, bLinked ? TEXT("OK") : TEXT("FAIL"));
+				LastBackwardFunc = FuncNode;
+			}
+		}
+		
+		// ★ 스왑: ForwardEvent → AI_Setup (캡쳐에서 Construction Event가 중간)
+		if (ForwardEvent)
+		{
+			FVector2D FuncPos(ForwardPos.X + XOffset, ForwardPos.Y);
+			URigVMNode* FuncNode = AddFunctionReferenceNode(Controller, TEXT("AI_Setup"), FuncPos, DebugInfo);
+			if (FuncNode)
+			{
+				Controller->SetNodePosition(FuncNode, FuncPos, false, false);
+				SetFunctionNodePins(Controller, FuncNode, ActualBoneName, SpaceName, ChainBones, ControlNames);
+				
+				FString SrcPin = (SpaceIndex == 0) ? 
+					ForwardEvent->GetName() + TEXT(".ExecuteContext") : 
+					LastSetupFunc->GetName() + TEXT(".ExecuteContext");
+				
+				bool bLinked = Controller->AddLink(SrcPin, FuncNode->GetName() + TEXT(".ExecuteContext"), false);
+				UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] %s -> AI_Setup [%s]"), *SrcPin, bLinked ? TEXT("OK") : TEXT("FAIL"));
+				LastSetupFunc = FuncNode;
+			}
+		}
+		
+		// ★ 스왑: ConstructionEvent → AI_Forward (캡쳐에서 Forwards Solve가 아래)
+		if (ConstructionEvent)
+		{
+			FVector2D FuncPos(ConstructionPos.X + XOffset, ConstructionPos.Y);
+			URigVMNode* FuncNode = AddFunctionReferenceNode(Controller, TEXT("AI_Forward"), FuncPos, DebugInfo);
+			if (FuncNode)
+			{
+				Controller->SetNodePosition(FuncNode, FuncPos, false, false);
+				SetFunctionNodePins(Controller, FuncNode, ActualBoneName, SpaceName, ChainBones, ControlNames);
+				
+				FString SrcPin = (SpaceIndex == 0) ? 
+					ConstructionEvent->GetName() + TEXT(".ExecuteContext") : 
+					LastForwardFunc->GetName() + TEXT(".ExecuteContext");
+				
+				bool bLinked = Controller->AddLink(SrcPin, FuncNode->GetName() + TEXT(".ExecuteContext"), false);
+				UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] %s -> AI_Forward [%s]"), *SrcPin, bLinked ? TEXT("OK") : TEXT("FAIL"));
+				LastForwardFunc = FuncNode;
+			}
+		}
+		
+		SpaceIndex++;
+	}
+	
+	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec] === Done (swapped Forward<->Setup) ==="));
 }
 
 #undef LOCTEXT_NAMESPACE

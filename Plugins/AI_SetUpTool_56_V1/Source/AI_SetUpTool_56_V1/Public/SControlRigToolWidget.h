@@ -127,6 +127,7 @@ private:
 	// UI 생성
 	TSharedRef<SWidget> CreateTabBar();                // 탭 바
 	TSharedRef<SWidget> CreateControlRigTab();         // Control Rig 탭 콘텐츠
+	TSharedRef<SWidget> CreateControlRigSecTab();      // Control Rig Sec 탭 콘텐츠 (세컨더리 전용)
 	TSharedRef<SWidget> CreateIKRigTab();              // IK Rig 탭 콘텐츠
 	TSharedRef<SWidget> CreateKawaiiPhysicsTab();      // Kawaii Physics 탭 콘텐츠
 	TSharedRef<SWidget> CreatePhysicsAssetTab();       // Physics Asset 탭 콘텐츠
@@ -386,7 +387,7 @@ private:
 	FString IKDefaultOutputFolder = TEXT("/Game/IKRigs");
 	
 	// 탭 관련
-	int32 CurrentTabIndex = 0;  // 0: Control Rig, 1: IK Rig, 2: Kawaii Physics, 3: Physics Asset
+	int32 CurrentTabIndex = 0;  // 0: Control Rig, 1: Control Rig Sec, 2: IK Rig, 3: Kawaii Physics, 4: Physics Asset
 	TSharedPtr<SWidgetSwitcher> TabContentSwitcher;
 	
 	// ============================================================================
@@ -466,4 +467,45 @@ private:
 	void SetPhysAssetStatus(const FString& Status);
 	void UpdatePhysAssetBoneListUI();
 	bool CreatePhysicsAsset();
+	
+	// ============================================================================
+	// Control Rig Sec 탭 관련 (세컨더리 전용 Control Rig)
+	// ============================================================================
+	TSharedPtr<FString> SelectedSecMesh;
+	TSharedPtr<SComboBox<TSharedPtr<FString>>> SecMeshComboBox;
+	TSharedPtr<FAssetThumbnail> SecMeshThumbnail;
+	TSharedPtr<SBox> SecMeshThumbnailBox;
+	TSharedPtr<SVerticalBox> SecBoneListBox;             // 본 목록 박스
+	TSharedPtr<SScrollBox> SecBoneScrollBox;
+	TSharedPtr<SEditableTextBox> SecOutputNameBox;
+	TSharedPtr<SEditableTextBox> SecOutputFolderBox;
+	TSharedPtr<STextBlock> SecStatusText;
+	FString SecDefaultOutputFolder = TEXT("/Game/ControlRigs");
+	TArray<FBoneDisplayInfo> SecBoneDisplayList;         // 본 표시 정보
+	TWeakObjectPtr<USkeletalMesh> SecCachedMesh;
+	TSharedPtr<SButton> SecCreateButton;
+	
+	// Control Rig Sec UI 함수
+	TSharedRef<SWidget> OnGenerateSecMeshWidget(TSharedPtr<FString> InItem);
+	void OnSecMeshSelectionChanged(TSharedPtr<FString> NewValue, ESelectInfo::Type SelectInfo);
+	FText GetSelectedSecMeshName() const;
+	FReply OnUseSelectedSecMeshClicked();
+	FReply OnSecBoneMappingClicked();
+	FReply OnCreateSecControlRigClicked();
+	FReply OnSecBrowseFolderClicked();
+	void UpdateSecMeshThumbnail();
+	void SetSecStatus(const FString& Status);
+	void BuildSecBoneDisplayList();
+	void UpdateSecBoneListUI();
+	TSharedRef<SWidget> CreateSecBoneRow(int32 Index);
+	void OnSecBoneClassificationChanged(EBoneClassification NewClassification, int32 BoneIndex);
+	bool CreateSecondaryOnlyControlRigFromSecTab();
+	void ConnectSecondaryFunctionNodesFromScratch(class UControlRigBlueprint* Rig, 
+		const TMap<FName, TArray<FName>>& ChainsBySpace);
+	void CleanupMainBoneNodesAndConnectSecondary(class UControlRigBlueprint* Rig,
+		const TMap<FName, TArray<FName>>& ChainsBySpace);
+	
+	// Control Rig Sec 탭용 간단한 함수 연결
+	void ConnectSecondaryFunctionsSimple(class UControlRigBlueprint* Rig,
+		const TMap<FName, TArray<FName>>& ChainsBySpace);
 };
