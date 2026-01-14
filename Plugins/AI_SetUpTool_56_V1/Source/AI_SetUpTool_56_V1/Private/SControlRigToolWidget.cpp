@@ -57,6 +57,11 @@
 #include "RetargetEditor/IKRetargeterController.h"
 #include "DesktopPlatformModule.h"
 #include "Widgets/Colors/SColorPicker.h"
+// Control Rig Edit Mode (시퀀서 연동용)
+#include "EditMode/ControlRigEditMode.h"
+#include "EditorModeManager.h"
+// Anim Picker 3D Viewport
+#include "SAnimPickerViewport.h"
 
 // Physics Asset
 #include "PhysicsEngine/PhysicsAsset.h"
@@ -287,6 +292,76 @@ bool SControlRigToolWidget::IsHelperBone(const FString& BoneName) const
 	return false;
 }
 
+// ============================================================================
+// SAnimPicker2DPanel 구현 - 마우스 줌/패닝 지원
+// ============================================================================
+void SAnimPicker2DPanel::Construct(const FArguments& InArgs)
+{
+	OwnerWidget = InArgs._OwnerWidget;
+	ZoomScale = 1.0f;
+	bIsDragging = false;
+	
+	ChildSlot
+	[
+		SAssignNew(PickerOverlay, SOverlay)
+	];
+}
+
+FReply SAnimPicker2DPanel::OnMouseWheel(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent)
+{
+	if (OwnerWidget)
+	{
+		// 마우스 휠로 줌
+		float Delta = MouseEvent.GetWheelDelta() * 0.1f;
+		ZoomScale = FMath::Clamp(ZoomScale + Delta, 0.5f, 2.5f);
+		OwnerWidget->AnimPicker2DZoomScale = ZoomScale;
+		OwnerWidget->UpdateAnimPicker2DView();
+		return FReply::Handled();
+	}
+	return FReply::Unhandled();
+}
+
+FReply SAnimPicker2DPanel::OnMouseButtonDown(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent)
+{
+	// Ctrl + 우클릭 또는 Ctrl + 좌클릭으로 드래그 줌 시작
+	if (MouseEvent.IsControlDown() && (MouseEvent.GetEffectingButton() == EKeys::RightMouseButton || MouseEvent.GetEffectingButton() == EKeys::LeftMouseButton))
+	{
+		bIsDragging = true;
+		LastMousePos = MouseEvent.GetScreenSpacePosition();
+		return FReply::Handled().CaptureMouse(SharedThis(this));
+	}
+	return FReply::Unhandled();
+}
+
+FReply SAnimPicker2DPanel::OnMouseButtonUp(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent)
+{
+	if (bIsDragging)
+	{
+		bIsDragging = false;
+		return FReply::Handled().ReleaseMouseCapture();
+	}
+	return FReply::Unhandled();
+}
+
+FReply SAnimPicker2DPanel::OnMouseMove(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent)
+{
+	if (bIsDragging && OwnerWidget)
+	{
+		FVector2D CurrentPos = MouseEvent.GetScreenSpacePosition();
+		FVector2D Delta = CurrentPos - LastMousePos;
+		LastMousePos = CurrentPos;
+		
+		// 가로 드래그로 줌 조절 (오른쪽 = 확대, 왼쪽 = 축소)
+		float ZoomDelta = Delta.X * 0.005f;
+		ZoomScale = FMath::Clamp(ZoomScale + ZoomDelta, 0.5f, 2.5f);
+		OwnerWidget->AnimPicker2DZoomScale = ZoomScale;
+		OwnerWidget->UpdateAnimPicker2DView();
+		
+		return FReply::Handled();
+	}
+	return FReply::Unhandled();
+}
+
 void SControlRigToolWidget::Construct(const FArguments& InArgs)
 {
 	ThumbnailPool = MakeShared<FAssetThumbnailPool>(24);
@@ -433,6 +508,12 @@ void SControlRigToolWidget::Construct(const FArguments& InArgs)
 				[
 					CreatePhysicsAssetTab()
 				]
+				
+				// Tab 5: Anim Picker
+				+ SWidgetSwitcher::Slot()
+				[
+					CreateAnimPickerTab()
+				]
 			]
 		]
 	];
@@ -541,6 +622,10 @@ TSharedRef<SWidget> SControlRigToolWidget::CreateTabBar()
 				+ SHorizontalBox::Slot().AutoWidth().Padding(2, 0, 0, 0)
 				[
 					MakeTabButton(4, LOCTEXT("Tab_PhysicsAsset", "Physics Asset"), FAppStyle::GetBrush("PhysicsAssetEditor.Tabs.Body"))
+				]
+				+ SHorizontalBox::Slot().AutoWidth().Padding(2, 0, 0, 0)
+				[
+					MakeTabButton(5, LOCTEXT("Tab_AnimPicker", "Anim Picker"), FAppStyle::GetBrush("Sequencer.Tracks.ControlRig"))
 				]
 				// 나머지 공간 채우기
 				+ SHorizontalBox::Slot().FillWidth(1.0f)
@@ -12243,6 +12328,2363 @@ bool SControlRigToolWidget::CreateSingleSecondaryControlRigAuto(const FString& M
 	
 	UE_LOG(LogTemp, Log, TEXT("[ControlRigSec Auto] Created: %s"), *OutputPath);
 	return true;
+}
+
+// ============================================================================
+// Anim Picker 탭 콘텐츠
+// ============================================================================
+TSharedRef<SWidget> SControlRigToolWidget::CreateAnimPickerTab()
+{
+	const FLinearColor CardBgColor(0.04f, 0.04f, 0.05f, 1.0f);
+	const FLinearColor AccentColor(0.2f, 0.6f, 0.9f, 1.0f);
+	
+	// Control Rig 에셋 목록 로드
+	LoadAnimPickerControlRigs();
+	
+	TSharedRef<SWidget> Result = SNew(SVerticalBox)
+		
+		// ========== 헤더 ==========
+		+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
+		[
+			SNew(SBorder)
+			.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+			.BorderBackgroundColor(FLinearColor(0.05f, 0.08f, 0.12f, 1.0f))
+			.Padding(FMargin(15, 12))
+			[
+				SNew(SHorizontalBox)
+				+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+				[
+					SNew(SImage)
+					.Image(FAppStyle::GetBrush("Sequencer.Tracks.ControlRig"))
+					.ColorAndOpacity(AccentColor)
+					.DesiredSizeOverride(FVector2D(24, 24))
+				]
+				+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(12, 0, 0, 0)
+				[
+					SNew(STextBlock)
+					.Text(LOCTEXT("AnimPickerHeader", "Animation Picker"))
+					.Font(FCoreStyle::GetDefaultFontStyle("Bold", 16))
+					.ColorAndOpacity(FLinearColor::White)
+				]
+				+ SHorizontalBox::Slot().FillWidth(1.0f)
+				+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+				[
+					SNew(STextBlock)
+					.Text(LOCTEXT("AnimPickerSubtitle", "Interactive Controller Selection"))
+					.Font(FCoreStyle::GetDefaultFontStyle("Regular", 10))
+					.ColorAndOpacity(FLinearColor(0.5f, 0.5f, 0.55f))
+				]
+			]
+		]
+		
+		// ========== Control Rig 선택 (썸네일 + 드롭다운 + 화살표) ==========
+		+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
+		[
+			SNew(SBorder)
+			.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+			.BorderBackgroundColor(CardBgColor)
+			.Padding(FMargin(15, 12))
+			[
+				SNew(SVerticalBox)
+				
+				// 섹션 헤더
+				+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
+				[
+					SNew(SHorizontalBox)
+					+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+					[
+						SNew(SImage)
+						.Image(FAppStyle::GetBrush("ControlRig.RigUnit"))
+						.ColorAndOpacity(FLinearColor(0.4f, 0.7f, 1.0f))
+						.DesiredSizeOverride(FVector2D(16, 16))
+					]
+					+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(8, 0, 0, 0)
+					[
+						SNew(STextBlock)
+						.Text(LOCTEXT("AnimPickerControlRig", "Control Rig Selection"))
+						.Font(FCoreStyle::GetDefaultFontStyle("Bold", 11))
+						.ColorAndOpacity(FLinearColor(0.8f, 0.85f, 0.9f))
+					]
+				]
+				
+				// 썸네일 + 드롭다운 + 화살표 버튼
+				+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 12)
+				[
+					SNew(SHorizontalBox)
+					// 썸네일
+					+ SHorizontalBox::Slot().AutoWidth().Padding(0, 0, 12, 0)
+					[
+						SNew(SBorder)
+						.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+						.BorderBackgroundColor(FLinearColor(0.02f, 0.02f, 0.025f, 1.0f))
+						.Padding(2)
+						[
+							SAssignNew(AnimPickerControlRigThumbnailBox, SBox)
+							.WidthOverride(ThumbnailSize)
+							.HeightOverride(ThumbnailSize)
+						]
+					]
+					// 드롭다운 + 버튼들
+					+ SHorizontalBox::Slot().FillWidth(1.0f)
+					[
+						SNew(SVerticalBox)
+						+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 6)
+						[
+							SNew(SHorizontalBox)
+							+ SHorizontalBox::Slot().FillWidth(1.0f).Padding(0, 0, 6, 0)
+							[
+								SAssignNew(AnimPickerControlRigComboBox, SComboBox<TSharedPtr<FString>>)
+								.OptionsSource(&AnimPickerControlRigOptions)
+								.OnGenerateWidget(this, &SControlRigToolWidget::OnGenerateAnimPickerControlRigWidget)
+								.OnSelectionChanged(this, &SControlRigToolWidget::OnAnimPickerControlRigSelectionChanged)
+								[
+									SNew(STextBlock)
+									.Text(this, &SControlRigToolWidget::GetSelectedAnimPickerControlRigName)
+									.Font(FCoreStyle::GetDefaultFontStyle("Regular", 10))
+								]
+							]
+							// 화살표 버튼 (선택된 에셋 가져오기)
+							+ SHorizontalBox::Slot().AutoWidth()
+							[
+								SNew(SButton)
+								.ButtonStyle(FAppStyle::Get(), "FlatButton")
+								.ContentPadding(FMargin(6, 4))
+								.ToolTipText(LOCTEXT("AnimPickerUseSelectedTooltip", "Use selected Control Rig from Content Browser"))
+								.OnClicked(this, &SControlRigToolWidget::OnAnimPickerUseSelectedControlRigClicked)
+								[
+									SNew(SImage)
+									.Image(FAppStyle::GetBrush("Icons.ArrowLeft"))
+									.ColorAndOpacity(FLinearColor(0.5f, 0.7f, 1.0f))
+									.DesiredSizeOverride(FVector2D(16, 16))
+								]
+							]
+						]
+						// Load + Refresh 버튼
+						+ SVerticalBox::Slot().AutoHeight()
+						[
+							SNew(SHorizontalBox)
+							// Load 버튼
+							+ SHorizontalBox::Slot().FillWidth(1.0f).Padding(0, 0, 4, 0)
+							[
+								SNew(SButton)
+								.HAlign(HAlign_Center)
+								.ContentPadding(FMargin(12, 6))
+								.OnClicked(this, &SControlRigToolWidget::OnAnimPickerLoadControlRigClicked)
+								.ButtonColorAndOpacity(FLinearColor(0.1f, 0.35f, 0.6f, 1.0f))
+								[
+									SNew(SHorizontalBox)
+									+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 6, 0)
+									[
+										SNew(SImage)
+										.Image(FAppStyle::GetBrush("Icons.Import"))
+										.DesiredSizeOverride(FVector2D(14, 14))
+									]
+									+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+									[
+										SNew(STextBlock)
+										.Text(LOCTEXT("AnimPickerLoadBtn", "Load"))
+										.Font(FCoreStyle::GetDefaultFontStyle("Bold", 10))
+									]
+								]
+							]
+							// Refresh 버튼
+							+ SHorizontalBox::Slot().AutoWidth()
+							[
+								SNew(SButton)
+								.HAlign(HAlign_Center)
+								.ContentPadding(FMargin(10, 6))
+								.OnClicked(this, &SControlRigToolWidget::OnAnimPickerRefreshClicked)
+								.ButtonColorAndOpacity(FLinearColor(0.15f, 0.4f, 0.2f, 1.0f))
+								.ToolTipText(LOCTEXT("AnimPickerRefreshTooltip", "Refresh Control Rig list"))
+								[
+									SNew(SImage)
+									.Image(FAppStyle::GetBrush("Icons.Refresh"))
+									.DesiredSizeOverride(FVector2D(14, 14))
+								]
+							]
+						]
+					]
+				]
+				
+				// 모드 전환 버튼 (3개: List / 2D / 3D)
+				+ SVerticalBox::Slot().AutoHeight()
+				[
+					SNew(SHorizontalBox)
+					// List View 버튼
+					+ SHorizontalBox::Slot().FillWidth(1.0f).Padding(0, 0, 2, 0)
+					[
+						SAssignNew(AnimPickerListViewButton, SButton)
+						.HAlign(HAlign_Center)
+						.ContentPadding(FMargin(0, 6))
+						.OnClicked(this, &SControlRigToolWidget::OnAnimPickerModeChanged, EAnimPickerMode::ListView)
+						.ButtonColorAndOpacity_Lambda([this]() 
+						{
+							return CurrentAnimPickerMode == EAnimPickerMode::ListView 
+								? FLinearColor(0.1f, 0.4f, 0.7f, 1.0f) 
+								: FLinearColor(0.05f, 0.05f, 0.06f, 1.0f);
+						})
+						[
+							SNew(SHorizontalBox)
+							+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 4, 0)
+							[
+								SNew(SImage)
+								.Image(FAppStyle::GetBrush("Icons.Toolbar.Details"))
+								.DesiredSizeOverride(FVector2D(12, 12))
+							]
+							+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+							[
+								SNew(STextBlock)
+								.Text(LOCTEXT("AnimPickerListView", "List"))
+								.Font(FCoreStyle::GetDefaultFontStyle("Bold", 9))
+							]
+						]
+					]
+					// 2D View 버튼
+					+ SHorizontalBox::Slot().FillWidth(1.0f).Padding(2, 0, 2, 0)
+					[
+						SNew(SButton)
+						.HAlign(HAlign_Center)
+						.ContentPadding(FMargin(0, 6))
+						.OnClicked(this, &SControlRigToolWidget::OnAnimPickerModeChanged, EAnimPickerMode::View2D)
+						.ButtonColorAndOpacity_Lambda([this]() 
+						{
+							return CurrentAnimPickerMode == EAnimPickerMode::View2D 
+								? FLinearColor(0.1f, 0.4f, 0.7f, 1.0f) 
+								: FLinearColor(0.05f, 0.05f, 0.06f, 1.0f);
+						})
+						[
+							SNew(SHorizontalBox)
+							+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 4, 0)
+							[
+								SNew(SImage)
+								.Image(FAppStyle::GetBrush("Icons.Visible"))
+								.DesiredSizeOverride(FVector2D(12, 12))
+							]
+							+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+							[
+								SNew(STextBlock)
+								.Text(LOCTEXT("AnimPicker2DView", "2D"))
+								.Font(FCoreStyle::GetDefaultFontStyle("Bold", 9))
+							]
+						]
+					]
+					// 3D View 버튼
+					+ SHorizontalBox::Slot().FillWidth(1.0f).Padding(2, 0, 0, 0)
+					[
+						SAssignNew(AnimPicker3DViewButton, SButton)
+						.HAlign(HAlign_Center)
+						.ContentPadding(FMargin(0, 6))
+						.OnClicked(this, &SControlRigToolWidget::OnAnimPickerModeChanged, EAnimPickerMode::View3D)
+						.ButtonColorAndOpacity_Lambda([this]() 
+						{
+							return CurrentAnimPickerMode == EAnimPickerMode::View3D 
+								? FLinearColor(0.1f, 0.4f, 0.7f, 1.0f) 
+								: FLinearColor(0.05f, 0.05f, 0.06f, 1.0f);
+						})
+						[
+							SNew(SHorizontalBox)
+							+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(0, 0, 4, 0)
+							[
+								SNew(SImage)
+								.Image(FAppStyle::GetBrush("EditorViewport.ToggleLODs"))
+								.DesiredSizeOverride(FVector2D(12, 12))
+							]
+							+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+							[
+								SNew(STextBlock)
+								.Text(LOCTEXT("AnimPicker3DView", "3D"))
+								.Font(FCoreStyle::GetDefaultFontStyle("Bold", 9))
+							]
+						]
+					]
+				]
+			]
+		]
+		
+		// ========== 컨텐츠 영역 (모드에 따라 전환) ==========
+		+ SVerticalBox::Slot().FillHeight(1.0f).Padding(0, 0, 0, 10)
+		[
+			SAssignNew(AnimPickerModeSwitcher, SWidgetSwitcher)
+			.WidgetIndex_Lambda([this]() { return (int32)CurrentAnimPickerMode; })
+			
+			// ===== List View (index 0) =====
+			+ SWidgetSwitcher::Slot()
+			[
+				SNew(SBorder)
+				.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+				.BorderBackgroundColor(CardBgColor)
+				.Padding(FMargin(10, 10))
+				[
+					SNew(SScrollBox)
+					+ SScrollBox::Slot()
+					[
+						SAssignNew(AnimPickerListViewBox, SVerticalBox)
+						+ SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center).VAlign(VAlign_Center).Padding(0, 50)
+						[
+							SNew(STextBlock)
+							.Text(LOCTEXT("AnimPickerNoControlRig", "Select a Control Rig and click 'Load' to view controllers"))
+							.Font(FCoreStyle::GetDefaultFontStyle("Italic", 11))
+							.ColorAndOpacity(FLinearColor(0.4f, 0.4f, 0.45f))
+						]
+					]
+				]
+			]
+			
+			// ===== 2D View (index 1) - 자동 배치 피커 (스크롤 + 줌) =====
+			+ SWidgetSwitcher::Slot()
+			[
+				SNew(SBorder)
+				.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+				.BorderBackgroundColor(CardBgColor)
+				.Padding(FMargin(5, 5))
+				[
+					SNew(SVerticalBox)
+					
+					// ★ 줌 컨트롤 바 ★
+					+ SVerticalBox::Slot().AutoHeight().Padding(5, 2)
+					[
+						SNew(SHorizontalBox)
+						+ SHorizontalBox::Slot().AutoWidth().Padding(2, 0)
+						[
+							SNew(SButton)
+							.ButtonStyle(&FAppStyle::Get().GetWidgetStyle<FButtonStyle>("SimpleButton"))
+							.ContentPadding(FMargin(4))
+							.OnClicked_Lambda([this]() -> FReply
+							{
+								AnimPicker2DZoomScale = FMath::Clamp(AnimPicker2DZoomScale - 0.15f, 0.5f, 2.5f);
+								UpdateAnimPicker2DView();
+								return FReply::Handled();
+							})
+							.ToolTipText(LOCTEXT("ZoomOut", "Zoom Out (-)"))
+							[
+								SNew(STextBlock)
+								.Text(FText::FromString(TEXT("−")))
+								.Font(FCoreStyle::GetDefaultFontStyle("Bold", 14))
+								.ColorAndOpacity(FLinearColor::White)
+							]
+						]
+						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(8, 0)
+						[
+							SNew(STextBlock)
+							.Text_Lambda([this]() { return FText::FromString(FString::Printf(TEXT("%.0f%%"), AnimPicker2DZoomScale * 100)); })
+							.Font(FCoreStyle::GetDefaultFontStyle("Regular", 10))
+							.ColorAndOpacity(FLinearColor(0.7f, 0.7f, 0.8f))
+						]
+						+ SHorizontalBox::Slot().AutoWidth().Padding(2, 0)
+						[
+							SNew(SButton)
+							.ButtonStyle(&FAppStyle::Get().GetWidgetStyle<FButtonStyle>("SimpleButton"))
+							.ContentPadding(FMargin(4))
+							.OnClicked_Lambda([this]() -> FReply
+							{
+								AnimPicker2DZoomScale = FMath::Clamp(AnimPicker2DZoomScale + 0.15f, 0.5f, 2.5f);
+								UpdateAnimPicker2DView();
+								return FReply::Handled();
+							})
+							.ToolTipText(LOCTEXT("ZoomIn", "Zoom In (+)"))
+							[
+								SNew(STextBlock)
+								.Text(FText::FromString(TEXT("+")))
+								.Font(FCoreStyle::GetDefaultFontStyle("Bold", 14))
+								.ColorAndOpacity(FLinearColor::White)
+							]
+						]
+						+ SHorizontalBox::Slot().AutoWidth().Padding(8, 0)
+						[
+							SNew(SButton)
+							.ButtonStyle(&FAppStyle::Get().GetWidgetStyle<FButtonStyle>("SimpleButton"))
+							.ContentPadding(FMargin(4))
+							.OnClicked_Lambda([this]() -> FReply
+							{
+								AnimPicker2DZoomScale = 1.0f;
+								UpdateAnimPicker2DView();
+								return FReply::Handled();
+							})
+							.ToolTipText(LOCTEXT("ZoomReset", "Reset Zoom (100%)"))
+							[
+								SNew(STextBlock)
+								.Text(FText::FromString(TEXT("Reset")))
+								.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
+								.ColorAndOpacity(FLinearColor(0.6f, 0.6f, 0.7f))
+							]
+						]
+					]
+					
+					// ★ 2D 피커 (마우스 휠 줌 지원) ★
+					+ SVerticalBox::Slot().FillHeight(1.0f)
+					[
+						SNew(SScrollBox)
+						.Orientation(Orient_Vertical)
+						+ SScrollBox::Slot().HAlign(HAlign_Center)
+						[
+							SNew(SScrollBox)
+							.Orientation(Orient_Horizontal)
+							+ SScrollBox::Slot().VAlign(VAlign_Center)
+							[
+								// 2D 피커 패널 (마우스 휠 줌 지원)
+								SNew(SBox)
+								.WidthOverride_Lambda([this]() { return 550.0f * AnimPicker2DZoomScale; })
+								.HeightOverride_Lambda([this]() { return 900.0f * AnimPicker2DZoomScale; })
+								[
+									SAssignNew(AnimPicker2DPanel, SAnimPicker2DPanel)
+									.OwnerWidget(this)
+								]
+							]
+						]
+					]
+				]
+			]
+			
+			// ===== 3D View (index 2) =====
+			+ SWidgetSwitcher::Slot()
+			[
+				SNew(SBorder)
+				.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+				.BorderBackgroundColor(CardBgColor)
+				.Padding(FMargin(2, 2))
+				[
+					SNew(SBox)
+					.MinDesiredHeight(400)
+					[
+						SAssignNew(AnimPicker3DViewport, SAnimPickerViewport)
+					]
+				]
+			]
+		]
+		
+		// ========== 상태 표시 ==========
+		+ SVerticalBox::Slot().AutoHeight()
+		[
+			SNew(SBorder)
+			.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+			.BorderBackgroundColor(FLinearColor(0.02f, 0.02f, 0.025f, 1.0f))
+			.Padding(FMargin(15, 8))
+			[
+				SAssignNew(AnimPickerStatusText, STextBlock)
+				.Text(LOCTEXT("AnimPickerReady", "Ready - Select a Control Rig to load controllers"))
+				.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
+				.ColorAndOpacity(FLinearColor(0.4f, 0.6f, 0.8f))
+			]
+		];
+	
+	// 3D 뷰포트 클릭 콜백 연결
+	if (AnimPicker3DViewport.IsValid())
+	{
+		AnimPicker3DViewport->OnControllerClicked.BindSP(this, &SControlRigToolWidget::OnAnimPicker3DControllerClicked);
+	}
+	
+	return Result;
+}
+
+// ============================================================================
+// Anim Picker - Control Rig 에셋 로드
+// ============================================================================
+void SControlRigToolWidget::LoadAnimPickerControlRigs()
+{
+	AnimPickerControlRigOptions.Empty();
+	AnimPickerControlRigPaths.Empty();
+	
+	FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
+	IAssetRegistry& AssetRegistry = AssetRegistryModule.Get();
+	
+	TArray<FAssetData> AssetDataList;
+	AssetRegistry.GetAssetsByClass(FTopLevelAssetPath(TEXT("/Script/ControlRigDeveloper"), TEXT("ControlRigBlueprint")), AssetDataList);
+	
+	for (const FAssetData& AssetData : AssetDataList)
+	{
+		FString AssetName = AssetData.AssetName.ToString();
+		FString AssetPath = AssetData.GetObjectPathString();
+		
+		AnimPickerControlRigOptions.Add(MakeShared<FString>(AssetName));
+		AnimPickerControlRigPaths.Add(AssetName, AssetPath);
+	}
+	
+	// 알파벳 순 정렬
+	AnimPickerControlRigOptions.Sort([](const TSharedPtr<FString>& A, const TSharedPtr<FString>& B)
+	{
+		return *A < *B;
+	});
+}
+
+// ============================================================================
+// Anim Picker - 콤보박스 위젯 생성
+// ============================================================================
+TSharedRef<SWidget> SControlRigToolWidget::OnGenerateAnimPickerControlRigWidget(TSharedPtr<FString> InItem)
+{
+	return SNew(STextBlock)
+		.Text(FText::FromString(*InItem))
+		.Font(FCoreStyle::GetDefaultFontStyle("Regular", 10));
+}
+
+// ============================================================================
+// Anim Picker - 선택 변경
+// ============================================================================
+void SControlRigToolWidget::OnAnimPickerControlRigSelectionChanged(TSharedPtr<FString> NewValue, ESelectInfo::Type SelectInfo)
+{
+	SelectedAnimPickerControlRig = NewValue;
+	UpdateAnimPickerControlRigThumbnail();
+}
+
+// ============================================================================
+// Anim Picker - 선택된 이름 가져오기
+// ============================================================================
+FText SControlRigToolWidget::GetSelectedAnimPickerControlRigName() const
+{
+	if (SelectedAnimPickerControlRig.IsValid())
+	{
+		return FText::FromString(*SelectedAnimPickerControlRig);
+	}
+	return LOCTEXT("AnimPickerSelectControlRig", "Select Control Rig...");
+}
+
+// ============================================================================
+// Anim Picker - 썸네일 업데이트
+// ============================================================================
+void SControlRigToolWidget::UpdateAnimPickerControlRigThumbnail()
+{
+	if (!AnimPickerControlRigThumbnailBox.IsValid() || !ThumbnailPool.IsValid())
+	{
+		return;
+	}
+	
+	FString Path = GetSelectedAnimPickerControlRigPath();
+	if (Path.IsEmpty())
+	{
+		AnimPickerControlRigThumbnailBox->SetContent(SNullWidget::NullWidget);
+		return;
+	}
+	
+	FAssetData AssetData = FAssetData(LoadObject<UObject>(nullptr, *Path));
+	if (AssetData.IsValid())
+	{
+		AnimPickerControlRigThumbnail = MakeShared<FAssetThumbnail>(AssetData, ThumbnailSize, ThumbnailSize, ThumbnailPool);
+		AnimPickerControlRigThumbnailBox->SetContent(AnimPickerControlRigThumbnail->MakeThumbnailWidget());
+	}
+	else
+	{
+		AnimPickerControlRigThumbnailBox->SetContent(SNullWidget::NullWidget);
+	}
+}
+
+// ============================================================================
+// Anim Picker - 선택된 Control Rig 경로 가져오기
+// ============================================================================
+FString SControlRigToolWidget::GetSelectedAnimPickerControlRigPath() const
+{
+	if (SelectedAnimPickerControlRig.IsValid())
+	{
+		const FString* PathPtr = AnimPickerControlRigPaths.Find(*SelectedAnimPickerControlRig);
+		if (PathPtr)
+		{
+			return *PathPtr;
+		}
+	}
+	return FString();
+}
+
+// ============================================================================
+// Anim Picker - 화살표 버튼 (Content Browser에서 선택된 에셋 가져오기)
+// ============================================================================
+FReply SControlRigToolWidget::OnAnimPickerUseSelectedControlRigClicked()
+{
+	FContentBrowserModule& ContentBrowserModule = FModuleManager::LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
+	TArray<FAssetData> SelectedAssets;
+	ContentBrowserModule.Get().GetSelectedAssets(SelectedAssets);
+	
+	for (const FAssetData& AssetData : SelectedAssets)
+	{
+		// Control Rig Blueprint인지 확인
+		if (AssetData.AssetClassPath == FTopLevelAssetPath(TEXT("/Script/ControlRigDeveloper"), TEXT("ControlRigBlueprint")))
+		{
+			FString AssetName = AssetData.AssetName.ToString();
+			FString AssetPath = AssetData.GetObjectPathString();
+			
+			// 옵션에 없으면 추가
+			bool bFound = false;
+			for (const TSharedPtr<FString>& Option : AnimPickerControlRigOptions)
+			{
+				if (*Option == AssetName)
+				{
+					bFound = true;
+					SelectedAnimPickerControlRig = Option;
+					break;
+				}
+			}
+			
+			if (!bFound)
+			{
+				TSharedPtr<FString> NewOption = MakeShared<FString>(AssetName);
+				AnimPickerControlRigOptions.Add(NewOption);
+				AnimPickerControlRigPaths.Add(AssetName, AssetPath);
+				SelectedAnimPickerControlRig = NewOption;
+			}
+			
+			// 콤보박스 업데이트
+			if (AnimPickerControlRigComboBox.IsValid())
+			{
+				AnimPickerControlRigComboBox->SetSelectedItem(SelectedAnimPickerControlRig);
+			}
+			
+			UpdateAnimPickerControlRigThumbnail();
+			SetAnimPickerStatus(FString::Printf(TEXT("Selected: %s"), *AssetName));
+			return FReply::Handled();
+		}
+	}
+	
+	SetAnimPickerStatus(TEXT("Please select a Control Rig Blueprint in Content Browser"));
+	return FReply::Handled();
+}
+
+// ============================================================================
+// Anim Picker - 모드 전환
+// ============================================================================
+FReply SControlRigToolWidget::OnAnimPickerModeChanged(EAnimPickerMode NewMode)
+{
+	CurrentAnimPickerMode = NewMode;
+	
+	// 모드 변경 시 해당 뷰 업데이트
+	if (NewMode == EAnimPickerMode::View2D)
+	{
+		UpdateAnimPicker2DView();
+	}
+	else if (NewMode == EAnimPickerMode::View3D)
+	{
+		UpdateAnimPicker3DView();
+	}
+	
+	return FReply::Handled();
+}
+
+// ============================================================================
+// Anim Picker - Control Rig 로드
+// ============================================================================
+FReply SControlRigToolWidget::OnAnimPickerLoadControlRigClicked()
+{
+	if (!SelectedAnimPickerControlRig.IsValid())
+	{
+		SetAnimPickerStatus(TEXT("Please select a Control Rig first"));
+		return FReply::Handled();
+	}
+	
+	FString* PathPtr = AnimPickerControlRigPaths.Find(*SelectedAnimPickerControlRig);
+	if (!PathPtr)
+	{
+		SetAnimPickerStatus(TEXT("Control Rig path not found"));
+		return FReply::Handled();
+	}
+	
+	LoadControllersFromControlRig(*PathPtr);
+	
+	return FReply::Handled();
+}
+
+// ============================================================================
+// Anim Picker - 새로고침 (Control Rig 목록 다시 로드)
+// ============================================================================
+FReply SControlRigToolWidget::OnAnimPickerRefreshClicked()
+{
+	// Control Rig 목록 다시 스캔
+	LoadAnimPickerControlRigs();
+	
+	// ComboBox 새로고침
+	if (AnimPickerControlRigComboBox.IsValid())
+	{
+		AnimPickerControlRigComboBox->RefreshOptions();
+	}
+	
+	// 현재 선택된 Control Rig가 있으면 다시 로드
+	if (SelectedAnimPickerControlRig.IsValid())
+	{
+		FString* PathPtr = AnimPickerControlRigPaths.Find(*SelectedAnimPickerControlRig);
+		if (PathPtr)
+		{
+			LoadControllersFromControlRig(*PathPtr);
+		}
+	}
+	
+	SetAnimPickerStatus(FString::Printf(TEXT("Refreshed: Found %d Control Rigs"), AnimPickerControlRigOptions.Num()));
+	
+	return FReply::Handled();
+}
+
+// ============================================================================
+// Anim Picker - Control Rig에서 컨트롤러 로드
+// ============================================================================
+void SControlRigToolWidget::LoadControllersFromControlRig(const FString& ControlRigPath)
+{
+	AnimPickerControllersBySpace.Empty();
+	AnimPickerSpaceExpanded.Empty();
+	
+	// ★★★ 로드하는 Control Rig 경로 출력 ★★★
+	UE_LOG(LogTemp, Error, TEXT("[AnimPicker] Loading Control Rig: %s"), *ControlRigPath);
+	
+	// Control Rig Blueprint 로드
+	UControlRigBlueprint* ControlRigBP = LoadObject<UControlRigBlueprint>(nullptr, *ControlRigPath);
+	if (!ControlRigBP)
+	{
+		SetAnimPickerStatus(TEXT("Failed to load Control Rig Blueprint"));
+		return;
+	}
+	
+	UE_LOG(LogTemp, Error, TEXT("[AnimPicker] Loaded: %s"), *ControlRigBP->GetName());
+	
+	URigHierarchy* Hierarchy = ControlRigBP->Hierarchy;
+	if (!Hierarchy)
+	{
+		SetAnimPickerStatus(TEXT("Control Rig has no hierarchy"));
+		return;
+	}
+	
+	// 모든 컨트롤 요소 가져오기
+	TArray<FRigControlElement*> Controls = Hierarchy->GetControls();
+	
+	// Space(Null) 요소 가져오기
+	TArray<FRigNullElement*> Nulls = Hierarchy->GetNulls();
+	TMap<FName, FName> ControlToSpace;  // Control -> Space 매핑
+	
+	// 각 Control의 부모 Space 찾기
+	for (FRigControlElement* Control : Controls)
+	{
+		FName ControlName = Control->GetFName();
+		FString NameStr = ControlName.ToString();
+		FString NameLower = NameStr.ToLower();
+		
+		// ★ 필터링: _ctrl 또는 _switch로 끝나는 것만 ★
+		bool bPassFilter = NameLower.EndsWith(TEXT("_ctrl")) || NameLower.EndsWith(TEXT("_switch"));
+		if (!bPassFilter)
+		{
+			continue;
+		}
+		
+		// 필터 통과 로그
+		if (NameLower.Contains(TEXT("switch")))
+		{
+			UE_LOG(LogTemp, Error, TEXT("[AnimPicker LOAD] Switch controller PASSED filter: '%s'"), *NameStr);
+		}
+		
+		FName ParentSpace = NAME_None;
+		
+		// 부모 체인을 따라가며 Space(Null) 찾기
+		FRigBaseElement* Parent = Hierarchy->GetFirstParent(Control);
+		while (Parent)
+		{
+			if (FRigNullElement* NullParent = Cast<FRigNullElement>(Parent))
+			{
+				ParentSpace = NullParent->GetFName();
+				break;
+			}
+			Parent = Hierarchy->GetFirstParent(Parent);
+		}
+		
+		// Space가 없으면 "root" 그룹에
+		if (ParentSpace == NAME_None)
+		{
+			ParentSpace = FName(TEXT("root"));
+		}
+		
+		// 컨트롤러 정보 생성
+		FAnimPickerControllerInfo Info;
+		Info.ControlName = ControlName;
+		Info.ParentSpace = ParentSpace;
+		Info.Transform = Hierarchy->GetGlobalTransform(Control->GetKey());
+		
+		// ★★★ Control Rig에서 Shape 정보 직접 추출 (올바른 API 사용!) ★★★
+		const FRigControlSettings& Settings = Control->Settings;
+		
+		// ★★★ Shape Transform: GetLocalControlShapeTransform() 사용! ★★★
+		// Settings.ShapeTransform은 기본값만 갖고 있고, 실제 값은 별도 저장됨!
+		FTransform ActualShapeTransform = Hierarchy->GetLocalControlShapeTransform(Control->GetKey(), false); // bInitial = false
+		Info.ShapeTransform = ActualShapeTransform;
+		Info.ShapeName = Settings.ShapeName;
+		Info.ShapeScale = ActualShapeTransform.GetScale3D();
+		
+		// ★ 색상: Control Rig의 원본 ShapeColor 사용 ★
+		Info.Color = Settings.ShapeColor;
+		
+		// ★★★ 모든 컨트롤러 ShapeTransform 디버그 (처음 20개) ★★★
+		static int32 DebugCounter = 0;
+		if (DebugCounter < 20)
+		{
+			FVector ShapeLoc = ActualShapeTransform.GetLocation();
+			FVector ShapeScale = ActualShapeTransform.GetScale3D();
+			FRotator ShapeRot = ActualShapeTransform.GetRotation().Rotator();
+			UE_LOG(LogTemp, Error, TEXT("[AnimPicker SHAPE] '%s': Shape='%s', ShapeTransform=(Loc=%.1f,%.1f,%.1f / Rot=%.1f,%.1f,%.1f / Scale=%.2f,%.2f,%.2f)"),
+				*NameStr,
+				*Settings.ShapeName.ToString(),
+				ShapeLoc.X, ShapeLoc.Y, ShapeLoc.Z,
+				ShapeRot.Pitch, ShapeRot.Yaw, ShapeRot.Roll,
+				ShapeScale.X, ShapeScale.Y, ShapeScale.Z);
+			DebugCounter++;
+		}
+		
+		// Space별로 그룹화
+		if (!AnimPickerControllersBySpace.Contains(ParentSpace))
+		{
+			AnimPickerControllersBySpace.Add(ParentSpace, TArray<FAnimPickerControllerInfo>());
+			AnimPickerSpaceExpanded.Add(ParentSpace, true);  // 기본 펼침
+		}
+		AnimPickerControllersBySpace[ParentSpace].Add(Info);
+	}
+	
+	// 컨트롤러 순서 저장 (Shift 범위 선택용)
+	AnimPickerControllerOrder.Empty();
+	for (const auto& Pair : AnimPickerControllersBySpace)
+	{
+		for (const FAnimPickerControllerInfo& Info : Pair.Value)
+		{
+			AnimPickerControllerOrder.Add(Info.ControlName);
+		}
+	}
+	
+	// 선택 초기화
+	AnimPickerSelectedControllers.Empty();
+	AnimPickerLastSelectedIndex = INDEX_NONE;
+	
+	// UI 업데이트
+	UpdateAnimPickerListViewUI();
+	UpdateAnimPicker2DView();
+	UpdateAnimPicker3DView();
+	SetAnimPickerStatus(FString::Printf(TEXT("Loaded %d controllers from %d spaces"), Controls.Num(), AnimPickerControllersBySpace.Num()));
+}
+
+// ============================================================================
+// Anim Picker - Space별 색상 가져오기
+// ============================================================================
+FLinearColor SControlRigToolWidget::GetColorForSpace(const FName& SpaceName) const
+{
+	// Space 이름에 따라 색상 결정 (세컨더리용)
+	FString SpaceStr = SpaceName.ToString().ToLower();
+	
+	if (SpaceStr.Contains(TEXT("head")) || SpaceStr.Contains(TEXT("hair")))
+	{
+		return FLinearColor(0.3f, 0.6f, 1.0f);  // 파랑
+	}
+	else if (SpaceStr.Contains(TEXT("pelvis")) || SpaceStr.Contains(TEXT("skirt")))
+	{
+		return FLinearColor(0.3f, 0.8f, 0.4f);  // 초록
+	}
+	else if (SpaceStr.Contains(TEXT("spine")) || SpaceStr.Contains(TEXT("cloak")) || SpaceStr.Contains(TEXT("cape")))
+	{
+		return FLinearColor(0.9f, 0.7f, 0.2f);  // 노랑
+	}
+	else if (SpaceStr.Contains(TEXT("arm")) || SpaceStr.Contains(TEXT("hand")))
+	{
+		return FLinearColor(0.9f, 0.4f, 0.3f);  // 빨강
+	}
+	else if (SpaceStr.Contains(TEXT("leg")) || SpaceStr.Contains(TEXT("foot")))
+	{
+		return FLinearColor(0.7f, 0.4f, 0.9f);  // 보라
+	}
+	
+	// 기본 색상 - 해시 기반
+	uint32 Hash = GetTypeHash(SpaceName);
+	float Hue = (Hash % 360) / 360.0f;
+	return FLinearColor::MakeFromHSV8(Hue * 255, 180, 200);
+}
+
+// ============================================================================
+// Anim Picker - 컨트롤러별 색상 가져오기 (Control Rig 기본 색상과 일치)
+// ============================================================================
+FLinearColor SControlRigToolWidget::GetColorForController(const FName& ControllerName) const
+{
+	FString CtrlStr = ControllerName.ToString().ToLower();
+	
+	// 왼쪽 본 - 파란색/청록색 (Control Rig 기본)
+	if (CtrlStr.EndsWith(TEXT("_l")) || CtrlStr.EndsWith(TEXT("_l_ctrl")) || 
+		CtrlStr.Contains(TEXT("_l_")) || CtrlStr.StartsWith(TEXT("l_")))
+	{
+		return FLinearColor(0.2f, 0.6f, 1.0f);  // 파란색
+	}
+	
+	// 오른쪽 본 - 빨간색/주황색 (Control Rig 기본)
+	if (CtrlStr.EndsWith(TEXT("_r")) || CtrlStr.EndsWith(TEXT("_r_ctrl")) || 
+		CtrlStr.Contains(TEXT("_r_")) || CtrlStr.StartsWith(TEXT("r_")))
+	{
+		return FLinearColor(1.0f, 0.3f, 0.2f);  // 빨간색
+	}
+	
+	// Spine 계열 - 노란색
+	if (CtrlStr.Contains(TEXT("spine")) || CtrlStr.Contains(TEXT("pelvis")) || 
+		CtrlStr.Contains(TEXT("hips")) || CtrlStr.Contains(TEXT("root")))
+	{
+		return FLinearColor(1.0f, 0.85f, 0.2f);  // 노란색
+	}
+	
+	// Head/Neck 계열 - 노란색 (중앙)
+	if (CtrlStr.Contains(TEXT("head")) || CtrlStr.Contains(TEXT("neck")))
+	{
+		return FLinearColor(1.0f, 0.85f, 0.2f);  // 노란색
+	}
+	
+	// IK 컨트롤러
+	if (CtrlStr.Contains(TEXT("ik_")) || CtrlStr.Contains(TEXT("_ik")))
+	{
+		if (CtrlStr.Contains(TEXT("_l")) || CtrlStr.Contains(TEXT("left")))
+			return FLinearColor(0.2f, 0.8f, 0.8f);  // 청록색
+		if (CtrlStr.Contains(TEXT("_r")) || CtrlStr.Contains(TEXT("right")))
+			return FLinearColor(1.0f, 0.5f, 0.3f);  // 주황색
+		return FLinearColor(0.6f, 0.9f, 0.3f);  // 연두색
+	}
+	
+	// 기본 - 회색
+	return FLinearColor(0.6f, 0.6f, 0.65f);
+}
+
+// ============================================================================
+// Anim Picker - Space 접기/펼치기
+// ============================================================================
+FReply SControlRigToolWidget::OnAnimPickerSpaceToggleClicked(FName SpaceName)
+{
+	if (bool* bExpanded = AnimPickerSpaceExpanded.Find(SpaceName))
+	{
+		*bExpanded = !(*bExpanded);
+		UpdateAnimPickerListViewUI();
+	}
+	return FReply::Handled();
+}
+
+// ============================================================================
+// Anim Picker - 컨트롤러 클릭 (다중 선택 지원)
+// ============================================================================
+FReply SControlRigToolWidget::OnAnimPickerControllerClicked(FName ControlName)
+{
+	// 현재 인덱스 찾기
+	int32 CurrentIndex = AnimPickerControllerOrder.IndexOfByKey(ControlName);
+	
+	// 키보드 상태 확인
+	const bool bCtrlDown = FSlateApplication::Get().GetModifierKeys().IsControlDown();
+	const bool bShiftDown = FSlateApplication::Get().GetModifierKeys().IsShiftDown();
+	
+	if (bCtrlDown)
+	{
+		// Ctrl+클릭: 토글 (추가/제거)
+		if (AnimPickerSelectedControllers.Contains(ControlName))
+		{
+			AnimPickerSelectedControllers.Remove(ControlName);
+		}
+		else
+		{
+			AnimPickerSelectedControllers.Add(ControlName);
+		}
+		AnimPickerLastSelectedIndex = CurrentIndex;
+	}
+	else if (bShiftDown && AnimPickerLastSelectedIndex != INDEX_NONE)
+	{
+		// Shift+클릭: 범위 선택
+		int32 StartIdx = FMath::Min(AnimPickerLastSelectedIndex, CurrentIndex);
+		int32 EndIdx = FMath::Max(AnimPickerLastSelectedIndex, CurrentIndex);
+		
+		for (int32 i = StartIdx; i <= EndIdx; i++)
+		{
+			if (AnimPickerControllerOrder.IsValidIndex(i))
+			{
+				AnimPickerSelectedControllers.Add(AnimPickerControllerOrder[i]);
+			}
+		}
+	}
+	else
+	{
+		// 일반 클릭: 단일 선택 (기존 선택 해제)
+		AnimPickerSelectedControllers.Empty();
+		AnimPickerSelectedControllers.Add(ControlName);
+		AnimPickerLastSelectedIndex = CurrentIndex;
+	}
+	
+	// 시퀀서/에디터에서 실제 선택
+	bool bClearFirst = !bCtrlDown && !bShiftDown;
+	SelectControlsInEditor(AnimPickerSelectedControllers, bClearFirst);
+	
+	// UI 업데이트
+	UpdateAnimPickerListViewUI();
+	
+	// 상태 표시
+	if (AnimPickerSelectedControllers.Num() == 1)
+	{
+		SetAnimPickerStatus(FString::Printf(TEXT("Selected: %s"), *ControlName.ToString()));
+	}
+	else
+	{
+		SetAnimPickerStatus(FString::Printf(TEXT("Selected: %d controllers"), AnimPickerSelectedControllers.Num()));
+	}
+	
+	UE_LOG(LogTemp, Log, TEXT("[AnimPicker] Selection: %d controllers"), AnimPickerSelectedControllers.Num());
+	
+	return FReply::Handled();
+}
+
+// ============================================================================
+// Anim Picker - 2D 피커 업데이트 (사람 실루엣 + 정확한 피커 배치)
+// ============================================================================
+void SControlRigToolWidget::UpdateAnimPicker2DView()
+{
+	// 패널에서 오버레이 가져오기
+	if (AnimPicker2DPanel.IsValid())
+	{
+		AnimPicker2DOverlay = AnimPicker2DPanel->GetOverlay();
+		AnimPicker2DPanel->SetZoomScale(AnimPicker2DZoomScale);
+	}
+	
+	if (!AnimPicker2DOverlay.IsValid())
+	{
+		UE_LOG(LogTemp, Error, TEXT("[AnimPicker 2D] AnimPicker2DOverlay is not valid!"));
+		return;
+	}
+	
+	// 기존 슬롯 모두 제거
+	AnimPicker2DOverlay->ClearChildren();
+	
+	// ★ 배경 슬롯 추가 (어두운 색) ★
+	AnimPicker2DOverlay->AddSlot()
+	[
+		SNew(SBorder)
+		.BorderImage(FAppStyle::GetBrush("WhiteBrush"))
+		.BorderBackgroundColor(FLinearColor(0.05f, 0.05f, 0.07f, 1.0f))
+	];
+	
+	if (AnimPickerControllersBySpace.Num() == 0)
+	{
+		AnimPicker2DOverlay->AddSlot()
+		.HAlign(HAlign_Center)
+		.VAlign(VAlign_Center)
+		[
+			SNew(STextBlock)
+			.Text(LOCTEXT("AnimPicker2DNoData", "2D Picker - Select Control Rig to load"))
+			.Font(FCoreStyle::GetDefaultFontStyle("Italic", 11))
+			.ColorAndOpacity(FLinearColor(0.5f, 0.5f, 0.6f))
+		];
+		return;
+	}
+	
+	// ★★★ 캔버스 크기 및 줌 스케일 ★★★
+	const float ZoomScale = AnimPicker2DZoomScale;
+	const float CanvasWidth = 500.0f * ZoomScale;
+	const float CanvasHeight = 700.0f * ZoomScale;
+	
+	// 실루엣 색상 (반투명 회색)
+	const FLinearColor SilhouetteColor(0.25f, 0.25f, 0.28f, 0.6f);
+	
+	// ★★★ 사람 실루엣 그리기 ★★★
+	// 머리 (원형 - 둥근 테두리)
+	AnimPicker2DOverlay->AddSlot()
+	.Padding(FMargin(CanvasWidth * 0.42f, CanvasHeight * 0.02f, 0, 0))
+	.HAlign(HAlign_Left).VAlign(VAlign_Top)
+	[
+		SNew(SBox).WidthOverride(CanvasWidth * 0.16f).HeightOverride(CanvasWidth * 0.16f)
+		[
+			SNew(SBorder)
+			.BorderImage(FAppStyle::GetBrush("WhiteBrush"))
+			.BorderBackgroundColor(SilhouetteColor)
+		]
+	];
+	
+	// 목
+	AnimPicker2DOverlay->AddSlot()
+	.Padding(FMargin(CanvasWidth * 0.46f, CanvasHeight * 0.115f, 0, 0))
+	.HAlign(HAlign_Left).VAlign(VAlign_Top)
+	[
+		SNew(SBox).WidthOverride(CanvasWidth * 0.08f).HeightOverride(CanvasHeight * 0.04f)
+		[
+			SNew(SBorder).BorderImage(FAppStyle::GetBrush("WhiteBrush")).BorderBackgroundColor(SilhouetteColor)
+		]
+	];
+	
+	// 어깨/쇄골 (가로로 넓은 사각형)
+	AnimPicker2DOverlay->AddSlot()
+	.Padding(FMargin(CanvasWidth * 0.22f, CanvasHeight * 0.15f, 0, 0))
+	.HAlign(HAlign_Left).VAlign(VAlign_Top)
+	[
+		SNew(SBox).WidthOverride(CanvasWidth * 0.56f).HeightOverride(CanvasHeight * 0.035f)
+		[
+			SNew(SBorder).BorderImage(FAppStyle::GetBrush("WhiteBrush")).BorderBackgroundColor(SilhouetteColor)
+		]
+	];
+	
+	// 몸통 (세로로 긴 사각형)
+	AnimPicker2DOverlay->AddSlot()
+	.Padding(FMargin(CanvasWidth * 0.35f, CanvasHeight * 0.185f, 0, 0))
+	.HAlign(HAlign_Left).VAlign(VAlign_Top)
+	[
+		SNew(SBox).WidthOverride(CanvasWidth * 0.30f).HeightOverride(CanvasHeight * 0.22f)
+		[
+			SNew(SBorder).BorderImage(FAppStyle::GetBrush("WhiteBrush")).BorderBackgroundColor(SilhouetteColor)
+		]
+	];
+	
+	// 골반 (가로로 넓은 사각형)
+	AnimPicker2DOverlay->AddSlot()
+	.Padding(FMargin(CanvasWidth * 0.32f, CanvasHeight * 0.40f, 0, 0))
+	.HAlign(HAlign_Left).VAlign(VAlign_Top)
+	[
+		SNew(SBox).WidthOverride(CanvasWidth * 0.36f).HeightOverride(CanvasHeight * 0.05f)
+		[
+			SNew(SBorder).BorderImage(FAppStyle::GetBrush("WhiteBrush")).BorderBackgroundColor(SilhouetteColor)
+		]
+	];
+	
+	// 왼쪽 팔 (upperarm)
+	AnimPicker2DOverlay->AddSlot()
+	.Padding(FMargin(CanvasWidth * 0.18f, CanvasHeight * 0.17f, 0, 0))
+	.HAlign(HAlign_Left).VAlign(VAlign_Top)
+	[
+		SNew(SBox).WidthOverride(CanvasWidth * 0.055f).HeightOverride(CanvasHeight * 0.12f)
+		[
+			SNew(SBorder).BorderImage(FAppStyle::GetBrush("WhiteBrush")).BorderBackgroundColor(SilhouetteColor)
+		]
+	];
+	// 왼쪽 팔 (lowerarm)
+	AnimPicker2DOverlay->AddSlot()
+	.Padding(FMargin(CanvasWidth * 0.14f, CanvasHeight * 0.29f, 0, 0))
+	.HAlign(HAlign_Left).VAlign(VAlign_Top)
+	[
+		SNew(SBox).WidthOverride(CanvasWidth * 0.05f).HeightOverride(CanvasHeight * 0.12f)
+		[
+			SNew(SBorder).BorderImage(FAppStyle::GetBrush("WhiteBrush")).BorderBackgroundColor(SilhouetteColor)
+		]
+	];
+	// 왼쪽 손
+	AnimPicker2DOverlay->AddSlot()
+	.Padding(FMargin(CanvasWidth * 0.10f, CanvasHeight * 0.41f, 0, 0))
+	.HAlign(HAlign_Left).VAlign(VAlign_Top)
+	[
+		SNew(SBox).WidthOverride(CanvasWidth * 0.07f).HeightOverride(CanvasHeight * 0.06f)
+		[
+			SNew(SBorder).BorderImage(FAppStyle::GetBrush("WhiteBrush")).BorderBackgroundColor(SilhouetteColor)
+		]
+	];
+	
+	// 오른쪽 팔 (upperarm)
+	AnimPicker2DOverlay->AddSlot()
+	.Padding(FMargin(CanvasWidth * 0.765f, CanvasHeight * 0.17f, 0, 0))
+	.HAlign(HAlign_Left).VAlign(VAlign_Top)
+	[
+		SNew(SBox).WidthOverride(CanvasWidth * 0.055f).HeightOverride(CanvasHeight * 0.12f)
+		[
+			SNew(SBorder).BorderImage(FAppStyle::GetBrush("WhiteBrush")).BorderBackgroundColor(SilhouetteColor)
+		]
+	];
+	// 오른쪽 팔 (lowerarm)
+	AnimPicker2DOverlay->AddSlot()
+	.Padding(FMargin(CanvasWidth * 0.81f, CanvasHeight * 0.29f, 0, 0))
+	.HAlign(HAlign_Left).VAlign(VAlign_Top)
+	[
+		SNew(SBox).WidthOverride(CanvasWidth * 0.05f).HeightOverride(CanvasHeight * 0.12f)
+		[
+			SNew(SBorder).BorderImage(FAppStyle::GetBrush("WhiteBrush")).BorderBackgroundColor(SilhouetteColor)
+		]
+	];
+	// 오른쪽 손
+	AnimPicker2DOverlay->AddSlot()
+	.Padding(FMargin(CanvasWidth * 0.83f, CanvasHeight * 0.41f, 0, 0))
+	.HAlign(HAlign_Left).VAlign(VAlign_Top)
+	[
+		SNew(SBox).WidthOverride(CanvasWidth * 0.07f).HeightOverride(CanvasHeight * 0.06f)
+		[
+			SNew(SBorder).BorderImage(FAppStyle::GetBrush("WhiteBrush")).BorderBackgroundColor(SilhouetteColor)
+		]
+	];
+	
+	// 왼쪽 다리 (thigh)
+	AnimPicker2DOverlay->AddSlot()
+	.Padding(FMargin(CanvasWidth * 0.35f, CanvasHeight * 0.45f, 0, 0))
+	.HAlign(HAlign_Left).VAlign(VAlign_Top)
+	[
+		SNew(SBox).WidthOverride(CanvasWidth * 0.065f).HeightOverride(CanvasHeight * 0.16f)
+		[
+			SNew(SBorder).BorderImage(FAppStyle::GetBrush("WhiteBrush")).BorderBackgroundColor(SilhouetteColor)
+		]
+	];
+	// 왼쪽 다리 (calf)
+	AnimPicker2DOverlay->AddSlot()
+	.Padding(FMargin(CanvasWidth * 0.34f, CanvasHeight * 0.61f, 0, 0))
+	.HAlign(HAlign_Left).VAlign(VAlign_Top)
+	[
+		SNew(SBox).WidthOverride(CanvasWidth * 0.055f).HeightOverride(CanvasHeight * 0.16f)
+		[
+			SNew(SBorder).BorderImage(FAppStyle::GetBrush("WhiteBrush")).BorderBackgroundColor(SilhouetteColor)
+		]
+	];
+	// 왼쪽 발
+	AnimPicker2DOverlay->AddSlot()
+	.Padding(FMargin(CanvasWidth * 0.30f, CanvasHeight * 0.77f, 0, 0))
+	.HAlign(HAlign_Left).VAlign(VAlign_Top)
+	[
+		SNew(SBox).WidthOverride(CanvasWidth * 0.085f).HeightOverride(CanvasHeight * 0.035f)
+		[
+			SNew(SBorder).BorderImage(FAppStyle::GetBrush("WhiteBrush")).BorderBackgroundColor(SilhouetteColor)
+		]
+	];
+	
+	// 오른쪽 다리 (thigh)
+	AnimPicker2DOverlay->AddSlot()
+	.Padding(FMargin(CanvasWidth * 0.585f, CanvasHeight * 0.45f, 0, 0))
+	.HAlign(HAlign_Left).VAlign(VAlign_Top)
+	[
+		SNew(SBox).WidthOverride(CanvasWidth * 0.065f).HeightOverride(CanvasHeight * 0.16f)
+		[
+			SNew(SBorder).BorderImage(FAppStyle::GetBrush("WhiteBrush")).BorderBackgroundColor(SilhouetteColor)
+		]
+	];
+	// 오른쪽 다리 (calf)
+	AnimPicker2DOverlay->AddSlot()
+	.Padding(FMargin(CanvasWidth * 0.605f, CanvasHeight * 0.61f, 0, 0))
+	.HAlign(HAlign_Left).VAlign(VAlign_Top)
+	[
+		SNew(SBox).WidthOverride(CanvasWidth * 0.055f).HeightOverride(CanvasHeight * 0.16f)
+		[
+			SNew(SBorder).BorderImage(FAppStyle::GetBrush("WhiteBrush")).BorderBackgroundColor(SilhouetteColor)
+		]
+	];
+	// 오른쪽 발
+	AnimPicker2DOverlay->AddSlot()
+	.Padding(FMargin(CanvasWidth * 0.615f, CanvasHeight * 0.77f, 0, 0))
+	.HAlign(HAlign_Left).VAlign(VAlign_Top)
+	[
+		SNew(SBox).WidthOverride(CanvasWidth * 0.085f).HeightOverride(CanvasHeight * 0.035f)
+		[
+			SNew(SBorder).BorderImage(FAppStyle::GetBrush("WhiteBrush")).BorderBackgroundColor(SilhouetteColor)
+		]
+	];
+	
+	// ★★★ 피커 위치 정의 (실루엣에 맞춰서) ★★★
+	TMap<FString, FVector2D> BonePositions;
+	
+	// === 머리/목 ===
+	BonePositions.Add(TEXT("head"), FVector2D(0.50f, 0.055f));
+	BonePositions.Add(TEXT("neck"), FVector2D(0.50f, 0.125f));
+	BonePositions.Add(TEXT("neck_01"), FVector2D(0.50f, 0.125f));
+	
+	// === 척추 (중앙 세로) ===
+	BonePositions.Add(TEXT("spine_03"), FVector2D(0.50f, 0.195f));
+	BonePositions.Add(TEXT("spine_02"), FVector2D(0.50f, 0.26f));
+	BonePositions.Add(TEXT("spine_01"), FVector2D(0.50f, 0.325f));
+	BonePositions.Add(TEXT("spine"), FVector2D(0.50f, 0.325f));
+	
+	// === 골반/힙 ===
+	BonePositions.Add(TEXT("pelvis"), FVector2D(0.50f, 0.39f));
+	BonePositions.Add(TEXT("hips"), FVector2D(0.50f, 0.42f));
+	BonePositions.Add(TEXT("body"), FVector2D(0.50f, 0.365f));
+	BonePositions.Add(TEXT("body_offset"), FVector2D(0.50f, 0.355f));
+	BonePositions.Add(TEXT("global"), FVector2D(0.50f, 0.44f));
+	// === 왼쪽 쇄골/팔 (실루엣 위치에 맞춤) ===
+	BonePositions.Add(TEXT("clavicle_l"), FVector2D(0.36f, 0.16f));
+	BonePositions.Add(TEXT("upperarm_l"), FVector2D(0.205f, 0.22f));
+	BonePositions.Add(TEXT("lowerarm_l"), FVector2D(0.165f, 0.34f));
+	BonePositions.Add(TEXT("hand_l"), FVector2D(0.135f, 0.435f));
+	
+	// 왼쪽 손가락 (손 아래쪽에 밀집)
+	BonePositions.Add(TEXT("thumb_01_l"), FVector2D(0.095f, 0.425f));
+	BonePositions.Add(TEXT("thumb_02_l"), FVector2D(0.08f, 0.435f));
+	BonePositions.Add(TEXT("thumb_03_l"), FVector2D(0.065f, 0.445f));
+	BonePositions.Add(TEXT("index_01_l"), FVector2D(0.10f, 0.455f));
+	BonePositions.Add(TEXT("index_02_l"), FVector2D(0.085f, 0.465f));
+	BonePositions.Add(TEXT("index_03_l"), FVector2D(0.07f, 0.475f));
+	BonePositions.Add(TEXT("middle_01_l"), FVector2D(0.115f, 0.46f));
+	BonePositions.Add(TEXT("middle_02_l"), FVector2D(0.10f, 0.47f));
+	BonePositions.Add(TEXT("middle_03_l"), FVector2D(0.085f, 0.48f));
+	BonePositions.Add(TEXT("ring_01_l"), FVector2D(0.13f, 0.46f));
+	BonePositions.Add(TEXT("ring_02_l"), FVector2D(0.115f, 0.47f));
+	BonePositions.Add(TEXT("ring_03_l"), FVector2D(0.10f, 0.48f));
+	BonePositions.Add(TEXT("pinky_01_l"), FVector2D(0.145f, 0.455f));
+	BonePositions.Add(TEXT("pinky_02_l"), FVector2D(0.13f, 0.465f));
+	BonePositions.Add(TEXT("pinky_03_l"), FVector2D(0.115f, 0.475f));
+	
+	// === 오른쪽 쇄골/팔 ===
+	BonePositions.Add(TEXT("clavicle_r"), FVector2D(0.64f, 0.16f));
+	BonePositions.Add(TEXT("upperarm_r"), FVector2D(0.795f, 0.22f));
+	BonePositions.Add(TEXT("lowerarm_r"), FVector2D(0.835f, 0.34f));
+	BonePositions.Add(TEXT("hand_r"), FVector2D(0.865f, 0.435f));
+	
+	// 오른쪽 손가락
+	BonePositions.Add(TEXT("thumb_01_r"), FVector2D(0.905f, 0.425f));
+	BonePositions.Add(TEXT("thumb_02_r"), FVector2D(0.92f, 0.435f));
+	BonePositions.Add(TEXT("thumb_03_r"), FVector2D(0.935f, 0.445f));
+	BonePositions.Add(TEXT("index_01_r"), FVector2D(0.90f, 0.455f));
+	BonePositions.Add(TEXT("index_02_r"), FVector2D(0.915f, 0.465f));
+	BonePositions.Add(TEXT("index_03_r"), FVector2D(0.93f, 0.475f));
+	BonePositions.Add(TEXT("middle_01_r"), FVector2D(0.885f, 0.46f));
+	BonePositions.Add(TEXT("middle_02_r"), FVector2D(0.90f, 0.47f));
+	BonePositions.Add(TEXT("middle_03_r"), FVector2D(0.915f, 0.48f));
+	BonePositions.Add(TEXT("ring_01_r"), FVector2D(0.87f, 0.46f));
+	BonePositions.Add(TEXT("ring_02_r"), FVector2D(0.885f, 0.47f));
+	BonePositions.Add(TEXT("ring_03_r"), FVector2D(0.90f, 0.48f));
+	BonePositions.Add(TEXT("pinky_01_r"), FVector2D(0.855f, 0.455f));
+	BonePositions.Add(TEXT("pinky_02_r"), FVector2D(0.87f, 0.465f));
+	BonePositions.Add(TEXT("pinky_03_r"), FVector2D(0.885f, 0.475f));
+	
+	// === 왼쪽 다리 (실루엣 위치에 맞춤) ===
+	BonePositions.Add(TEXT("thigh_l"), FVector2D(0.38f, 0.50f));
+	BonePositions.Add(TEXT("calf_l"), FVector2D(0.365f, 0.66f));
+	BonePositions.Add(TEXT("foot_l"), FVector2D(0.35f, 0.77f));
+	BonePositions.Add(TEXT("ball_l"), FVector2D(0.32f, 0.79f));
+	BonePositions.Add(TEXT("toe_l"), FVector2D(0.30f, 0.785f));
+	
+	// === 오른쪽 다리 ===
+	BonePositions.Add(TEXT("thigh_r"), FVector2D(0.62f, 0.50f));
+	BonePositions.Add(TEXT("calf_r"), FVector2D(0.635f, 0.66f));
+	BonePositions.Add(TEXT("foot_r"), FVector2D(0.65f, 0.77f));
+	BonePositions.Add(TEXT("ball_r"), FVector2D(0.68f, 0.79f));
+	BonePositions.Add(TEXT("toe_r"), FVector2D(0.70f, 0.785f));
+	
+	// === IK 컨트롤러 (실루엣 바깥쪽에 배치) ===
+	// 왼쪽 IK
+	BonePositions.Add(TEXT("hand_l_ik"), FVector2D(0.04f, 0.44f));
+	BonePositions.Add(TEXT("arm_l_pv"), FVector2D(0.08f, 0.28f));
+	BonePositions.Add(TEXT("foot_l_ik"), FVector2D(0.25f, 0.78f));
+	BonePositions.Add(TEXT("leg_l_pv"), FVector2D(0.28f, 0.60f));
+	BonePositions.Add(TEXT("ball_l_ik"), FVector2D(0.25f, 0.80f));
+	
+	// 오른쪽 IK
+	BonePositions.Add(TEXT("hand_r_ik"), FVector2D(0.96f, 0.44f));
+	BonePositions.Add(TEXT("arm_r_pv"), FVector2D(0.92f, 0.28f));
+	BonePositions.Add(TEXT("foot_r_ik"), FVector2D(0.75f, 0.78f));
+	BonePositions.Add(TEXT("leg_r_pv"), FVector2D(0.72f, 0.60f));
+	BonePositions.Add(TEXT("ball_r_ik"), FVector2D(0.75f, 0.80f));
+	
+	// === Curl 컨트롤러 (손 바깥쪽) ===
+	BonePositions.Add(TEXT("thumb_curl_l"), FVector2D(0.05f, 0.42f));
+	BonePositions.Add(TEXT("index_curl_l"), FVector2D(0.05f, 0.455f));
+	BonePositions.Add(TEXT("middle_curl_l"), FVector2D(0.05f, 0.47f));
+	BonePositions.Add(TEXT("ring_curl_l"), FVector2D(0.05f, 0.485f));
+	BonePositions.Add(TEXT("pinky_curl_l"), FVector2D(0.05f, 0.50f));
+	
+	BonePositions.Add(TEXT("thumb_curl_r"), FVector2D(0.95f, 0.42f));
+	BonePositions.Add(TEXT("index_curl_r"), FVector2D(0.95f, 0.455f));
+	BonePositions.Add(TEXT("middle_curl_r"), FVector2D(0.95f, 0.47f));
+	BonePositions.Add(TEXT("ring_curl_r"), FVector2D(0.95f, 0.485f));
+	BonePositions.Add(TEXT("pinky_curl_r"), FVector2D(0.95f, 0.50f));
+	
+	// === Foot 보조 컨트롤러 ===
+	BonePositions.Add(TEXT("heel_l"), FVector2D(0.30f, 0.81f));
+	BonePositions.Add(TEXT("foot_bk1_l"), FVector2D(0.28f, 0.82f));
+	BonePositions.Add(TEXT("foot_roll_l"), FVector2D(0.26f, 0.81f));
+	BonePositions.Add(TEXT("roll_blend_l"), FVector2D(0.24f, 0.82f));
+	BonePositions.Add(TEXT("tip_l"), FVector2D(0.27f, 0.80f));
+	
+	BonePositions.Add(TEXT("heel_r"), FVector2D(0.70f, 0.81f));
+	BonePositions.Add(TEXT("foot_bk1_r"), FVector2D(0.72f, 0.82f));
+	BonePositions.Add(TEXT("foot_roll_r"), FVector2D(0.74f, 0.81f));
+	BonePositions.Add(TEXT("roll_blend_r"), FVector2D(0.76f, 0.82f));
+	BonePositions.Add(TEXT("tip_r"), FVector2D(0.73f, 0.80f));
+	
+	// ★★★ 모든 컨트롤러 수집 ★★★
+	struct F2DPickerInfo
+	{
+		FName ControlName;
+		FName SpaceName;
+		bool bIsMainBone;
+		FVector2D ScreenPos;
+		bool bHasFixedPos;
+	};
+	TArray<F2DPickerInfo> MainControllers;
+	TMap<FString, TArray<F2DPickerInfo>> SecondaryByParent;  // 부모 본 이름 → 세컨더리 목록
+	
+	// Space 이름에서 부모 본 이름 추출 함수
+	auto GetParentBoneFromSpace = [](const FName& SpaceName) -> FString
+	{
+		FString SpaceStr = SpaceName.ToString().ToLower();
+		// 예: "head_space" → "head", "pelvis_ctrl_space" → "pelvis"
+		SpaceStr = SpaceStr.Replace(TEXT("_space"), TEXT(""));
+		SpaceStr = SpaceStr.Replace(TEXT("_ctrl"), TEXT(""));
+		return SpaceStr;
+	};
+	
+	// ★★★ 디버그: 모든 컨트롤러 출력 ★★★
+	UE_LOG(LogTemp, Warning, TEXT("========== [AnimPicker 2D] All Controllers =========="));
+	int32 TotalCount = 0;
+	for (const auto& Pair : AnimPickerControllersBySpace)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("  Space: %s (%d controllers)"), *Pair.Key.ToString(), Pair.Value.Num());
+		for (const FAnimPickerControllerInfo& Info : Pair.Value)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("    - %s"), *Info.ControlName.ToString());
+			TotalCount++;
+		}
+	}
+	UE_LOG(LogTemp, Warning, TEXT("Total: %d controllers in %d spaces"), TotalCount, AnimPickerControllersBySpace.Num());
+	UE_LOG(LogTemp, Warning, TEXT("====================================================="));
+	
+	// ★★★ 세컨더리 패턴 정의 (의류/장식 컨트롤러만 세컨더리) ★★★
+	auto IsSecondaryPattern = [](const FString& NameLower) -> bool
+	{
+		// 의류/장식 컨트롤러만 세컨더리
+		if (NameLower.Contains(TEXT("cape")) || NameLower.Contains(TEXT("cloak")) || 
+			NameLower.Contains(TEXT("skirt")) || NameLower.Contains(TEXT("armor")) ||
+			NameLower.Contains(TEXT("hair")) || NameLower.Contains(TEXT("ribbon")) ||
+			NameLower.Contains(TEXT("belt")) || NameLower.Contains(TEXT("pouch")) ||
+			NameLower.Contains(TEXT("cloth")) || NameLower.Contains(TEXT("accessory")))
+		{
+			return true;
+		}
+		return false;
+	};
+	
+	for (const auto& Pair : AnimPickerControllersBySpace)
+	{
+		for (const FAnimPickerControllerInfo& Info : Pair.Value)
+		{
+			FString NameStr = Info.ControlName.ToString();
+			FString NameLower = NameStr.ToLower();
+			
+			// ★ 필터링: _ctrl 또는 _switch로 끝나는 것만 ★
+			if (!NameLower.EndsWith(TEXT("_ctrl")) && !NameLower.EndsWith(TEXT("_switch")))
+			{
+				continue;
+			}
+			
+			// ★★★ 메인/세컨더리 분류: 이름 패턴 기반 ★★★
+			bool bIsMainBone = !IsSecondaryPattern(NameLower);
+			
+			F2DPickerInfo PickerInfo;
+			PickerInfo.ControlName = Info.ControlName;
+			PickerInfo.SpaceName = Pair.Key;
+			PickerInfo.bIsMainBone = bIsMainBone;
+			PickerInfo.bHasFixedPos = false;
+			
+			if (bIsMainBone)
+			{
+				// 메인 본: 고정 위치 찾기
+				FString MatchedKey = TEXT("NONE");
+				for (auto& PosEntry : BonePositions)
+				{
+					if (NameLower.Contains(PosEntry.Key))
+					{
+						PickerInfo.ScreenPos = FVector2D(PosEntry.Value.X * CanvasWidth, PosEntry.Value.Y * CanvasHeight);
+						PickerInfo.bHasFixedPos = true;
+						MatchedKey = PosEntry.Key;
+						break;
+					}
+				}
+				UE_LOG(LogTemp, Warning, TEXT("[2D MAIN] %s -> Key=%s, HasPos=%d, Pos=(%.0f, %.0f)"), 
+					*NameStr, *MatchedKey, PickerInfo.bHasFixedPos ? 1 : 0, PickerInfo.ScreenPos.X, PickerInfo.ScreenPos.Y);
+				MainControllers.Add(PickerInfo);
+			}
+			else
+			{
+				// 세컨더리: 부모 본별로 그룹화
+				FString ParentBone = GetParentBoneFromSpace(Pair.Key);
+				UE_LOG(LogTemp, Warning, TEXT("[2D SEC] %s -> ParentBone=%s (from Space=%s)"), 
+					*NameStr, *ParentBone, *Pair.Key.ToString());
+				if (!SecondaryByParent.Contains(ParentBone))
+				{
+					SecondaryByParent.Add(ParentBone, TArray<F2DPickerInfo>());
+				}
+				SecondaryByParent[ParentBone].Add(PickerInfo);
+			}
+		}
+	}
+	
+	UE_LOG(LogTemp, Warning, TEXT("[2D SUMMARY] MainControllers=%d, SecondaryParents=%d"), MainControllers.Num(), SecondaryByParent.Num());
+	
+	// ★★★ 메인 본 위치 맵 (세컨더리 배치용) ★★★
+	TMap<FString, FVector2D> MainBonePositions;
+	
+	// ★★★ 메인 본 버튼 생성 ★★★
+	int32 MainCount = 0;
+	int32 SecCount = 0;
+	
+	for (const F2DPickerInfo& Info : MainControllers)
+	{
+		if (!Info.bHasFixedPos) continue;
+		
+		FString LowerName = Info.ControlName.ToString().ToLower();
+		
+		// ★★★ 컨트롤러 종류별 크기 설정 (직사각형 형태) ★★★
+		float BtnW = 32.0f * ZoomScale;
+		float BtnH = 32.0f * ZoomScale;
+		
+		// ★ SPINE (가로로 긴 직사각형) ★
+		if (LowerName.Contains(TEXT("spine")))
+		{
+			BtnW = 55.0f * ZoomScale;
+			BtnH = 22.0f * ZoomScale;
+		}
+		// ★ HIPS / PELVIS (가로로 넓음) ★
+		else if (LowerName.Contains(TEXT("hips")) || LowerName.Contains(TEXT("pelvis")))
+		{
+			BtnW = 65.0f * ZoomScale;
+			BtnH = 26.0f * ZoomScale;
+		}
+		// ★ HEAD (정사각형, 큼) ★
+		else if (LowerName.Contains(TEXT("head")))
+		{
+			BtnW = 42.0f * ZoomScale;
+			BtnH = 42.0f * ZoomScale;
+		}
+		// ★ NECK (가로로 약간 긴) ★
+		else if (LowerName.Contains(TEXT("neck")))
+		{
+			BtnW = 38.0f * ZoomScale;
+			BtnH = 24.0f * ZoomScale;
+		}
+		// ★ BODY (정사각형, 큼) ★
+		else if (LowerName.Contains(TEXT("body")))
+		{
+			BtnW = 45.0f * ZoomScale;
+			BtnH = 30.0f * ZoomScale;
+		}
+		// ★ CLAVICLE (가로로 긴) ★
+		else if (LowerName.Contains(TEXT("clavicle")))
+		{
+			BtnW = 40.0f * ZoomScale;
+			BtnH = 20.0f * ZoomScale;
+		}
+		// ★ UPPERARM / THIGH (세로로 긴 직사각형) ★
+		else if (LowerName.Contains(TEXT("upperarm")) || LowerName.Contains(TEXT("thigh")))
+		{
+			BtnW = 24.0f * ZoomScale;
+			BtnH = 45.0f * ZoomScale;
+		}
+		// ★ LOWERARM / CALF (세로로 긴 직사각형) ★
+		else if (LowerName.Contains(TEXT("lowerarm")) || LowerName.Contains(TEXT("calf")))
+		{
+			BtnW = 22.0f * ZoomScale;
+			BtnH = 40.0f * ZoomScale;
+		}
+		// ★ HAND / FOOT (정사각형, 중간) ★
+		else if (LowerName.Contains(TEXT("hand")) || LowerName.Contains(TEXT("foot")))
+		{
+			BtnW = 30.0f * ZoomScale;
+			BtnH = 30.0f * ZoomScale;
+		}
+		// ★ BALL (정사각형, 작음) ★
+		else if (LowerName.Contains(TEXT("ball")))
+		{
+			BtnW = 24.0f * ZoomScale;
+			BtnH = 24.0f * ZoomScale;
+		}
+		// ★ IK 컨트롤러 (원형 느낌) ★
+		else if (LowerName.Contains(TEXT("_ik")))
+		{
+			BtnW = 26.0f * ZoomScale;
+			BtnH = 26.0f * ZoomScale;
+		}
+		// ★ PV 컨트롤러 (다이아몬드 느낌, 작음) ★
+		else if (LowerName.Contains(TEXT("_pv")))
+		{
+			BtnW = 20.0f * ZoomScale;
+			BtnH = 20.0f * ZoomScale;
+		}
+		// ★ 발 보조 컨트롤러 (heel, foot_roll, roll_blend, tip, foot_bk1) ★
+		else if (LowerName.Contains(TEXT("heel")) || LowerName.Contains(TEXT("foot_roll")) ||
+			LowerName.Contains(TEXT("roll_blend")) || LowerName.Contains(TEXT("tip_")) ||
+			LowerName.Contains(TEXT("foot_bk")))
+		{
+			BtnW = 22.0f * ZoomScale;
+			BtnH = 18.0f * ZoomScale;
+		}
+		// ★ Curl 컨트롤러 ★
+		else if (LowerName.Contains(TEXT("curl")))
+		{
+			BtnW = 18.0f * ZoomScale;
+			BtnH = 18.0f * ZoomScale;
+		}
+		// ★ 손가락/발가락 (작은 직사각형) ★
+		else if (LowerName.Contains(TEXT("thumb")) || LowerName.Contains(TEXT("index")) || 
+			LowerName.Contains(TEXT("middle")) || LowerName.Contains(TEXT("ring")) || 
+			LowerName.Contains(TEXT("pinky")) || LowerName.Contains(TEXT("toe")))
+		{
+			BtnW = 14.0f * ZoomScale;
+			BtnH = 18.0f * ZoomScale;
+		}
+		// ★ GLOBAL (큰 정사각형) ★
+		else if (LowerName.Contains(TEXT("global")))
+		{
+			BtnW = 50.0f * ZoomScale;
+			BtnH = 28.0f * ZoomScale;
+		}
+		
+		// 색상: 왼쪽=파랑, 오른쪽=빨강, 중앙=노랑 (진한 색상)
+		FLinearColor BtnColor(1.0f, 0.75f, 0.0f, 1.0f);  // 기본 진한 노랑/골드
+		
+		if (LowerName.Contains(TEXT("_l_")) || LowerName.EndsWith(TEXT("_l_ctrl")) || LowerName.Contains(TEXT("_l_fk")) || LowerName.Contains(TEXT("_l_ik")))
+			BtnColor = FLinearColor(0.1f, 0.5f, 1.0f, 1.0f);  // 왼쪽 진한 파랑
+		else if (LowerName.Contains(TEXT("_r_")) || LowerName.EndsWith(TEXT("_r_ctrl")) || LowerName.Contains(TEXT("_r_fk")) || LowerName.Contains(TEXT("_r_ik")))
+			BtnColor = FLinearColor(1.0f, 0.2f, 0.15f, 1.0f);  // 오른쪽 진한 빨강
+		
+		// 선택 여부
+		if (AnimPickerSelectedControllers.Contains(Info.ControlName))
+		{
+			BtnColor = FLinearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			BtnW += 6.0f;
+			BtnH += 6.0f;
+		}
+		
+		float ScreenX = Info.ScreenPos.X;
+		float ScreenY = Info.ScreenPos.Y;
+		
+		// 메인 본 위치 저장 (세컨더리 배치용)
+		// 컨트롤러 이름에서 본 이름 추출 (예: head_ctrl → head)
+		FString BoneName = LowerName.Replace(TEXT("_ctrl"), TEXT(""));
+		MainBonePositions.Add(BoneName, FVector2D(ScreenX, ScreenY));
+		
+		FName ControlName = Info.ControlName;
+		
+		AnimPicker2DOverlay->AddSlot()
+		.Padding(FMargin(ScreenX - BtnW/2, ScreenY - BtnH/2, 0, 0))
+		.HAlign(HAlign_Left)
+		.VAlign(VAlign_Top)
+		[
+			SNew(SBox)
+			.WidthOverride(BtnW)
+			.HeightOverride(BtnH)
+			[
+				SNew(SButton)
+				.ButtonColorAndOpacity(BtnColor)
+				.ContentPadding(0)
+				.OnClicked_Lambda([this, ControlName]() -> FReply
+				{
+					OnAnimPickerControllerClicked(ControlName);
+					return FReply::Handled();
+				})
+				.ToolTipText(FText::FromName(ControlName))
+			]
+		];
+		MainCount++;
+	}
+	
+	// ★★★ 세컨더리 컨트롤러 (해당 부위 근처에 직관적 배치) ★★★
+	// 모든 세컨더리를 하나의 배열로 수집
+	TArray<F2DPickerInfo> AllSecondary;
+	for (auto& SecPair : SecondaryByParent)
+	{
+		for (const F2DPickerInfo& Info : SecPair.Value)
+		{
+			AllSecondary.Add(Info);
+		}
+	}
+	
+	// 세컨더리 크기
+	const float SecBtnSize = 14.0f * ZoomScale;
+	const float SecSpacing = 16.0f * ZoomScale;
+	
+	// ★★★ 세컨더리 위치 계산 함수 - 이름 기반으로 해당 부위 근처 배치 ★★★
+	// 카운터: 같은 영역에 여러 개 있을 때 오프셋용
+	TMap<FString, int32> AreaCounters;
+	
+	auto GetSecondaryPosition = [&](const FString& NameLower) -> FVector2D
+	{
+		// 기본 위치 (중앙)
+		float X = 0.5f;
+		float Y = 0.5f;
+		FString AreaKey = TEXT("default");
+		
+		// === 어깨 갑옷 (ShoulderArmor) - 어깨 바깥쪽 ===
+		if (NameLower.Contains(TEXT("shoulderarmor")))
+		{
+			if (NameLower.Contains(TEXT("l_")))
+			{
+				AreaKey = TEXT("l_shoulder_armor");
+				X = 0.12f;
+				Y = 0.16f;
+			}
+			else
+			{
+				AreaKey = TEXT("r_shoulder_armor");
+				X = 0.88f;
+				Y = 0.16f;
+			}
+		}
+		// === 망토 (Cape/Cloak) - 등/어깨 뒤쪽 ===
+		else if (NameLower.Contains(TEXT("cape")) || NameLower.Contains(TEXT("cloak")))
+		{
+			if (NameLower.StartsWith(TEXT("l_cape")) || NameLower.StartsWith(TEXT("lb_cape")))
+			{
+				AreaKey = TEXT("l_cape");
+				X = 0.18f;
+				Y = 0.25f;
+			}
+			else if (NameLower.StartsWith(TEXT("r_cape")) || NameLower.StartsWith(TEXT("rb_cape")))
+			{
+				AreaKey = TEXT("r_cape");
+				X = 0.82f;
+				Y = 0.25f;
+			}
+			else if (NameLower.StartsWith(TEXT("lf_cape")))
+			{
+				AreaKey = TEXT("lf_cape");
+				X = 0.28f;
+				Y = 0.20f;
+			}
+			else if (NameLower.StartsWith(TEXT("rf_cape")))
+			{
+				AreaKey = TEXT("rf_cape");
+				X = 0.72f;
+				Y = 0.20f;
+			}
+			else if (NameLower.StartsWith(TEXT("b_cape")) || NameLower.Contains(TEXT("center")))
+			{
+				AreaKey = TEXT("b_cape");
+				X = 0.50f;
+				Y = 0.28f;
+			}
+			else
+			{
+				AreaKey = TEXT("cape_other");
+				X = 0.50f;
+				Y = 0.22f;
+			}
+		}
+		// === 치마 (Skirt) - 골반/다리 주변 ===
+		else if (NameLower.Contains(TEXT("skirt")))
+		{
+			if (NameLower.StartsWith(TEXT("l_skirt")) || NameLower.StartsWith(TEXT("lb_skirt")))
+			{
+				AreaKey = TEXT("l_skirt");
+				X = 0.26f;
+				Y = 0.52f;
+			}
+			else if (NameLower.StartsWith(TEXT("r_skirt")) || NameLower.StartsWith(TEXT("rb_skirt")))
+			{
+				AreaKey = TEXT("r_skirt");
+				X = 0.74f;
+				Y = 0.52f;
+			}
+			else if (NameLower.StartsWith(TEXT("lf_skirt")))
+			{
+				AreaKey = TEXT("lf_skirt");
+				X = 0.32f;
+				Y = 0.46f;
+			}
+			else if (NameLower.StartsWith(TEXT("rf_skirt")))
+			{
+				AreaKey = TEXT("rf_skirt");
+				X = 0.68f;
+				Y = 0.46f;
+			}
+			else if (NameLower.StartsWith(TEXT("f_skirt")))
+			{
+				AreaKey = TEXT("f_skirt");
+				X = 0.50f;
+				Y = 0.46f;
+			}
+			else if (NameLower.StartsWith(TEXT("b_skirt")))
+			{
+				AreaKey = TEXT("b_skirt");
+				X = 0.50f;
+				Y = 0.52f;
+			}
+			else
+			{
+				AreaKey = TEXT("skirt_other");
+				X = 0.50f;
+				Y = 0.50f;
+			}
+		}
+		// === 머리카락 (Hair) - 머리 주변 ===
+		else if (NameLower.Contains(TEXT("hair")))
+		{
+			if (NameLower.Contains(TEXT("l_")))
+			{
+				AreaKey = TEXT("l_hair");
+				X = 0.38f;
+				Y = 0.06f;
+			}
+			else if (NameLower.Contains(TEXT("r_")))
+			{
+				AreaKey = TEXT("r_hair");
+				X = 0.62f;
+				Y = 0.06f;
+			}
+			else
+			{
+				AreaKey = TEXT("hair");
+				X = 0.50f;
+				Y = 0.02f;
+			}
+		}
+		// === 기타 ===
+		else
+		{
+			AreaKey = TEXT("other");
+			X = 0.50f;
+			Y = 0.85f;
+		}
+		
+		// 같은 영역에 여러 개 있으면 아래로 오프셋
+		if (!AreaCounters.Contains(AreaKey))
+		{
+			AreaCounters.Add(AreaKey, 0);
+		}
+		int32 Idx = AreaCounters[AreaKey];
+		AreaCounters[AreaKey] = Idx + 1;
+		
+		// 세로로 체인 배치
+		Y += (Idx * SecSpacing / CanvasHeight);
+		
+		return FVector2D(X, Y);
+	};
+	
+	for (int32 i = 0; i < AllSecondary.Num(); i++)
+	{
+		const F2DPickerInfo& Info = AllSecondary[i];
+		FString NameLower = Info.ControlName.ToString().ToLower();
+		
+		// 위치 계산
+		FVector2D NormPos = GetSecondaryPosition(NameLower);
+		float ScreenX = NormPos.X * CanvasWidth;
+		float ScreenY = NormPos.Y * CanvasHeight;
+		
+		// 세컨더리 색상 (타입 기반)
+		FLinearColor BtnColor(0.6f, 0.4f, 0.8f, 1.0f);  // 기본 보라
+		
+		if (NameLower.Contains(TEXT("cape")) || NameLower.Contains(TEXT("cloak")))
+			BtnColor = FLinearColor(0.5f, 0.35f, 0.9f, 1.0f);  // 보라
+		else if (NameLower.Contains(TEXT("skirt")))
+			BtnColor = FLinearColor(0.9f, 0.35f, 0.5f, 1.0f);  // 핑크
+		else if (NameLower.Contains(TEXT("armor")))
+			BtnColor = FLinearColor(0.3f, 0.6f, 0.9f, 1.0f);  // 시안
+		else if (NameLower.Contains(TEXT("hair")))
+			BtnColor = FLinearColor(0.9f, 0.6f, 0.3f, 1.0f);  // 오렌지
+		
+		float BtnW = SecBtnSize;
+		float BtnH = SecBtnSize;
+		
+		// 선택 여부
+		if (AnimPickerSelectedControllers.Contains(Info.ControlName))
+		{
+			BtnColor = FLinearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			BtnW += 4.0f * ZoomScale;
+			BtnH += 4.0f * ZoomScale;
+		}
+		
+		FName ControlName = Info.ControlName;
+		
+		// 세컨더리 버튼
+		AnimPicker2DOverlay->AddSlot()
+		.Padding(FMargin(ScreenX - BtnW/2, ScreenY - BtnH/2, 0, 0))
+		.HAlign(HAlign_Left)
+		.VAlign(VAlign_Top)
+		[
+			SNew(SBox)
+			.WidthOverride(BtnW)
+			.HeightOverride(BtnH)
+			[
+				SNew(SButton)
+				.ButtonColorAndOpacity(BtnColor)
+				.ContentPadding(0)
+				.OnClicked_Lambda([this, ControlName]() -> FReply
+				{
+					OnAnimPickerControllerClicked(ControlName);
+					return FReply::Handled();
+				})
+				.ToolTipText(FText::FromName(ControlName))
+			]
+		];
+		SecCount++;
+	}
+	
+	UE_LOG(LogTemp, Warning, TEXT("[AnimPicker 2D] Created %d main bones, %d secondary"), MainCount, SecCount);
+}
+
+// ============================================================================
+// Anim Picker - 3D 뷰에서 컨트롤러 클릭
+// ============================================================================
+void SControlRigToolWidget::OnAnimPicker3DControllerClicked(FName ControlName, bool bCtrlDown)
+{
+	// 현재 인덱스 찾기
+	int32 CurrentIndex = AnimPickerControllerOrder.IndexOfByKey(ControlName);
+	
+	if (bCtrlDown)
+	{
+		// Ctrl+클릭: 토글 (추가/제거)
+		if (AnimPickerSelectedControllers.Contains(ControlName))
+		{
+			AnimPickerSelectedControllers.Remove(ControlName);
+		}
+		else
+		{
+			AnimPickerSelectedControllers.Add(ControlName);
+		}
+		AnimPickerLastSelectedIndex = CurrentIndex;
+	}
+	else
+	{
+		// 일반 클릭: 단일 선택 (기존 선택 해제)
+		AnimPickerSelectedControllers.Empty();
+		AnimPickerSelectedControllers.Add(ControlName);
+		AnimPickerLastSelectedIndex = CurrentIndex;
+	}
+	
+	// 시퀀서/에디터에서 실제 선택
+	SelectControlsInEditor(AnimPickerSelectedControllers, !bCtrlDown);
+	
+	// UI 업데이트 (List View도 동기화)
+	UpdateAnimPickerListViewUI();
+	UpdateAnimPicker2DView();  // 2D 피커 선택 상태 업데이트
+	
+	// ★ 3D 뷰는 선택 상태만 업데이트 (마커 재생성 안 함 - 시점 리셋 방지) ★
+	if (AnimPicker3DViewport.IsValid())
+	{
+		AnimPicker3DViewport->SetSelectedControllers(AnimPickerSelectedControllers);
+	}
+	
+	// 상태 표시
+	if (AnimPickerSelectedControllers.Num() == 1)
+	{
+		SetAnimPickerStatus(FString::Printf(TEXT("3D View - Selected: %s"), *ControlName.ToString()));
+	}
+	else
+	{
+		SetAnimPickerStatus(FString::Printf(TEXT("3D View - Selected: %d controllers"), AnimPickerSelectedControllers.Num()));
+	}
+	
+	UE_LOG(LogTemp, Log, TEXT("[AnimPicker 3D] Selection: %d controllers"), AnimPickerSelectedControllers.Num());
+}
+
+// ============================================================================
+// Anim Picker - 3D 뷰포트 업데이트 (본 위치는 RefSkeleton, Shape 정보는 Control Rig에서)
+// ============================================================================
+void SControlRigToolWidget::UpdateAnimPicker3DView()
+{
+	if (!AnimPicker3DViewport.IsValid())
+	{
+		return;
+	}
+	
+	// Control Rig에서 Preview Mesh 가져와서 설정
+	FString ControlRigPath = GetSelectedAnimPickerControlRigPath();
+	USkeletalMesh* PreviewMesh = nullptr;
+	
+	if (!ControlRigPath.IsEmpty())
+	{
+		UControlRigBlueprint* ControlRigBP = LoadObject<UControlRigBlueprint>(nullptr, *ControlRigPath);
+		if (ControlRigBP)
+		{
+			PreviewMesh = ControlRigBP->GetPreviewMesh();
+			if (PreviewMesh)
+			{
+				AnimPicker3DViewport->SetSkeletalMesh(PreviewMesh);
+				UE_LOG(LogTemp, Log, TEXT("[AnimPicker 3D] Set preview mesh: %s"), *PreviewMesh->GetName());
+			}
+		}
+	}
+	
+	// ★★★ 본 위치: RefSkeleton에서, Shape 정보: Control Rig에서 ★★★
+	TArray<TPair<FName, FTransform>> ControllerTransforms;
+	TMap<FName, FLinearColor> ControllerColors;
+	TMap<FName, FVector> ControllerShapeScales;
+	TMap<FName, FName> ControllerShapeNames;  // Shape 모양 (Box, Sphere, Circle 등)
+	
+	// 본 이름 → 글로벌 위치 캐시 (스켈레탈 메쉬 기준)
+	TMap<FName, FTransform> BoneTransformCache;
+	if (PreviewMesh)
+	{
+		const FReferenceSkeleton& RefSkeleton = PreviewMesh->GetRefSkeleton();
+		TArray<FTransform> ComponentSpaceTransforms;
+		
+		// 로컬 → 컴포넌트 스페이스 변환
+		const TArray<FTransform>& RefPose = RefSkeleton.GetRefBonePose();
+		ComponentSpaceTransforms.SetNum(RefPose.Num());
+		
+		for (int32 BoneIdx = 0; BoneIdx < RefPose.Num(); BoneIdx++)
+		{
+			int32 ParentIdx = RefSkeleton.GetParentIndex(BoneIdx);
+			if (ParentIdx == INDEX_NONE)
+			{
+				ComponentSpaceTransforms[BoneIdx] = RefPose[BoneIdx];
+			}
+			else
+			{
+				ComponentSpaceTransforms[BoneIdx] = RefPose[BoneIdx] * ComponentSpaceTransforms[ParentIdx];
+			}
+			
+			FName BoneName = RefSkeleton.GetBoneName(BoneIdx);
+			BoneTransformCache.Add(BoneName, ComponentSpaceTransforms[BoneIdx]);
+		}
+		
+		UE_LOG(LogTemp, Log, TEXT("[AnimPicker 3D] Cached %d bone transforms from RefSkeleton"), BoneTransformCache.Num());
+	}
+	
+	// 컨트롤러 정보 수집 - 모든 _ctrl 컨트롤러 포함!
+	for (const auto& Pair : AnimPickerControllersBySpace)
+	{
+		for (const FAnimPickerControllerInfo& Info : Pair.Value)
+		{
+			FString CtrlName = Info.ControlName.ToString();
+			FString NameLower = CtrlName.ToLower();
+			
+			// ★ 필터링: _ctrl 또는 _switch로 끝나는 것만 ★
+			if (!NameLower.EndsWith(TEXT("_ctrl")) && !NameLower.EndsWith(TEXT("_switch")))
+			{
+				continue;
+			}
+			
+			// ★★★ FK/IK Switch 컨트롤러 특별 처리 ★★★
+			bool bIsSwitch = NameLower.Contains(TEXT("switch"));
+			FString BoneNameStr;
+			
+			if (bIsSwitch)
+			{
+				// switch 컨트롤러: 관련 본 이름 추출
+				// arm_l_fk_ik_switch → upperarm_l
+				// leg_l_fk_ik_switch → thigh_l
+				if (NameLower.Contains(TEXT("arm_l")))
+				{
+					BoneNameStr = TEXT("upperarm_l");
+				}
+				else if (NameLower.Contains(TEXT("arm_r")))
+				{
+					BoneNameStr = TEXT("upperarm_r");
+				}
+				else if (NameLower.Contains(TEXT("leg_l")))
+				{
+					BoneNameStr = TEXT("thigh_l");
+				}
+				else if (NameLower.Contains(TEXT("leg_r")))
+				{
+					BoneNameStr = TEXT("thigh_r");
+				}
+				else
+				{
+					BoneNameStr = TEXT("pelvis");  // 기본
+				}
+				
+				UE_LOG(LogTemp, Warning, TEXT("[AnimPicker 3D] Switch '%s' -> Bone '%s'"), *CtrlName, *BoneNameStr);
+			}
+			else
+			{
+				// 일반 컨트롤러: 이름에서 본 이름 추출
+				BoneNameStr = CtrlName;
+				BoneNameStr.RemoveFromEnd(TEXT("_ctrl"));
+				
+				// FK/IK 접미사 제거
+				if (BoneNameStr.EndsWith(TEXT("_fk")))
+				{
+					BoneNameStr.RemoveFromEnd(TEXT("_fk"));
+				}
+				else if (BoneNameStr.EndsWith(TEXT("_ik")))
+				{
+					BoneNameStr.RemoveFromEnd(TEXT("_ik"));
+				}
+			}
+			
+			FName BoneName = FName(*BoneNameStr);
+			FTransform BoneTransform = FTransform::Identity;
+			bool bFoundBone = false;
+			
+			// RefSkeleton에서 본 위치 찾기
+			if (BoneTransformCache.Contains(BoneName))
+			{
+				BoneTransform = BoneTransformCache[BoneName];
+				bFoundBone = true;
+			}
+			else
+			{
+				// 대소문자 무시 검색
+				for (const auto& CachePair : BoneTransformCache)
+				{
+					FString CacheBoneLower = CachePair.Key.ToString().ToLower();
+					if (CacheBoneLower == BoneNameStr.ToLower())
+					{
+						BoneTransform = CachePair.Value;
+						bFoundBone = true;
+						break;
+					}
+					// 부분 매칭도 시도 (예: spine_01 in Spine_01_drv)
+					if (CacheBoneLower.Contains(BoneNameStr.ToLower()) || BoneNameStr.ToLower().Contains(CacheBoneLower))
+					{
+						BoneTransform = CachePair.Value;
+						bFoundBone = true;
+						break;
+					}
+				}
+			}
+			
+			// ★ 본을 못 찾아도 Control Rig의 Transform + ShapeOffset 사용 ★
+			FVector FinalLocation;
+			if (bFoundBone)
+			{
+				// 본 위치 + ShapeTransform 오프셋
+				FinalLocation = BoneTransform.GetLocation() + Info.ShapeTransform.GetLocation();
+				
+				// ★★★ Switch 컨트롤러는 본 옆에 오프셋 적용 ★★★
+				if (bIsSwitch)
+				{
+					// 왼쪽/오른쪽에 따라 X 방향 오프셋
+					float SideOffset = 30.0f;  // 본에서 30cm 옆
+					if (NameLower.Contains(TEXT("_l_")))
+					{
+						FinalLocation.Y += SideOffset;  // 왼쪽은 +Y
+					}
+					else if (NameLower.Contains(TEXT("_r_")))
+					{
+						FinalLocation.Y -= SideOffset;  // 오른쪽은 -Y
+					}
+					FinalLocation.Z += 15.0f;  // 약간 위로
+				}
+			}
+			else
+			{
+				// 본 못 찾음 → Control Rig Transform + ShapeOffset 사용
+				FinalLocation = Info.Transform.GetLocation() + Info.ShapeTransform.GetLocation();
+				UE_LOG(LogTemp, Warning, TEXT("[AnimPicker 3D] Bone not found for '%s' (tried: %s), using ControlRig transform"), *CtrlName, *BoneNameStr);
+			}
+			
+			FTransform FinalTransform = bFoundBone ? BoneTransform : Info.Transform;
+			FinalTransform.SetLocation(FinalLocation);
+			
+			ControllerTransforms.Add(TPair<FName, FTransform>(Info.ControlName, FinalTransform));
+			
+			// ★ Control Rig의 원본 색상 사용 ★
+			ControllerColors.Add(Info.ControlName, Info.Color);
+			
+			// ★ Control Rig의 Shape 스케일 사용 ★
+			ControllerShapeScales.Add(Info.ControlName, Info.ShapeScale);
+			
+			// ★ Control Rig의 Shape 이름 사용 ★
+			ControllerShapeNames.Add(Info.ControlName, Info.ShapeName);
+		}
+	}
+	
+	UE_LOG(LogTemp, Log, TEXT("[AnimPicker 3D] Collected %d controllers (Bone pos from RefSkeleton, Shape from ControlRig)"), ControllerTransforms.Num());
+	
+	// 3D 뷰포트에 마커 설정 (Shape 스케일 + Shape 이름 정보 포함)
+	AnimPicker3DViewport->SetControllerMarkersWithShapeInfo(ControllerTransforms, ControllerColors, ControllerShapeScales, ControllerShapeNames);
+	
+	UE_LOG(LogTemp, Log, TEXT("[AnimPicker 3D] Updated with %d controllers"), ControllerTransforms.Num());
+}
+
+// ============================================================================
+// Anim Picker - 시퀀서/에디터에서 실제 컨트롤러 선택
+// ============================================================================
+void SControlRigToolWidget::SelectControlsInEditor(const TSet<FName>& ControlNames, bool bClearSelection)
+{
+	// Control Rig Edit Mode 가져오기
+	FControlRigEditMode* EditMode = static_cast<FControlRigEditMode*>(
+		GLevelEditorModeTools().GetActiveMode(FControlRigEditMode::ModeName));
+	
+	if (!EditMode)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[AnimPicker] Control Rig Edit Mode not active. Open Sequencer with a Control Rig track first."));
+		return;
+	}
+	
+	// 활성 Control Rig 가져오기
+	TArray<UControlRig*> ActiveControlRigs = EditMode->GetControlRigsArray(true);
+	if (ActiveControlRigs.Num() == 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[AnimPicker] No active Control Rigs found."));
+		return;
+	}
+	
+	for (UControlRig* ControlRig : ActiveControlRigs)
+	{
+		if (!ControlRig) continue;
+		
+		// 선택 초기화 (필요시)
+		if (bClearSelection)
+		{
+			ControlRig->ClearControlSelection();
+		}
+		
+		// 컨트롤러 선택
+		for (const FName& ControlName : ControlNames)
+		{
+			ControlRig->SelectControl(ControlName, true);
+		}
+	}
+	
+	UE_LOG(LogTemp, Log, TEXT("[AnimPicker] Selected %d controls in editor"), ControlNames.Num());
+}
+
+// ============================================================================
+// Anim Picker - List View UI 업데이트
+// ============================================================================
+void SControlRigToolWidget::UpdateAnimPickerListViewUI()
+{
+	if (!AnimPickerListViewBox.IsValid())
+	{
+		return;
+	}
+	
+	AnimPickerListViewBox->ClearChildren();
+	
+	if (AnimPickerControllersBySpace.Num() == 0)
+	{
+		AnimPickerListViewBox->AddSlot()
+		.AutoHeight()
+		.HAlign(HAlign_Center)
+		.VAlign(VAlign_Center)
+		.Padding(0, 50)
+		[
+			SNew(STextBlock)
+			.Text(LOCTEXT("AnimPickerNoControllers", "Select a Control Rig and click 'Load' to view controllers"))
+			.Font(FCoreStyle::GetDefaultFontStyle("Italic", 11))
+			.ColorAndOpacity(FLinearColor(0.4f, 0.4f, 0.45f))
+		];
+		return;
+	}
+	
+	// ★★★ 복사 버튼 추가 ★★★
+	AnimPickerListViewBox->AddSlot()
+	.AutoHeight()
+	.Padding(4, 4, 4, 8)
+	[
+		SNew(SButton)
+		.ButtonStyle(FAppStyle::Get(), "PrimaryButton")
+		.ContentPadding(FMargin(12, 6))
+		.OnClicked_Lambda([this]() -> FReply
+		{
+			// 모든 컨트롤러 이름을 텍스트로 수집
+			FString AllControllers;
+			int32 TotalCount = 0;
+			
+			for (const auto& Pair : AnimPickerControllersBySpace)
+			{
+				AllControllers += FString::Printf(TEXT("=== %s (%d) ===\n"), *Pair.Key.ToString(), Pair.Value.Num());
+				for (const FAnimPickerControllerInfo& Info : Pair.Value)
+				{
+					AllControllers += Info.ControlName.ToString() + TEXT("\n");
+					TotalCount++;
+				}
+				AllControllers += TEXT("\n");
+			}
+			
+			AllControllers = FString::Printf(TEXT("Total: %d controllers\n\n"), TotalCount) + AllControllers;
+			
+			// 클립보드에 복사
+			FPlatformApplicationMisc::ClipboardCopy(*AllControllers);
+			
+			SetAnimPickerStatus(FString::Printf(TEXT("Copied %d controller names to clipboard"), TotalCount));
+			
+			return FReply::Handled();
+		})
+		[
+			SNew(SHorizontalBox)
+			+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+			[
+				SNew(SImage)
+				.Image(FAppStyle::GetBrush("GenericCommands.Copy"))
+				.ColorAndOpacity(FLinearColor::White)
+			]
+			+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(6, 0, 0, 0)
+			[
+				SNew(STextBlock)
+				.Text(LOCTEXT("CopyAllControllers", "Copy All Controller Names"))
+				.Font(FCoreStyle::GetDefaultFontStyle("Bold", 10))
+			]
+		]
+	];
+	
+	// Space별로 표시
+	for (auto& Pair : AnimPickerControllersBySpace)
+	{
+		FName SpaceName = Pair.Key;
+		TArray<FAnimPickerControllerInfo>& Controllers = Pair.Value;
+		bool bExpanded = AnimPickerSpaceExpanded.FindOrAdd(SpaceName, true);
+		FLinearColor SpaceColor = GetColorForSpace(SpaceName);
+		
+		// Space 헤더
+		AnimPickerListViewBox->AddSlot()
+		.AutoHeight()
+		.Padding(0, 4, 0, 2)
+		[
+			SNew(SButton)
+			.ButtonStyle(FAppStyle::Get(), "FlatButton")
+			.ContentPadding(FMargin(8, 6))
+			.OnClicked(this, &SControlRigToolWidget::OnAnimPickerSpaceToggleClicked, SpaceName)
+			[
+				SNew(SHorizontalBox)
+				+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+				[
+					SNew(SImage)
+					.Image(FAppStyle::GetBrush(bExpanded ? "TreeArrow_Expanded" : "TreeArrow_Collapsed"))
+					.ColorAndOpacity(FLinearColor(0.6f, 0.6f, 0.65f))
+					.DesiredSizeOverride(FVector2D(10, 10))
+				]
+				+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(8, 0, 0, 0)
+				[
+					SNew(SBorder)
+					.BorderImage(FAppStyle::GetBrush("WhiteBrush"))
+					.BorderBackgroundColor(SpaceColor)
+					.Padding(0)
+					[
+						SNew(SBox)
+						.WidthOverride(12)
+						.HeightOverride(12)
+					]
+				]
+				+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(8, 0, 0, 0)
+				[
+					SNew(STextBlock)
+					.Text(FText::FromName(SpaceName))
+					.Font(FCoreStyle::GetDefaultFontStyle("Bold", 11))
+					.ColorAndOpacity(FLinearColor(0.9f, 0.9f, 0.95f))
+				]
+				+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center).Padding(8, 0, 0, 0)
+				[
+					SNew(STextBlock)
+					.Text(FText::FromString(FString::Printf(TEXT("(%d)"), Controllers.Num())))
+					.Font(FCoreStyle::GetDefaultFontStyle("Regular", 9))
+					.ColorAndOpacity(FLinearColor(0.5f, 0.5f, 0.55f))
+				]
+			]
+		];
+		
+		// 컨트롤러 목록 (펼쳐진 경우만)
+		if (bExpanded)
+		{
+			for (const FAnimPickerControllerInfo& Info : Controllers)
+			{
+				FLinearColor CtrlColor = Info.Color;
+				bool bIsSelected = AnimPickerSelectedControllers.Contains(Info.ControlName);
+				
+				// 선택된 경우 배경색 변경
+				FLinearColor BgColor = bIsSelected 
+					? FLinearColor(0.15f, 0.35f, 0.55f, 1.0f)  // 선택됨 - 파란 배경
+					: FLinearColor(0.03f, 0.03f, 0.04f, 1.0f); // 기본 - 어두운 배경
+				
+				AnimPickerListViewBox->AddSlot()
+				.AutoHeight()
+				.Padding(20, 1, 0, 1)
+				[
+					SNew(SBorder)
+					.BorderImage(FAppStyle::GetBrush("WhiteBrush"))
+					.BorderBackgroundColor(BgColor)
+					.Padding(0)
+					[
+						SNew(SButton)
+						.ButtonStyle(FAppStyle::Get(), "FlatButton")
+						.ContentPadding(FMargin(8, 4))
+						.OnClicked(this, &SControlRigToolWidget::OnAnimPickerControllerClicked, Info.ControlName)
+						[
+							SNew(SHorizontalBox)
+							+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+							[
+								SNew(SBorder)
+								.BorderImage(FAppStyle::GetBrush("WhiteBrush"))
+								.BorderBackgroundColor(CtrlColor)
+								.Padding(0)
+								[
+									SNew(SBox)
+									.WidthOverride(10)
+									.HeightOverride(10)
+								]
+							]
+							+ SHorizontalBox::Slot().FillWidth(1.0f).VAlign(VAlign_Center).Padding(10, 0, 0, 0)
+							[
+								SNew(STextBlock)
+								.Text(FText::FromName(Info.ControlName))
+								.Font(FCoreStyle::GetDefaultFontStyle(bIsSelected ? "Bold" : "Regular", 10))
+								.ColorAndOpacity(bIsSelected ? FLinearColor::White : (CtrlColor * 0.9f + FLinearColor(0.1f, 0.1f, 0.1f)))
+							]
+						]
+					]
+				];
+			}
+		}
+	}
+}
+
+// ============================================================================
+// Anim Picker - 상태 메시지 설정
+// ============================================================================
+void SControlRigToolWidget::SetAnimPickerStatus(const FString& Message)
+{
+	if (AnimPickerStatusText.IsValid())
+	{
+		AnimPickerStatusText->SetText(FText::FromString(Message));
+	}
 }
 
 #undef LOCTEXT_NAMESPACE

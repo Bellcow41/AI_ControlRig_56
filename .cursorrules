@@ -41,6 +41,27 @@
 | **IK Rig** | IK Rig + Retargeter 자동 생성 | ✅ 완료 |
 | **Kawaii Physics** | Secondary 본용 AnimBP 자동 생성 | ✅ 완료 |
 | **Physics Asset** | 메인 본 캡슐 콜리전 자동 생성 | ✅ 완료 |
+| **Anim Picker** | Control Rig 컨트롤러 시각적 선택 도구 | 🚧 개발중 |
+
+### Anim Picker 탭 기능 (개발중)
+- Control Rig 선택 (드롭다운 + 화살표 버튼 + 썸네일)
+- 3가지 뷰 모드: List View, 2D View, 3D View
+- List View: Space별 그룹화, 접기/펼치기
+- 2D View: 사람 형태 고정 레이아웃
+- 3D View: 3D 뷰포트에 컨트롤러 마커 표시
+- Control Rig에서 Shape 정보 추출:
+  - **ShapeName**: Box, Sphere, Circle, Hexagon, Octagon, Arrow 등
+  - **ShapeTransform**: `Hierarchy->GetLocalControlShapeTransform()` 사용
+  - **ShapeColor**: 컨트롤러 색상
+- 다중 선택: Ctrl+클릭, Shift+클릭
+- 필터링: `_ctrl`로 끝나는 것 + `_switch` 포함
+
+### Anim Picker 남은 작업
+- [ ] FK/IK Switch 컨트롤러 위치 조정 및 동작
+- [ ] Shape Transform 스케일 3D 뷰포트 반영 최적화
+- [ ] 시퀀서 연동 (피커 클릭 시 실제 컨트롤러 선택)
+- [ ] 툴팁 기능 완성
+- [ ] 디버그 로그 레벨 Error → Log로 변경
 
 ## 5.6 vs 5.7 차이점
 
@@ -58,7 +79,8 @@
   - Runtime/Engine - 엔진 핵심 클래스
   - Runtime/AnimGraphRuntime - 애니메이션 그래프
   - Editor/AnimGraph - AnimBlueprint 노드
-  - Plugins/Animation - Control Rig, IK Rig 등
+  - Plugins/Animation/ControlRig - Control Rig API
+    - `RigHierarchy.h` - `GetLocalControlShapeTransform()` 등
 
 ## 코드 스타일
 - 언리얼 엔진 코딩 표준을 따릅니다.
@@ -71,9 +93,11 @@
 - 소스: `Source/AI_SetUpTool_56_V1/`
 - 헤더: `Public/SControlRigToolWidget.h`
 - 구현: `Private/SControlRigToolWidget.cpp`
+- 3D 뷰포트: `Public/SAnimPickerViewport.h`, `Private/SAnimPickerViewport.cpp`
 - 빌드 설정: `AI_SetUpTool_56_V1.Build.cs`
 - Python 환경: `BoneMapping_AI/python/` (임베디드)
 - 설치 스크립트: `install.bat`
+- 테스트 에셋: `Content/00_CooT/test_rig_fk.uasset`, `test_rig_ik.uasset`
 
 ## 빌드 명령어
 
@@ -87,5 +111,5 @@ cd "D:\01_Works\00_UE\UE_5.6\Engine\Build\BatchFiles"
 
 ---
 
-*Last Updated: 2025-01-06*
+*Last Updated: 2026-01-14*
 

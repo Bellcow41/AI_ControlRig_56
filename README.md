@@ -21,15 +21,38 @@
 | 🦴 **IK Rig Generator** | IK Rig + Retargeter 자동 생성 | ✅ 완료 |
 | 🎀 **Kawaii Physics** | 태그 기반 세컨더리 본 AnimBP 자동 생성 | ✅ 완료 |
 | ⚡ **Physics Asset** | 메인 본 캡슐 콜리전 자동 생성 | ✅ 완료 |
+| 🎯 **Anim Picker** | Control Rig 컨트롤러 시각적 선택 도구 | 🚧 개발중 |
 
 ## 플러그인 탭 구성
 
-| 탭 | 기능 | 색상 테마 |
-|----|------|-----------|
-| **Control Rig** | AI 본 매핑 + Control Rig 자동 생성 | 파랑 |
-| **IK Rig** | IK Rig + Retargeter 자동 생성 | 파랑 |
-| **Kawaii Physics** | Secondary 본용 AnimBP 자동 생성 | 핑크 |
-| **Physics Asset** | 메인 본 캡슐 콜리전 자동 생성 | 주황 |
+| 탭 | 기능 | 색상 테마 | 상태 |
+|----|------|-----------|------|
+| **Control Rig** | AI 본 매핑 + Control Rig 자동 생성 | 파랑 | ✅ 완료 |
+| **IK Rig** | IK Rig + Retargeter 자동 생성 | 파랑 | ✅ 완료 |
+| **Kawaii Physics** | Secondary 본용 AnimBP 자동 생성 | 핑크 | ✅ 완료 |
+| **Physics Asset** | 메인 본 캡슐 콜리전 자동 생성 | 주황 | ✅ 완료 |
+| **Anim Picker** | Control Rig 컨트롤러 시각적 선택 도구 | 청록 | 🚧 개발중 |
+
+## Anim Picker 탭 기능 (개발중)
+
+### 현재 구현된 기능
+- Control Rig 선택 (드롭다운 + 화살표 버튼 + 썸네일)
+- 3가지 뷰 모드: **List View**, **2D View**, **3D View**
+- List View: Space별 그룹화, 접기/펼치기
+- 2D View: 사람 형태 고정 레이아웃
+- 3D View: 3D 뷰포트에 컨트롤러 마커 표시
+- 다중 선택: Ctrl+클릭, Shift+클릭
+- Control Rig에서 Shape 정보 추출:
+  - **ShapeName**: Box, Sphere, Circle, Hexagon, Octagon, Arrow 등
+  - **ShapeTransform**: Location, Rotation, Scale
+  - **ShapeColor**: 컨트롤러 색상
+- 필터링: `_ctrl`로 끝나는 것 + `_switch` 포함
+
+### 남은 작업
+- FK/IK Switch 컨트롤러 위치 조정 및 동작
+- 시퀀서 연동 (피커 클릭 시 실제 컨트롤러 선택)
+- Shape Transform 스케일 반영 최적화
+- 툴팁 기능 완성
 
 ## 프로젝트 구조
 
@@ -39,9 +62,11 @@ AI_SetUpTool_56/
 │   └── AI_SetUpTool_56_V1/          # UE5.6 플러그인
 │       ├── Source/AI_SetUpTool_56_V1/
 │       │   ├── Public/
-│       │   │   └── SControlRigToolWidget.h
+│       │   │   ├── SControlRigToolWidget.h
+│       │   │   └── SAnimPickerViewport.h  # 3D 뷰포트
 │       │   └── Private/
 │       │       ├── SControlRigToolWidget.cpp
+│       │       ├── SAnimPickerViewport.cpp
 │       │       └── ControlRigToolModule.cpp
 │       ├── BoneMapping_AI/          # AI 시스템
 │       │   ├── python/              # 임베디드 Python 3.11
@@ -49,7 +74,11 @@ AI_SetUpTool_56/
 │       │   └── 04_inference/        # API 서버
 │       ├── Resources/               # 템플릿 Control Rig
 │       └── install.bat              # Python 환경 자동 설치
-└── Content/
+├── Content/
+│   └── 00_CooT/
+│       ├── test_rig_fk.uasset       # FK 모드 테스트 Control Rig
+│       └── test_rig_ik.uasset       # IK 모드 테스트 Control Rig
+└── README.md
 ```
 
 ## 설치 및 실행
@@ -62,7 +91,7 @@ AI_SetUpTool_56/
 
 ### 2. 에디터에서 사용
 1. **Tools → AI Control Rig Tool**
-2. 원하는 탭 선택 (Control Rig / IK Rig / Kawaii Physics / Physics Asset)
+2. 원하는 탭 선택 (Control Rig / IK Rig / Kawaii Physics / Physics Asset / Anim Picker)
 3. 에셋 선택 후 생성 버튼 클릭
 
 ### 3. 수동 빌드 (개발용)
@@ -79,6 +108,7 @@ cd "D:\01_Works\00_UE\UE_5.6\Engine\Build\BatchFiles"
 | ControlRigBlueprint | `ControlRigBlueprint.h` | `ControlRigBlueprintLegacy.h` |
 | CalcBoneVertInfos | 3개 인자 | 4개 인자 |
 | FSavePackageArgs | `#include "UObject/SavePackage.h"` 필요 | 기본 포함 |
+| Anim Picker | 🚧 개발중 | ❌ 미구현 |
 
 ## 배포 (다른 컴퓨터에 설치)
 
@@ -105,5 +135,5 @@ Plugins/AI_SetUpTool_56_V1/
 
 ---
 
-*Last Updated: 2025-01-06*
+*Last Updated: 2026-01-14*
 

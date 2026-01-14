@@ -24,7 +24,8 @@ public class AI_SetUpTool_56_V1 : ModuleRules
 			"DesktopPlatform",  // 폴더 선택 다이얼로그용
 			"AnimGraph", "AnimGraphRuntime", "BlueprintGraph",  // AnimBlueprint 생성용
 			"Kismet", "KismetCompiler",  // Blueprint 편집용
-			"AppFramework"  // 컬러 피커용
+			"AppFramework",  // 컬러 피커용
+			"AdvancedPreviewScene"  // Anim Picker 3D 뷰포트용
 		});
 		
 		// Kawaii Physics는 외부 플러그인이므로 동적 로딩 사용

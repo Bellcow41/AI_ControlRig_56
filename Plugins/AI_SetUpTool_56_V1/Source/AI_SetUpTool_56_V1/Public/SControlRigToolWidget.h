@@ -15,6 +15,39 @@ class SBox;
 class SVerticalBox;
 class SScrollBox;
 class SWidgetSwitcher;
+class SAnimPickerViewport;
+class SOverlay;
+class SControlRigToolWidget;
+
+// ============================================================================
+// 2D Picker 마우스 줌/패닝 지원 패널
+// ============================================================================
+class SAnimPicker2DPanel : public SCompoundWidget
+{
+public:
+	SLATE_BEGIN_ARGS(SAnimPicker2DPanel) {}
+		SLATE_ARGUMENT(SControlRigToolWidget*, OwnerWidget)
+	SLATE_END_ARGS()
+
+	void Construct(const FArguments& InArgs);
+	
+	// 마우스 이벤트
+	virtual FReply OnMouseWheel(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent) override;
+	virtual FReply OnMouseButtonDown(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent) override;
+	virtual FReply OnMouseButtonUp(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent) override;
+	virtual FReply OnMouseMove(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent) override;
+	
+	TSharedPtr<SOverlay> GetOverlay() const { return PickerOverlay; }
+	void SetZoomScale(float InScale) { ZoomScale = InScale; }
+	float GetZoomScale() const { return ZoomScale; }
+
+private:
+	TSharedPtr<SOverlay> PickerOverlay;
+	SControlRigToolWidget* OwnerWidget = nullptr;
+	float ZoomScale = 1.0f;
+	bool bIsDragging = false;
+	FVector2D LastMousePos = FVector2D::ZeroVector;
+};
 
 // ============================================================================
 // 워크플로우 단계
@@ -110,6 +143,8 @@ struct FBoneDisplayInfo
 
 class SControlRigToolWidget : public SCompoundWidget
 {
+	friend class SAnimPicker2DPanel;  // 2D 피커 패널에서 접근 허용
+	
 public:
 	SLATE_BEGIN_ARGS(SControlRigToolWidget) {}
 	SLATE_END_ARGS()
@@ -131,6 +166,7 @@ private:
 	TSharedRef<SWidget> CreateIKRigTab();              // IK Rig 탭 콘텐츠
 	TSharedRef<SWidget> CreateKawaiiPhysicsTab();      // Kawaii Physics 탭 콘텐츠
 	TSharedRef<SWidget> CreatePhysicsAssetTab();       // Physics Asset 탭 콘텐츠
+	TSharedRef<SWidget> CreateAnimPickerTab();          // Anim Picker 탭 콘텐츠
 	TSharedRef<SWidget> CreateTemplateSection();
 	TSharedRef<SWidget> CreateMeshSection();
 	TSharedRef<SWidget> CreateOutputSection();
@@ -530,4 +566,80 @@ private:
 	void UpdateSecMultipleMeshListUI();
 	bool CreateMultipleSecondaryControlRigs();
 	bool CreateSingleSecondaryControlRigAuto(const FString& MeshPath);  // 자동 세컨더리 판별로 생성
+	
+	// ============================================================================
+	// Anim Picker 탭 관련
+	// ============================================================================
+	
+	// 피커 모드
+	enum class EAnimPickerMode : uint8
+	{
+		ListView = 0,  // 리스트 뷰
+		View2D = 1,    // 2D 뷰 (캐릭터 실루엣)
+		View3D = 2     // 3D 뷰
+	};
+	EAnimPickerMode CurrentAnimPickerMode = EAnimPickerMode::ListView;
+	
+	// 컨트롤러 정보 구조체
+	struct FAnimPickerControllerInfo
+	{
+		FName ControlName;           // 컨트롤러 이름
+		FName ParentSpace;           // 부모 Space 이름
+		FLinearColor Color;          // 표시 색상 (Control Rig에서 가져온 원본)
+		FTransform Transform;        // 글로벌 위치
+		FTransform ShapeTransform;   // Shape 오프셋 (본 위치 기준)
+		FName ShapeName;             // Shape 종류 (Box_Solid, Circle 등)
+		FVector ShapeScale;          // Shape 크기
+		bool bIsSelected = false;    // 선택 상태
+	};
+	
+	// Control Rig 에셋 관련
+	TArray<TSharedPtr<FString>> AnimPickerControlRigOptions;    // Control Rig 에셋 목록
+	TMap<FString, FString> AnimPickerControlRigPaths;           // 이름 -> 경로 매핑
+	TSharedPtr<FString> SelectedAnimPickerControlRig;           // 현재 선택된 Control Rig
+	TSharedPtr<SComboBox<TSharedPtr<FString>>> AnimPickerControlRigComboBox;
+	TSharedPtr<FAssetThumbnail> AnimPickerControlRigThumbnail;  // 썸네일
+	TSharedPtr<SBox> AnimPickerControlRigThumbnailBox;          // 썸네일 박스
+	
+	// 컨트롤러 목록
+	TMap<FName, TArray<FAnimPickerControllerInfo>> AnimPickerControllersBySpace;  // Space별 컨트롤러
+	TMap<FName, bool> AnimPickerSpaceExpanded;                  // Space 접기/펼치기 상태
+	TSet<FName> AnimPickerSelectedControllers;                  // 선택된 컨트롤러들
+	TArray<FName> AnimPickerControllerOrder;                    // 전체 컨트롤러 순서 (Shift 범위 선택용)
+	int32 AnimPickerLastSelectedIndex = INDEX_NONE;             // 마지막 선택 인덱스
+	
+	// UI 위젯
+	TSharedPtr<SWidgetSwitcher> AnimPickerModeSwitcher;         // 모드 전환용
+	TSharedPtr<SVerticalBox> AnimPickerListViewBox;             // 리스트 뷰 컨테이너
+	TSharedPtr<STextBlock> AnimPickerStatusText;
+	TSharedPtr<SButton> AnimPickerListViewButton;
+	TSharedPtr<SButton> AnimPicker3DViewButton;
+	TSharedPtr<SAnimPickerViewport> AnimPicker3DViewport;       // 3D 뷰포트
+	TSharedPtr<SAnimPicker2DPanel> AnimPicker2DPanel;           // 2D 피커 패널 (줌 지원)
+	TSharedPtr<SOverlay> AnimPicker2DOverlay;                   // 2D 피커 오버레이
+	TSharedPtr<FAssetThumbnail> AnimPicker2DBackgroundThumbnail;  // 2D 배경 스켈레탈 메쉬 썸네일
+	float AnimPicker2DZoomScale = 1.0f;                         // 2D 뷰 줌 스케일
+	
+	// Anim Picker UI 함수
+	TSharedRef<SWidget> OnGenerateAnimPickerControlRigWidget(TSharedPtr<FString> InItem);
+	void OnAnimPickerControlRigSelectionChanged(TSharedPtr<FString> NewValue, ESelectInfo::Type SelectInfo);
+	FText GetSelectedAnimPickerControlRigName() const;
+	FReply OnAnimPickerModeChanged(EAnimPickerMode NewMode);
+	FReply OnAnimPickerLoadControlRigClicked();
+	FReply OnAnimPickerRefreshClicked();                 // 새로고침 버튼
+	FReply OnAnimPickerUseSelectedControlRigClicked();  // 화살표 버튼
+	FReply OnAnimPickerSpaceToggleClicked(FName SpaceName);
+	FReply OnAnimPickerControllerClicked(FName ControlName);
+	void UpdateAnimPickerListViewUI();
+	void UpdateAnimPicker3DView();                      // 3D 뷰포트 업데이트
+	void UpdateAnimPicker2DView();                      // 2D 피커 업데이트
+	void OnAnimPicker3DControllerClicked(FName ControlName, bool bCtrlDown);  // 3D 뷰에서 클릭
+	void UpdateAnimPickerControlRigThumbnail();         // 썸네일 업데이트
+	void SetAnimPickerStatus(const FString& Message);
+	void LoadAnimPickerControlRigs();
+	void LoadControllersFromControlRig(const FString& ControlRigPath);
+	FLinearColor GetColorForSpace(const FName& SpaceName) const;
+	FLinearColor GetColorForController(const FName& ControllerName) const;  // 컨트롤러별 색상
+	FString GetSelectedAnimPickerControlRigPath() const;
+	void SelectControlsInEditor(const TSet<FName>& ControlNames, bool bClearSelection = true);  // 시퀀서/에디터에서 실제 선택
 };
