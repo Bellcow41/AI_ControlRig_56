@@ -225,7 +225,8 @@ void FAnimPickerViewportClient::Draw(const FSceneView* View, FPrimitiveDrawInter
 	{
 		FVector Location = Data.Transform.GetLocation();
 		FVector Extent = Data.BoxExtent;
-		FQuat Rotation = Data.Transform.GetRotation();
+		// ★★★ ShapeRotation 적용! (컨트롤러 회전 * Shape 로컬 회전) ★★★
+		FQuat Rotation = Data.Transform.GetRotation() * Data.ShapeRotation;
 		FString ShapeStr = Data.ShapeName.ToString().ToLower();
 		
 		FColor DrawColor = Data.Color.ToFColor(true);
@@ -638,9 +639,12 @@ void FAnimPickerViewportClient::SetControllerMarkers(const TArray<TPair<FName, F
 }
 
 // ★★★ Control Rig Shape 정보를 사용해서 마커 생성 ★★★
-void FAnimPickerViewportClient::SetControllerMarkersWithShapeInfo(const TArray<TPair<FName, FTransform>>& Controllers, const TMap<FName, FLinearColor>& Colors, const TMap<FName, FVector>& ShapeScales, const TMap<FName, FName>& ShapeNames)
+void FAnimPickerViewportClient::SetControllerMarkersWithShapeInfo(const TArray<TPair<FName, FTransform>>& Controllers, const TMap<FName, FLinearColor>& Colors, const TMap<FName, FVector>& ShapeScales, const TMap<FName, FName>& ShapeNames, const TMap<FName, FQuat>& ShapeRotations)
 {
 	ClearControllerMarkers();
+	
+	UE_LOG(LogTemp, Log, TEXT("[3D Marker] === Controllers=%d, ShapeScales=%d, ShapeRotations=%d ==="),
+		Controllers.Num(), ShapeScales.Num(), ShapeRotations.Num());
 	
 	for (const auto& Controller : Controllers)
 	{
@@ -652,39 +656,14 @@ void FAnimPickerViewportClient::SetControllerMarkersWithShapeInfo(const TArray<T
 		Data.ControlName = ControlName;
 		Data.Transform = Transform;
 		
-		// ★ Control Rig의 Shape 스케일 가져오기 ★
-		FVector ShapeScale = FVector(1.0f);
-		if (ShapeScales.Contains(ControlName))
-		{
-			ShapeScale = ShapeScales[ControlName];
-			Data.bUseShapeScale = true;
-			Data.ShapeScale = ShapeScale;
-		}
+		// ★ 고정 크기 사용 (Shape 크기 맞추기는 나중에) ★
+		Data.ShapeScale = FVector(1.0f);
+		Data.ShapeRotation = FQuat::Identity;
+		Data.ShapeName = FName(TEXT("Box_Thin"));
+		Data.bUseShapeScale = false;
 		
-		// ★ Control Rig의 Shape 이름 가져오기 ★
-		if (ShapeNames.Contains(ControlName))
-		{
-			Data.ShapeName = ShapeNames[ControlName];
-		}
-		else
-		{
-			Data.ShapeName = FName(TEXT("Box_Thin"));  // 기본값
-		}
-		
-		// ★★★ ShapeScale 값을 실제 크기로 변환 ★★★
-		// Control Rig ShapeTransform의 Scale3D 값 사용
-		const float ScaleMultiplier = 2.5f;  // 곱셈 계수
-		FVector BoxExtent = ShapeScale * ScaleMultiplier;
-		
-		// 최소/최대 크기 제한
-		BoxExtent.X = FMath::Clamp(BoxExtent.X, 1.0f, 25.0f);
-		BoxExtent.Y = FMath::Clamp(BoxExtent.Y, 1.0f, 25.0f);
-		BoxExtent.Z = FMath::Clamp(BoxExtent.Z, 1.0f, 25.0f);
-		
-		Data.BoxExtent = BoxExtent;
-		
-		UE_LOG(LogTemp, Warning, TEXT("[3D Marker] %s: Shape=%s, Scale=(%.2f,%.2f,%.2f) -> Extent=(%.2f,%.2f,%.2f)"),
-			*ControlName.ToString(), *Data.ShapeName.ToString(), ShapeScale.X, ShapeScale.Y, ShapeScale.Z, BoxExtent.X, BoxExtent.Y, BoxExtent.Z);
+		// ★ 고정 BoxExtent (모든 컨트롤러 동일 크기) ★
+		Data.BoxExtent = FVector(2.0f, 2.0f, 2.0f);
 		
 		// ★ Control Rig의 원본 색상 사용 ★
 		if (Colors.Contains(ControlName))
@@ -693,23 +672,10 @@ void FAnimPickerViewportClient::SetControllerMarkersWithShapeInfo(const TArray<T
 		}
 		else
 		{
-			Data.Color = FLinearColor(0.7f, 0.7f, 0.7f);  // 기본 회색
+			Data.Color = FLinearColor(0.7f, 0.7f, 0.7f);
 		}
 		
 		ControllerData.Add(Data);
-		
-		// 디버그 로그 (처음 10개)
-		static int32 DebugCount = 0;
-		if (DebugCount < 10)
-		{
-			FVector Loc = Transform.GetLocation();
-			UE_LOG(LogTemp, Warning, TEXT("[AnimPicker 3D] '%s': Pos=(%.1f,%.1f,%.1f) ShapeScale=(%.2f,%.2f,%.2f) Color=(%.2f,%.2f,%.2f)"),
-				*ControlName.ToString(),
-				Loc.X, Loc.Y, Loc.Z,
-				ShapeScale.X, ShapeScale.Y, ShapeScale.Z,
-				Data.Color.R, Data.Color.G, Data.Color.B);
-			DebugCount++;
-		}
 	}
 	
 	// 최초 로드 시 포커스
@@ -834,11 +800,11 @@ void SAnimPickerViewport::SetControllerMarkers(const TArray<TPair<FName, FTransf
 	}
 }
 
-void SAnimPickerViewport::SetControllerMarkersWithShapeInfo(const TArray<TPair<FName, FTransform>>& Controllers, const TMap<FName, FLinearColor>& Colors, const TMap<FName, FVector>& ShapeScales, const TMap<FName, FName>& ShapeNames)
+void SAnimPickerViewport::SetControllerMarkersWithShapeInfo(const TArray<TPair<FName, FTransform>>& Controllers, const TMap<FName, FLinearColor>& Colors, const TMap<FName, FVector>& ShapeScales, const TMap<FName, FName>& ShapeNames, const TMap<FName, FQuat>& ShapeRotations)
 {
 	if (ViewportClient.IsValid())
 	{
-		ViewportClient->SetControllerMarkersWithShapeInfo(Controllers, Colors, ShapeScales, ShapeNames);
+		ViewportClient->SetControllerMarkersWithShapeInfo(Controllers, Colors, ShapeScales, ShapeNames, ShapeRotations);
 	}
 }
 

@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Widgets/SCompoundWidget.h"
+#include "Widgets/SLeafWidget.h"
 #include "Widgets/DeclarativeSyntaxSupport.h"
 #include "Widgets/Input/SComboBox.h"
 #include "Widgets/Input/SCheckBox.h"
@@ -18,11 +19,14 @@ class SWidgetSwitcher;
 class SAnimPickerViewport;
 class SOverlay;
 class SControlRigToolWidget;
+class UAnimPickerLayoutAsset;
 
 // ============================================================================
-// 2D Picker 마우스 줌/패닝 지원 패널
+// 2D Picker 뷰포트 패널 (완전 리팩토링)
+// - 모든 렌더링을 OnPaint에서 처리
+// - 뷰포트 변환 (줌/패닝)을 통해 시점 이동
 // ============================================================================
-class SAnimPicker2DPanel : public SCompoundWidget
+class SAnimPicker2DPanel : public SLeafWidget
 {
 public:
 	SLATE_BEGIN_ARGS(SAnimPicker2DPanel) {}
@@ -31,22 +35,60 @@ public:
 
 	void Construct(const FArguments& InArgs);
 	
+	// SWidget 인터페이스
+	virtual FVector2D ComputeDesiredSize(float) const override { return FVector2D(900, 1400); }
+	virtual int32 OnPaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry, const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements, int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const override;
+	
 	// 마우스 이벤트
 	virtual FReply OnMouseWheel(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent) override;
 	virtual FReply OnMouseButtonDown(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent) override;
 	virtual FReply OnMouseButtonUp(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent) override;
 	virtual FReply OnMouseMove(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent) override;
+	virtual FCursorReply OnCursorQuery(const FGeometry& MyGeometry, const FPointerEvent& CursorEvent) const override;
+	virtual bool SupportsKeyboardFocus() const override { return true; }
 	
-	TSharedPtr<SOverlay> GetOverlay() const { return PickerOverlay; }
-	void SetZoomScale(float InScale) { ZoomScale = InScale; }
-	float GetZoomScale() const { return ZoomScale; }
+	// 뷰포트 변환
+	FVector2D WorldToScreen(const FVector2D& WorldPos) const;
+	FVector2D ScreenToWorld(const FVector2D& ScreenPos) const;
+	
+	// Getter/Setter
+	void SetZoom(float InZoom) { Zoom = FMath::Clamp(InZoom, 0.3f, 3.0f); }
+	float GetZoom() const { return Zoom; }
+	void SetViewOffset(FVector2D InOffset) { ViewOffset = InOffset; }
+	FVector2D GetViewOffset() const { return ViewOffset; }
+	void ResetView() { Zoom = 1.0f; ViewOffset = FVector2D::ZeroVector; }
 
 private:
-	TSharedPtr<SOverlay> PickerOverlay;
 	SControlRigToolWidget* OwnerWidget = nullptr;
-	float ZoomScale = 1.0f;
-	bool bIsDragging = false;
+	
+	// 뷰포트 변환
+	float Zoom = 1.0f;
+	FVector2D ViewOffset = FVector2D::ZeroVector;  // 뷰 오프셋 (스크린 좌표)
+	
+	// 마우스 상태
+	bool bIsPanning = false;       // 휠버튼/Alt+드래그 패닝
+	bool bIsZooming = false;       // Ctrl+드래그 줌
 	FVector2D LastMousePos = FVector2D::ZeroVector;
+	FVector2D ZoomPivot = FVector2D::ZeroVector;  // 줌 중심점 (월드 좌표)
+	
+	// 피커 선택/드래그
+	int32 SelectedCustomPicker = INDEX_NONE;
+	int32 DraggingCustomPicker = INDEX_NONE;
+	int32 HoveredMainPicker = INDEX_NONE;
+	int32 HoveredCustomPicker = INDEX_NONE;
+	int32 SelectedMainPicker = INDEX_NONE;   // 선택된 메인 피커
+	int32 DraggingMainPicker = INDEX_NONE;   // 드래그 중인 메인 피커
+	int32 ResizeHandle = INDEX_NONE;  // 0=좌상, 2=우상, 4=우하, 6=좌하
+	bool bResizingMainPicker = false;  // 메인 피커 리사이즈 중
+	FVector2D DragStartWorld = FVector2D::ZeroVector;
+	FVector2D PickerStartPos = FVector2D::ZeroVector;
+	FVector2D PickerStartSize = FVector2D::ZeroVector;
+	FVector2D LastMouseWorldPos = FVector2D::ZeroVector;  // 툴팁용 마우스 위치
+	
+	// 히트 테스트 함수
+	int32 HitTestMainPicker(const FVector2D& WorldPos) const;
+	int32 HitTestCustomPicker(const FVector2D& WorldPos) const;
+	int32 HitTestResizeHandle(const FVector2D& WorldPos, int32 PickerIndex) const;
 };
 
 // ============================================================================
@@ -151,6 +193,9 @@ public:
 
 	void Construct(const FArguments& InArgs);
 	virtual ~SControlRigToolWidget();
+	
+	// ★★★ 시퀀서 자동 연동: Tick에서 활성 Control Rig 감지 ★★★
+	virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
 
 private:
 	struct FAssetInfo
@@ -601,6 +646,11 @@ private:
 	TSharedPtr<FAssetThumbnail> AnimPickerControlRigThumbnail;  // 썸네일
 	TSharedPtr<SBox> AnimPickerControlRigThumbnailBox;          // 썸네일 박스
 	
+	// ★★★ 시퀀서 자동 연동: 현재 활성 Control Rig 추적 ★★★
+	TWeakObjectPtr<class UControlRig> LastActiveControlRig;     // 이전 활성 Control Rig
+	float SequencerSyncTimer = 0.0f;                            // 동기화 타이머 (매 프레임 체크 방지)
+	bool bSequencerAutoSyncEnabled = true;                      // 자동 동기화 활성화 여부
+	
 	// 컨트롤러 목록
 	TMap<FName, TArray<FAnimPickerControllerInfo>> AnimPickerControllersBySpace;  // Space별 컨트롤러
 	TMap<FName, bool> AnimPickerSpaceExpanded;                  // Space 접기/펼치기 상태
@@ -619,6 +669,90 @@ private:
 	TSharedPtr<SOverlay> AnimPicker2DOverlay;                   // 2D 피커 오버레이
 	TSharedPtr<FAssetThumbnail> AnimPicker2DBackgroundThumbnail;  // 2D 배경 스켈레탈 메쉬 썸네일
 	float AnimPicker2DZoomScale = 1.0f;                         // 2D 뷰 줌 스케일
+	FVector2D AnimPicker2DPanOffset = FVector2D::ZeroVector;    // 2D 뷰 패닝 오프셋
+	
+	// ★★★ 2D 뷰 피커 데이터 (OnPaint에서 그리기용) ★★★
+	struct F2DPickerData
+	{
+		FName ControlName;                    // 컨트롤러 이름
+		FVector2D Position;                   // 정규화 좌표 (0~1)
+		FVector2D Size;                       // 픽셀 크기
+		FLinearColor Color;                   // 색상
+		bool bIsSecondary = false;            // 세컨더리 본인지
+	};
+	TArray<F2DPickerData> MainBonePickers2D;  // 메인본 피커들 (2D 뷰용)
+	
+	// ★★★ 2D 뷰 세컨더리 영역 Space 라벨 ★★★
+	struct FSpaceLabel2D
+	{
+		FString SpaceName;                    // Space 이름 (예: "Spine Space")
+		FVector2D Position;                   // 정규화 좌표 (0~1)
+		FLinearColor Color;                   // 라벨 색상
+	};
+	TArray<FSpaceLabel2D> SecondarySpaceLabels2D;  // Space 라벨들
+	
+	// ★★★ 커스텀 피커 그룹 (Maya 스타일) ★★★
+	struct FCustomPickerGroup
+	{
+		FString GroupName;                    // 그룹 이름
+		TArray<FName> ControllerNames;        // 포함된 컨트롤러 이름들
+		FLinearColor Color;                   // 버튼 색상
+		FVector2D Position2D = FVector2D(0.5f, 0.85f);  // 2D 뷰에서 위치 (정규화 좌표 0~1)
+		FVector2D Size2D = FVector2D(80.0f, 30.0f);     // 2D 뷰에서 크기 (픽셀)
+	};
+	TArray<FCustomPickerGroup> CustomPickerGroups;              // 저장된 그룹들
+	TSharedPtr<SVerticalBox> CustomPickerContainer;             // 그룹 버튼 컨테이너
+	int32 NextCustomGroupColorIndex = 0;                        // 다음 그룹 색상 인덱스
+	
+	// 2D 피커 드래그 & 리사이즈
+	int32 DraggingPickerIndex = INDEX_NONE;                     // 현재 드래그 중인 피커 인덱스
+	bool bResizingPicker = false;                               // 리사이즈 중인지 여부
+	FVector2D DragStartPos = FVector2D::ZeroVector;             // 드래그 시작 위치
+	FVector2D PickerStartPos = FVector2D::ZeroVector;           // 피커 시작 위치
+	FVector2D PickerStartSize = FVector2D::ZeroVector;          // 피커 시작 크기
+	
+	// 커스텀 피커 함수 (Selection Sets)
+	FReply OnCreateCustomPickerGroupClicked();                  // 피커 생성 버튼 (시퀀서/플러그인 선택 둘 다 지원)
+	FReply OnCustomPickerGroupClicked(int32 GroupIndex);        // 그룹 버튼 클릭
+	FReply OnDeleteCustomPickerGroup(int32 GroupIndex);         // 그룹 삭제
+	void RefreshCustomPickerUI();                               // 커스텀 피커 UI 갱신
+	FLinearColor GetNextGroupColor();                           // 다음 그룹 색상
+	TSet<FName> GetSelectedControllersFromSequencer();          // ★ 시퀀서에서 선택된 컨트롤러들 가져오기
+	
+	// ★★★ 피커 레이아웃 에셋 시스템 ★★★
+	TArray<TSharedPtr<FString>> LayoutAssetOptions;             // Layout 에셋 목록
+	TMap<FString, FString> LayoutAssetPaths;                    // 이름 -> 경로 매핑
+	TSharedPtr<FString> SelectedLayoutAsset;                    // 현재 선택된 Layout 에셋
+	TSharedPtr<SComboBox<TSharedPtr<FString>>> LayoutAssetComboBox;  // Layout 드롭다운
+	TWeakObjectPtr<UAnimPickerLayoutAsset> CurrentLayoutAsset;  // 현재 로드된 Layout 에셋
+	
+	// Layout 에셋 함수
+	void LoadLayoutAssets();                                    // Layout 에셋 목록 로드
+	void LoadLayoutAssetsForControlRig(const FString& ControlRigPath);  // 특정 Control Rig용 Layout만 로드
+	TSharedRef<SWidget> OnGenerateLayoutAssetWidget(TSharedPtr<FString> InItem);
+	void OnLayoutAssetSelectionChanged(TSharedPtr<FString> NewValue, ESelectInfo::Type SelectInfo);
+	FText GetSelectedLayoutAssetName() const;
+	FReply OnSaveLayoutClicked();                               // 현재 레이아웃 저장
+	FReply OnNewLayoutClicked();                                // 새 레이아웃 생성
+	void ApplyLayoutAsset(UAnimPickerLayoutAsset* Layout);      // 레이아웃 적용
+	void SaveCurrentLayoutToAsset(UAnimPickerLayoutAsset* Layout);  // 현재 상태를 에셋에 저장
+	
+	// Maya 피커 기능 (Reset, Key, Mirror, Pose)
+	FReply OnAnimPickerResetClicked();                          // 선택된 컨트롤러 초기화
+	FReply OnAnimPickerKeyClicked();                            // 선택된 컨트롤러에 키프레임
+	FReply OnAnimPickerMirrorClicked();                         // 좌우 대칭 복사
+	FReply OnAnimPickerSavePoseClicked();                       // 포즈 저장
+	FReply OnAnimPickerLoadPoseClicked();                       // 포즈 불러오기
+	FName GetMirroredControlName(const FName& ControlName);     // 미러 이름 찾기
+	
+	// 포즈 라이브러리 데이터
+	struct FSavedPose
+	{
+		FString PoseName;
+		TMap<FName, FTransform> ControlTransforms;              // 컨트롤러별 Transform
+	};
+	TArray<FSavedPose> SavedPoses;                              // 저장된 포즈들
+	int32 CurrentPoseIndex = INDEX_NONE;                        // 현재 선택된 포즈
 	
 	// Anim Picker UI 함수
 	TSharedRef<SWidget> OnGenerateAnimPickerControlRigWidget(TSharedPtr<FString> InItem);
@@ -638,6 +772,8 @@ private:
 	void SetAnimPickerStatus(const FString& Message);
 	void LoadAnimPickerControlRigs();
 	void LoadControllersFromControlRig(const FString& ControlRigPath);
+	void LoadControllersFromActiveControlRig(class UControlRig* InControlRig);  // ★ 시퀀서 연동용
+	void CheckSequencerActiveControlRig();  // ★ Tick에서 호출: 활성 Control Rig 변경 감지
 	FLinearColor GetColorForSpace(const FName& SpaceName) const;
 	FLinearColor GetColorForController(const FName& ControllerName) const;  // 컨트롤러별 색상
 	FString GetSelectedAnimPickerControlRigPath() const;

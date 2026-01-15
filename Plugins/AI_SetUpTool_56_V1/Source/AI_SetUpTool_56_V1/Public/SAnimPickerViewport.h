@@ -13,10 +13,11 @@ class UControlRigBlueprint;
 struct FControllerMarkerData
 {
 	FName ControlName;
-	FTransform Transform;
-	FVector BoxExtent;
+	FTransform Transform;        // 컨트롤러 월드 위치
+	FVector BoxExtent;           // 그리기용 크기
 	FLinearColor Color;
 	FVector ShapeScale;          // Control Rig의 Shape 스케일
+	FQuat ShapeRotation;         // Control Rig의 Shape 회전 (★ 추가!)
 	FName ShapeName;             // Shape 모양 (Box, Sphere, Circle 등)
 	bool bUseShapeScale = false; // Shape 스케일 사용 여부
 };
@@ -48,7 +49,7 @@ public:
 	
 	// 컨트롤러 마커 설정
 	void SetControllerMarkers(const TArray<TPair<FName, FTransform>>& Controllers, const TMap<FName, FLinearColor>& Colors);
-	void SetControllerMarkersWithShapeInfo(const TArray<TPair<FName, FTransform>>& Controllers, const TMap<FName, FLinearColor>& Colors, const TMap<FName, FVector>& ShapeScales, const TMap<FName, FName>& ShapeNames);
+	void SetControllerMarkersWithShapeInfo(const TArray<TPair<FName, FTransform>>& Controllers, const TMap<FName, FLinearColor>& Colors, const TMap<FName, FVector>& ShapeScales, const TMap<FName, FName>& ShapeNames, const TMap<FName, FQuat>& ShapeRotations);
 	void ClearControllerMarkers();
 	
 	// 선택 상태 업데이트
@@ -102,7 +103,7 @@ public:
 	
 	// 컨트롤러 마커 설정
 	void SetControllerMarkers(const TArray<TPair<FName, FTransform>>& Controllers, const TMap<FName, FLinearColor>& Colors);
-	void SetControllerMarkersWithShapeInfo(const TArray<TPair<FName, FTransform>>& Controllers, const TMap<FName, FLinearColor>& Colors, const TMap<FName, FVector>& ShapeScales, const TMap<FName, FName>& ShapeNames);
+	void SetControllerMarkersWithShapeInfo(const TArray<TPair<FName, FTransform>>& Controllers, const TMap<FName, FLinearColor>& Colors, const TMap<FName, FVector>& ShapeScales, const TMap<FName, FName>& ShapeNames, const TMap<FName, FQuat>& ShapeRotations);
 	void ClearControllerMarkers();
 	
 	// 선택 상태 업데이트
