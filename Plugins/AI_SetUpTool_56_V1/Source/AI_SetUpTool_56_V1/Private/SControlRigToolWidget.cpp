@@ -308,7 +308,7 @@ void SAnimPicker2DPanel::Construct(const FArguments& InArgs)
 FVector2D SAnimPicker2DPanel::WorldToScreen(const FVector2D& WorldPos) const
 {
 	FVector2D PanelSize = GetCachedGeometry().GetLocalSize();
-	if (PanelSize.X < 10) PanelSize = FVector2D(900.0f, 1400.0f);
+	if (PanelSize.X < 10) PanelSize = FVector2D(1200.0f, 1800.0f);
 	
 	// 월드 좌표를 픽셀로 변환 후, 줌과 오프셋 적용
 	FVector2D ScreenPos = WorldPos * PanelSize * Zoom + ViewOffset;
@@ -319,7 +319,7 @@ FVector2D SAnimPicker2DPanel::WorldToScreen(const FVector2D& WorldPos) const
 FVector2D SAnimPicker2DPanel::ScreenToWorld(const FVector2D& ScreenPos) const
 {
 	FVector2D PanelSize = GetCachedGeometry().GetLocalSize();
-	if (PanelSize.X < 10) PanelSize = FVector2D(900.0f, 1400.0f);
+	if (PanelSize.X < 10) PanelSize = FVector2D(1200.0f, 1800.0f);
 	
 	// 역변환: 오프셋 제거 → 줌 제거 → 픽셀에서 정규화로
 	FVector2D WorldPos = (ScreenPos - ViewOffset) / Zoom / PanelSize;
@@ -344,7 +344,7 @@ FReply SAnimPicker2DPanel::OnMouseWheel(const FGeometry& MyGeometry, const FPoin
 		
 		// 줌 후에도 마우스 아래 같은 월드 좌표가 유지되도록 ViewOffset 조정
 		FVector2D PanelSize = MyGeometry.GetLocalSize();
-		if (PanelSize.X < 10) PanelSize = FVector2D(900.0f, 1400.0f);
+		if (PanelSize.X < 10) PanelSize = FVector2D(1200.0f, 1800.0f);
 		
 		FVector2D NewScreenPos = WorldPosBeforeZoom * PanelSize * Zoom + ViewOffset;
 		ViewOffset += (LocalPos - NewScreenPos);
@@ -363,10 +363,10 @@ FCursorReply SAnimPicker2DPanel::OnCursorQuery(const FGeometry& MyGeometry, cons
 	
 	FVector2D LocalPos = MyGeometry.AbsoluteToLocal(CursorEvent.GetScreenSpacePosition());
 	
-	// 선택된 피커의 리사이즈 핸들 위에 있으면
-	if (SelectedCustomPicker != INDEX_NONE)
+	// 선택된 커스텀 피커의 리사이즈 핸들 위에 있으면
+	for (int32 PickerIdx : SelectedCustomPickers)
 	{
-		int32 Handle = HitTestResizeHandle(ScreenToWorld(LocalPos), SelectedCustomPicker);
+		int32 Handle = HitTestResizeHandle(ScreenToWorld(LocalPos), PickerIdx);
 		if (Handle == 0 || Handle == 4)  // 좌상, 우하
 		{
 			return FCursorReply::Cursor(EMouseCursor::ResizeSouthEast);
@@ -374,6 +374,33 @@ FCursorReply SAnimPicker2DPanel::OnCursorQuery(const FGeometry& MyGeometry, cons
 		else if (Handle == 2 || Handle == 6)  // 우상, 좌하
 		{
 			return FCursorReply::Cursor(EMouseCursor::ResizeSouthWest);
+		}
+	}
+	
+	// 선택된 메인 피커의 리사이즈 핸들도 체크
+	for (int32 PickerIdx : SelectedMainPickers)
+	{
+		if (OwnerWidget && PickerIdx < OwnerWidget->MainBonePickers2D.Num())
+		{
+			const auto& MainPicker = OwnerWidget->MainBonePickers2D[PickerIdx];
+			FVector2D PickerScreenPos = WorldToScreen(MainPicker.Position);
+			FVector2D PickerScreenSize = MainPicker.Size * Zoom;
+			const float HandleSize = 8.0f;
+			FVector2D Corners[4] = {
+				PickerScreenPos - PickerScreenSize * 0.5f,
+				PickerScreenPos + FVector2D(PickerScreenSize.X * 0.5f, -PickerScreenSize.Y * 0.5f),
+				PickerScreenPos + PickerScreenSize * 0.5f,
+				PickerScreenPos + FVector2D(-PickerScreenSize.X * 0.5f, PickerScreenSize.Y * 0.5f)
+			};
+			
+			for (int32 i = 0; i < 4; i++)
+			{
+				if ((LocalPos - Corners[i]).Size() < HandleSize)
+				{
+					if (i == 0 || i == 2) return FCursorReply::Cursor(EMouseCursor::ResizeSouthEast);
+					else return FCursorReply::Cursor(EMouseCursor::ResizeSouthWest);
+				}
+			}
 		}
 	}
 	
@@ -392,7 +419,7 @@ int32 SAnimPicker2DPanel::HitTestMainPicker(const FVector2D& WorldPos) const
 		
 		// Position은 정규화된 월드 좌표, Size는 픽셀 크기
 		FVector2D PanelSize = GetCachedGeometry().GetLocalSize();
-		if (PanelSize.X < 10) PanelSize = FVector2D(900.0f, 1400.0f);
+		if (PanelSize.X < 10) PanelSize = FVector2D(1200.0f, 1800.0f);
 		
 		// 피커 중심 (정규화 좌표)
 		FVector2D Center = Picker.Position;
@@ -414,7 +441,7 @@ int32 SAnimPicker2DPanel::HitTestCustomPicker(const FVector2D& WorldPos) const
 	if (!OwnerWidget) return INDEX_NONE;
 	
 	FVector2D PanelSize = GetCachedGeometry().GetLocalSize();
-	if (PanelSize.X < 10) PanelSize = FVector2D(900.0f, 1400.0f);
+	if (PanelSize.X < 10) PanelSize = FVector2D(1200.0f, 1800.0f);
 	
 	// 역순으로 검색
 	for (int32 i = OwnerWidget->CustomPickerGroups.Num() - 1; i >= 0; --i)
@@ -443,7 +470,7 @@ int32 SAnimPicker2DPanel::HitTestResizeHandle(const FVector2D& WorldPos, int32 P
 		return INDEX_NONE;
 	
 	FVector2D PanelSize = GetCachedGeometry().GetLocalSize();
-	if (PanelSize.X < 10) PanelSize = FVector2D(900.0f, 1400.0f);
+	if (PanelSize.X < 10) PanelSize = FVector2D(1200.0f, 1800.0f);
 	
 	const auto& Group = OwnerWidget->CustomPickerGroups[PickerIndex];
 	if (Group.Position2D.IsNearlyZero() || Group.Size2D.IsNearlyZero())
@@ -572,6 +599,62 @@ static void DrawPickerButton(
 	// 텍스트는 표시하지 않음 (툴팁으로 대체)
 }
 
+// ★★★ FK/IK Switch 피커 그리기 (FSlateRoundedBoxBrush로 완벽한 원형) ★★★
+static void DrawSwitchPicker(
+	FSlateWindowElementList& OutDrawElements,
+	int32 LayerId,
+	const FGeometry& Geo,
+	const FVector2D& ScreenPos,    // 중심 위치 (스크린 좌표)
+	float Radius,                  // 반지름 (픽셀)
+	bool bSwitchState,             // true=IK(ON), false=FK(OFF)
+	bool bSelected,
+	bool bHovered)
+{
+	// 색상 결정
+	FLinearColor FillColor = bSwitchState ? 
+		FLinearColor(0.2f, 0.75f, 0.3f, 1.0f) :   // IK: 초록색
+		FLinearColor(0.95f, 0.95f, 0.95f, 1.0f);  // FK: 흰색
+	FLinearColor BorderColor = bSwitchState ?
+		FLinearColor(0.1f, 0.5f, 0.15f, 1.0f) :   // IK: 진한 초록
+		FLinearColor(0.3f, 0.3f, 0.3f, 1.0f);     // FK: 회색
+	
+	float Diameter = Radius * 2.0f;
+	FVector2D TopLeft = ScreenPos - FVector2D(Radius, Radius);
+	
+	// ★ 그림자 (완벽한 원형) ★
+	static FSlateRoundedBoxBrush ShadowBrush(FLinearColor(0, 0, 0, 0.3f), Radius);
+	FSlateDrawElement::MakeBox(OutDrawElements, LayerId,
+		Geo.ToPaintGeometry(FVector2D(Diameter, Diameter), FSlateLayoutTransform(TopLeft + FVector2D(2, 2))),
+		&ShadowBrush, ESlateDrawEffect::None, FLinearColor::White);
+	
+	// ★ 메인 원형 (테두리 포함) ★
+	static FSlateRoundedBoxBrush CircleBrushFK(FLinearColor(0.95f, 0.95f, 0.95f, 1.0f), Radius, FLinearColor(0.3f, 0.3f, 0.3f, 1.0f), 2.0f);
+	static FSlateRoundedBoxBrush CircleBrushIK(FLinearColor(0.2f, 0.75f, 0.3f, 1.0f), Radius, FLinearColor(0.1f, 0.5f, 0.15f, 1.0f), 2.0f);
+	
+	const FSlateBrush* CircleBrush = bSwitchState ? &CircleBrushIK : &CircleBrushFK;
+	FSlateDrawElement::MakeBox(OutDrawElements, LayerId + 1,
+		Geo.ToPaintGeometry(FVector2D(Diameter, Diameter), FSlateLayoutTransform(TopLeft)),
+		CircleBrush, ESlateDrawEffect::None, FLinearColor::White);
+	
+	// ★ 선택/호버 아웃라인 (주황색 원형) ★
+	if (bSelected || bHovered)
+	{
+		static FSlateRoundedBoxBrush OutlineBrush(FLinearColor::Transparent, Radius + 3, FLinearColor(1.0f, 0.6f, 0.0f, 1.0f), 3.0f);
+		FSlateDrawElement::MakeBox(OutDrawElements, LayerId + 2,
+			Geo.ToPaintGeometry(FVector2D(Diameter + 6, Diameter + 6), FSlateLayoutTransform(TopLeft - FVector2D(3, 3))),
+			&OutlineBrush, ESlateDrawEffect::None, FLinearColor::White);
+	}
+	
+	// 중앙 상태 텍스트 (FK/IK)
+	FSlateFontInfo Font = FCoreStyle::GetDefaultFontStyle("Bold", 7);
+	FString StateText = bSwitchState ? TEXT("IK") : TEXT("FK");
+	FLinearColor TextColor = bSwitchState ? FLinearColor::White : FLinearColor(0.2f, 0.2f, 0.2f, 1.0f);
+	
+	FSlateDrawElement::MakeText(OutDrawElements, LayerId + 3,
+		Geo.ToPaintGeometry(FVector2D(Diameter, Radius), FSlateLayoutTransform(ScreenPos - FVector2D(Radius * 0.55f, Radius * 0.35f))),
+		StateText, Font, ESlateDrawEffect::None, TextColor);
+}
+
 // OnPaint: 모든 피커를 뷰포트 변환 적용하여 그리기
 int32 SAnimPicker2DPanel::OnPaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry, const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements, int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const
 {
@@ -579,7 +662,7 @@ int32 SAnimPicker2DPanel::OnPaint(const FPaintArgs& Args, const FGeometry& Allot
 	
 	const FSlateBrush* WhiteBrush = FAppStyle::GetBrush("WhiteBrush");
 	FVector2D PanelSize = AllottedGeometry.GetLocalSize();
-	if (PanelSize.X < 10) PanelSize = FVector2D(900.0f, 1400.0f);
+	if (PanelSize.X < 10) PanelSize = FVector2D(1200.0f, 1800.0f);
 	
 	// 배경
 	FSlateDrawElement::MakeBox(OutDrawElements, LayerId,
@@ -595,9 +678,9 @@ int32 SAnimPicker2DPanel::OnPaint(const FPaintArgs& Args, const FGeometry& Allot
 	FLinearColor DimLabelColor(0.4f, 0.4f, 0.45f, 1.0f);
 	FLinearColor LineColor(0.15f, 0.15f, 0.18f, 1.0f);
 	
-	// 구분선 위치 (월드 좌표 0.72 → 스크린 좌표로 변환) - 더 오른쪽으로
-	FVector2D DividerWorldTop(0.72f, 0.0f);
-	FVector2D DividerWorldBottom(0.72f, 1.0f);
+	// 구분선 위치 (월드 좌표 0.82 → 스크린 좌표로 변환) - 메인 영역 더 넓게
+	FVector2D DividerWorldTop(0.82f, 0.0f);
+	FVector2D DividerWorldBottom(0.82f, 1.0f);
 	FVector2D DividerScreenTop = WorldToScreen(DividerWorldTop);
 	FVector2D DividerScreenBottom = WorldToScreen(DividerWorldBottom);
 	float DividerX = DividerScreenTop.X;
@@ -614,8 +697,8 @@ int32 SAnimPicker2DPanel::OnPaint(const FPaintArgs& Args, const FGeometry& Allot
 		AllottedGeometry.ToPaintGeometry(FVector2D(200, 20), FSlateLayoutTransform(MainLabelScreen)),
 		FText::FromString(TEXT("MAIN CONTROLLERS")), LabelFont, ESlateDrawEffect::None, LabelColor);
 	
-	// "SECONDARY" 라벨 (월드 좌표 기준) - 더 오른쪽으로
-	FVector2D SecLabelWorld(0.74f, 0.005f);
+	// "SECONDARY" 라벨 (월드 좌표 기준) - 구분선 오른쪽
+	FVector2D SecLabelWorld(0.84f, 0.005f);
 	FVector2D SecLabelScreen = WorldToScreen(SecLabelWorld);
 	FSlateDrawElement::MakeText(OutDrawElements, LayerId + 1,
 		AllottedGeometry.ToPaintGeometry(FVector2D(200, 20), FSlateLayoutTransform(SecLabelScreen)),
@@ -644,9 +727,109 @@ int32 SAnimPicker2DPanel::OnPaint(const FPaintArgs& Args, const FGeometry& Allot
 	LayerId += 2;
 	
 	// ========== 메인 본 피커 그리기 ==========
+	// ★★★ FK/IK Switch 상태 수집 ★★★
+	TMap<FString, bool> SwitchStates;  // "arm_l" -> true(IK)/false(FK)
+	for (const auto& Picker : OwnerWidget->MainBonePickers2D)
+	{
+		if (Picker.bIsSwitch)
+		{
+			FString SwitchName = Picker.SwitchControlName.ToString().ToLower();
+			// arm_l_fk_ik_switch -> arm_l
+			// leg_r_fk_ik_switch -> leg_r
+			if (SwitchName.Contains(TEXT("arm_l"))) SwitchStates.Add(TEXT("arm_l"), Picker.bSwitchState);
+			else if (SwitchName.Contains(TEXT("arm_r"))) SwitchStates.Add(TEXT("arm_r"), Picker.bSwitchState);
+			else if (SwitchName.Contains(TEXT("leg_l"))) SwitchStates.Add(TEXT("leg_l"), Picker.bSwitchState);
+			else if (SwitchName.Contains(TEXT("leg_r"))) SwitchStates.Add(TEXT("leg_r"), Picker.bSwitchState);
+		}
+	}
+	
+	// ★★★ FK/IK 상태에 따른 피커 가시성 판단 함수 ★★★
+	auto ShouldShowPicker = [&SwitchStates](const FString& PickerNameLower) -> bool
+	{
+		// IK 컨트롤러 판단 (_ik 또는 _pv 포함)
+		bool bIsIKControl = PickerNameLower.Contains(TEXT("_ik")) || PickerNameLower.Contains(TEXT("_pv"));
+		
+		// FK 컨트롤러 판단 (팔/다리 본체)
+		bool bIsArmLFK = (PickerNameLower.Contains(TEXT("upperarm_l")) || 
+						  PickerNameLower.Contains(TEXT("lowerarm_l")) ||
+						  (PickerNameLower.Contains(TEXT("hand_l")) && !PickerNameLower.Contains(TEXT("_ik"))));
+		bool bIsArmRFK = (PickerNameLower.Contains(TEXT("upperarm_r")) || 
+						  PickerNameLower.Contains(TEXT("lowerarm_r")) ||
+						  (PickerNameLower.Contains(TEXT("hand_r")) && !PickerNameLower.Contains(TEXT("_ik"))));
+		bool bIsLegLFK = (PickerNameLower.Contains(TEXT("thigh_l")) || 
+						  PickerNameLower.Contains(TEXT("calf_l")) ||
+						  (PickerNameLower.Contains(TEXT("foot_l")) && !PickerNameLower.Contains(TEXT("_ik"))));
+		bool bIsLegRFK = (PickerNameLower.Contains(TEXT("thigh_r")) || 
+						  PickerNameLower.Contains(TEXT("calf_r")) ||
+						  (PickerNameLower.Contains(TEXT("foot_r")) && !PickerNameLower.Contains(TEXT("_ik"))));
+		
+		// IK 컨트롤러가 아니고 FK 관련 컨트롤러도 아니면 항상 표시
+		if (!bIsIKControl && !bIsArmLFK && !bIsArmRFK && !bIsLegLFK && !bIsLegRFK)
+		{
+			return true;
+		}
+		
+		// 왼팔 관련
+		if (PickerNameLower.Contains(TEXT("arm_l")) || PickerNameLower.Contains(TEXT("hand_l")) ||
+			PickerNameLower.Contains(TEXT("upperarm_l")) || PickerNameLower.Contains(TEXT("lowerarm_l")))
+		{
+			bool* bIK = SwitchStates.Find(TEXT("arm_l"));
+			if (bIK)
+			{
+				if (bIsIKControl) return *bIK;      // IK 모드일 때만 표시
+				if (bIsArmLFK) return !(*bIK);      // FK 모드일 때만 표시
+			}
+		}
+		// 오른팔 관련
+		if (PickerNameLower.Contains(TEXT("arm_r")) || PickerNameLower.Contains(TEXT("hand_r")) ||
+			PickerNameLower.Contains(TEXT("upperarm_r")) || PickerNameLower.Contains(TEXT("lowerarm_r")))
+		{
+			bool* bIK = SwitchStates.Find(TEXT("arm_r"));
+			if (bIK)
+			{
+				if (bIsIKControl) return *bIK;
+				if (bIsArmRFK) return !(*bIK);
+			}
+		}
+		// 왼다리 관련
+		if (PickerNameLower.Contains(TEXT("leg_l")) || PickerNameLower.Contains(TEXT("foot_l")) ||
+			PickerNameLower.Contains(TEXT("thigh_l")) || PickerNameLower.Contains(TEXT("calf_l")))
+		{
+			bool* bIK = SwitchStates.Find(TEXT("leg_l"));
+			if (bIK)
+			{
+				if (bIsIKControl) return *bIK;
+				if (bIsLegLFK) return !(*bIK);
+			}
+		}
+		// 오른다리 관련
+		if (PickerNameLower.Contains(TEXT("leg_r")) || PickerNameLower.Contains(TEXT("foot_r")) ||
+			PickerNameLower.Contains(TEXT("thigh_r")) || PickerNameLower.Contains(TEXT("calf_r")))
+		{
+			bool* bIK = SwitchStates.Find(TEXT("leg_r"));
+			if (bIK)
+			{
+				if (bIsIKControl) return *bIK;
+				if (bIsLegRFK) return !(*bIK);
+			}
+		}
+		
+		return true;  // 기본: 표시
+	};
+	
 	for (int32 i = 0; i < OwnerWidget->MainBonePickers2D.Num(); ++i)
 	{
 		const auto& Picker = OwnerWidget->MainBonePickers2D[i];
+		
+		// ★ FK/IK 상태에 따른 표시 여부 확인 (Switch 피커는 항상 표시) ★
+		if (!Picker.bIsSwitch)
+		{
+			FString PickerNameLower = Picker.ControlName.ToString().ToLower();
+			if (!ShouldShowPicker(PickerNameLower))
+			{
+				continue;  // 이 피커는 현재 모드에서 숨김
+			}
+		}
 		
 		// 월드 → 스크린 변환
 		FVector2D ScreenCenter = WorldToScreen(Picker.Position);
@@ -659,13 +842,24 @@ int32 SAnimPicker2DPanel::OnPaint(const FPaintArgs& Args, const FGeometry& Allot
 			continue;
 		}
 		
-		// 선택 또는 호버 상태
-		bool bSelected = (i == SelectedMainPicker) || (i == HoveredMainPicker);
-		bool bDrawHandles = (i == SelectedMainPicker);  // 선택된 것만 핸들
+		// 선택 또는 호버 상태 (다중 선택 지원)
+		bool bSelected = SelectedMainPickers.Contains(i) || (i == HoveredMainPicker);
+		bool bHovered = (i == HoveredMainPicker);
+		bool bDrawHandles = SelectedMainPickers.Contains(i);  // 선택된 것만 핸들
 		FString DisplayName = Picker.ControlName.ToString();
 		
-		DrawPickerButton(OutDrawElements, LayerId, AllottedGeometry,
-			ScreenCenter, ScreenSize, Picker.Color, DisplayName, bSelected, bDrawHandles);
+		// ★ Switch 피커는 원형으로 그리기 ★
+		if (Picker.bIsSwitch)
+		{
+			float Radius = FMath::Min(ScreenSize.X, ScreenSize.Y) * 0.5f;
+			DrawSwitchPicker(OutDrawElements, LayerId, AllottedGeometry,
+				ScreenCenter, Radius, Picker.bSwitchState, bSelected, bHovered);
+		}
+		else
+		{
+			DrawPickerButton(OutDrawElements, LayerId, AllottedGeometry,
+				ScreenCenter, ScreenSize, Picker.Color, DisplayName, bSelected, bDrawHandles);
+		}
 	}
 	LayerId += 5;
 	
@@ -687,9 +881,9 @@ int32 SAnimPicker2DPanel::OnPaint(const FPaintArgs& Args, const FGeometry& Allot
 			continue;
 		}
 		
-		// 선택 또는 호버 상태
-		bool bSelected = (i == SelectedCustomPicker) || (i == HoveredCustomPicker);
-		bool bDrawHandles = (i == SelectedCustomPicker);
+		// 선택 또는 호버 상태 (다중 선택 지원)
+		bool bSelected = SelectedCustomPickers.Contains(i) || (i == HoveredCustomPicker);
+		bool bDrawHandles = SelectedCustomPickers.Contains(i);
 		DrawPickerButton(OutDrawElements, LayerId, AllottedGeometry,
 			ScreenCenter, ScreenSize, Group.Color, Group.GroupName, bSelected, bDrawHandles);
 	}
@@ -759,6 +953,124 @@ int32 SAnimPicker2DPanel::OnPaint(const FPaintArgs& Args, const FGeometry& Allot
 	FSlateDrawElement::MakeText(OutDrawElements, LayerId,
 		AllottedGeometry.ToPaintGeometry(FVector2D(100, 20), FSlateLayoutTransform(FVector2D(5, 5))),
 		FText::FromString(InfoText), SmallFont, ESlateDrawEffect::None, FLinearColor(0.5f, 0.5f, 0.5f, 1.0f));
+	LayerId++;
+	
+	// ========== FK/IK Switch 팝업 그리기 ==========
+	if (OwnerWidget->bShowSwitchPopup && OwnerWidget->ActiveSwitchPickerIndex != INDEX_NONE)
+	{
+		int32 SwitchIdx = OwnerWidget->ActiveSwitchPickerIndex;
+		if (SwitchIdx < OwnerWidget->MainBonePickers2D.Num())
+		{
+			const auto& SwitchPicker = OwnerWidget->MainBonePickers2D[SwitchIdx];
+			if (SwitchPicker.bIsSwitch)
+			{
+				// 팝업 위치 (Switch 피커 옆)
+				FVector2D SwitchScreenPos = WorldToScreen(SwitchPicker.Position);
+				FVector2D PopupPos = SwitchScreenPos + FVector2D(25, -40);
+				
+				// 화면 밖으로 나가지 않도록 조정
+				float PopupW = 80.0f;
+				float PopupH = 70.0f;
+				if (PopupPos.X + PopupW > PanelSize.X) PopupPos.X = PanelSize.X - PopupW - 10;
+				if (PopupPos.Y < 10) PopupPos.Y = 10;
+				if (PopupPos.Y + PopupH > PanelSize.Y) PopupPos.Y = PanelSize.Y - PopupH - 10;
+				
+				// 팝업 배경
+				FSlateDrawElement::MakeBox(OutDrawElements, LayerId,
+					AllottedGeometry.ToPaintGeometry(FVector2D(PopupW, PopupH), FSlateLayoutTransform(PopupPos)),
+					WhiteBrush, ESlateDrawEffect::None, FLinearColor(0.15f, 0.15f, 0.18f, 0.98f));
+				
+				// 팝업 테두리
+				FLinearColor PopupBorder(0.4f, 0.4f, 0.45f, 1.0f);
+				FSlateDrawElement::MakeBox(OutDrawElements, LayerId + 1,
+					AllottedGeometry.ToPaintGeometry(FVector2D(PopupW, 2), FSlateLayoutTransform(PopupPos)),
+					WhiteBrush, ESlateDrawEffect::None, PopupBorder);
+				FSlateDrawElement::MakeBox(OutDrawElements, LayerId + 1,
+					AllottedGeometry.ToPaintGeometry(FVector2D(PopupW, 2), FSlateLayoutTransform(PopupPos + FVector2D(0, PopupH - 2))),
+					WhiteBrush, ESlateDrawEffect::None, PopupBorder);
+				FSlateDrawElement::MakeBox(OutDrawElements, LayerId + 1,
+					AllottedGeometry.ToPaintGeometry(FVector2D(2, PopupH), FSlateLayoutTransform(PopupPos)),
+					WhiteBrush, ESlateDrawEffect::None, PopupBorder);
+				FSlateDrawElement::MakeBox(OutDrawElements, LayerId + 1,
+					AllottedGeometry.ToPaintGeometry(FVector2D(2, PopupH), FSlateLayoutTransform(PopupPos + FVector2D(PopupW - 2, 0))),
+					WhiteBrush, ESlateDrawEffect::None, PopupBorder);
+				
+				// 제목
+				FSlateFontInfo TitleFont = FCoreStyle::GetDefaultFontStyle("Bold", 10);
+				FSlateDrawElement::MakeText(OutDrawElements, LayerId + 2,
+					AllottedGeometry.ToPaintGeometry(FVector2D(PopupW - 8, 18), FSlateLayoutTransform(PopupPos + FVector2D(8, 6))),
+					FText::FromString(TEXT("FK/IK")), TitleFont, ESlateDrawEffect::None, FLinearColor::White);
+				
+				// FK 버튼 (위쪽)
+				FVector2D FKBtnPos = PopupPos + FVector2D(8, 26);
+				FVector2D FKBtnSize(64, 18);
+				FLinearColor FKBtnColor = SwitchPicker.bSwitchState ? FLinearColor(0.3f, 0.3f, 0.35f, 1.0f) : FLinearColor(0.2f, 0.6f, 0.9f, 1.0f);
+				FSlateDrawElement::MakeBox(OutDrawElements, LayerId + 2,
+					AllottedGeometry.ToPaintGeometry(FKBtnSize, FSlateLayoutTransform(FKBtnPos)),
+					WhiteBrush, ESlateDrawEffect::None, FKBtnColor);
+				FSlateDrawElement::MakeText(OutDrawElements, LayerId + 3,
+					AllottedGeometry.ToPaintGeometry(FKBtnSize, FSlateLayoutTransform(FKBtnPos + FVector2D(20, 2))),
+					FText::FromString(TEXT("FK")), SmallFont, ESlateDrawEffect::None, FLinearColor::White);
+				
+				// IK 버튼 (아래쪽)
+				FVector2D IKBtnPos = PopupPos + FVector2D(8, 46);
+				FVector2D IKBtnSize(64, 18);
+				FLinearColor IKBtnColor = SwitchPicker.bSwitchState ? FLinearColor(0.2f, 0.8f, 0.3f, 1.0f) : FLinearColor(0.3f, 0.3f, 0.35f, 1.0f);
+				FSlateDrawElement::MakeBox(OutDrawElements, LayerId + 2,
+					AllottedGeometry.ToPaintGeometry(IKBtnSize, FSlateLayoutTransform(IKBtnPos)),
+					WhiteBrush, ESlateDrawEffect::None, IKBtnColor);
+				FSlateDrawElement::MakeText(OutDrawElements, LayerId + 3,
+					AllottedGeometry.ToPaintGeometry(IKBtnSize, FSlateLayoutTransform(IKBtnPos + FVector2D(20, 2))),
+					FText::FromString(TEXT("IK")), SmallFont, ESlateDrawEffect::None, FLinearColor::White);
+				
+				// 팝업 버튼 히트 영역 저장 (SwitchPopupPosition에 저장)
+				OwnerWidget->SwitchPopupPosition = PopupPos;
+				
+				LayerId += 4;
+			}
+		}
+	}
+	
+	// ========== 마퀴 선택 사각형 그리기 ==========
+	if (bIsMarqueeSelecting)
+	{
+		FVector2D MarqueeScreenStart = WorldToScreen(MarqueeStartWorld);
+		FVector2D MarqueeScreenEnd = WorldToScreen(MarqueeEndWorld);
+		
+		float MinX = FMath::Min(MarqueeScreenStart.X, MarqueeScreenEnd.X);
+		float MaxX = FMath::Max(MarqueeScreenStart.X, MarqueeScreenEnd.X);
+		float MinY = FMath::Min(MarqueeScreenStart.Y, MarqueeScreenEnd.Y);
+		float MaxY = FMath::Max(MarqueeScreenStart.Y, MarqueeScreenEnd.Y);
+		
+		float RectW = MaxX - MinX;
+		float RectH = MaxY - MinY;
+		
+		// 마퀴 내부 (반투명 파랑)
+		FSlateDrawElement::MakeBox(OutDrawElements, LayerId,
+			AllottedGeometry.ToPaintGeometry(FVector2D(RectW, RectH), FSlateLayoutTransform(FVector2D(MinX, MinY))),
+			WhiteBrush, ESlateDrawEffect::None, FLinearColor(0.2f, 0.5f, 1.0f, 0.15f));
+		
+		// 마퀴 테두리 (밝은 파랑)
+		FLinearColor BorderColor(0.3f, 0.6f, 1.0f, 0.8f);
+		// 상
+		FSlateDrawElement::MakeBox(OutDrawElements, LayerId + 1,
+			AllottedGeometry.ToPaintGeometry(FVector2D(RectW, 1), FSlateLayoutTransform(FVector2D(MinX, MinY))),
+			WhiteBrush, ESlateDrawEffect::None, BorderColor);
+		// 하
+		FSlateDrawElement::MakeBox(OutDrawElements, LayerId + 1,
+			AllottedGeometry.ToPaintGeometry(FVector2D(RectW, 1), FSlateLayoutTransform(FVector2D(MinX, MaxY))),
+			WhiteBrush, ESlateDrawEffect::None, BorderColor);
+		// 좌
+		FSlateDrawElement::MakeBox(OutDrawElements, LayerId + 1,
+			AllottedGeometry.ToPaintGeometry(FVector2D(1, RectH), FSlateLayoutTransform(FVector2D(MinX, MinY))),
+			WhiteBrush, ESlateDrawEffect::None, BorderColor);
+		// 우
+		FSlateDrawElement::MakeBox(OutDrawElements, LayerId + 1,
+			AllottedGeometry.ToPaintGeometry(FVector2D(1, RectH), FSlateLayoutTransform(FVector2D(MaxX, MinY))),
+			WhiteBrush, ESlateDrawEffect::None, BorderColor);
+		
+		LayerId += 2;
+	}
 	
 	return LayerId + 1;
 }
@@ -771,7 +1083,7 @@ FReply SAnimPicker2DPanel::OnMouseButtonDown(const FGeometry& MyGeometry, const 
 	FVector2D LocalPos = MyGeometry.AbsoluteToLocal(MouseEvent.GetScreenSpacePosition());
 	FVector2D WorldPos = ScreenToWorld(LocalPos);
 	FVector2D PanelSize = MyGeometry.GetLocalSize();
-	if (PanelSize.X < 10) PanelSize = FVector2D(900.0f, 1400.0f);
+	if (PanelSize.X < 10) PanelSize = FVector2D(1200.0f, 1800.0f);
 	
 	// 휠 버튼: 뷰포트 패닝 시작
 	if (MouseEvent.GetEffectingButton() == EKeys::MiddleMouseButton)
@@ -790,53 +1102,232 @@ FReply SAnimPicker2DPanel::OnMouseButtonDown(const FGeometry& MyGeometry, const 
 		return FReply::Handled().CaptureMouse(SharedThis(this));
 	}
 	
-	// 좌클릭 (Ctrl 없이)
-	if (MouseEvent.GetEffectingButton() == EKeys::LeftMouseButton && !MouseEvent.IsControlDown())
+	// 좌클릭 처리
+	if (MouseEvent.GetEffectingButton() == EKeys::LeftMouseButton)
 	{
-		// 1. 선택된 커스텀 피커의 리사이즈 핸들 체크
-		if (SelectedCustomPicker != INDEX_NONE && OwnerWidget)
+		bool bShiftDown = MouseEvent.IsShiftDown();
+		bool bCtrlDown = MouseEvent.IsControlDown();
+		
+		// ★★★ Switch 팝업 버튼 클릭 체크 ★★★
+		if (OwnerWidget && OwnerWidget->bShowSwitchPopup && OwnerWidget->ActiveSwitchPickerIndex != INDEX_NONE)
 		{
-			int32 Handle = HitTestResizeHandle(WorldPos, SelectedCustomPicker);
-			if (Handle != INDEX_NONE)
+			FVector2D PopupPos = OwnerWidget->SwitchPopupPosition;
+			float PopupW = 80.0f;
+			float PopupH = 70.0f;
+			
+			// FK 버튼 영역 (PopupPos + (8, 26), 64x18)
+			FVector2D FKBtnPos = PopupPos + FVector2D(8, 26);
+			FVector2D FKBtnSize(64, 18);
+			if (LocalPos.X >= FKBtnPos.X && LocalPos.X <= FKBtnPos.X + FKBtnSize.X &&
+				LocalPos.Y >= FKBtnPos.Y && LocalPos.Y <= FKBtnPos.Y + FKBtnSize.Y)
 			{
-				ResizeHandle = Handle;
-				DraggingCustomPicker = SelectedCustomPicker;
-				bResizingMainPicker = false;
-				DragStartWorld = WorldPos;
-				PickerStartPos = OwnerWidget->CustomPickerGroups[SelectedCustomPicker].Position2D;
-				PickerStartSize = OwnerWidget->CustomPickerGroups[SelectedCustomPicker].Size2D;
-				return FReply::Handled().CaptureMouse(SharedThis(this));
+				// FK 선택 (bSwitchState = false)
+				int32 SwitchIdx = OwnerWidget->ActiveSwitchPickerIndex;
+				if (SwitchIdx < OwnerWidget->MainBonePickers2D.Num())
+				{
+					OwnerWidget->MainBonePickers2D[SwitchIdx].bSwitchState = false;
+					// Control Rig에 적용
+					OwnerWidget->SetSwitchControlValue(OwnerWidget->MainBonePickers2D[SwitchIdx].SwitchControlName, false);
+				}
+				OwnerWidget->bShowSwitchPopup = false;
+				OwnerWidget->ActiveSwitchPickerIndex = INDEX_NONE;
+				return FReply::Handled();
+			}
+			
+			// IK 버튼 영역 (PopupPos + (8, 46), 64x18)
+			FVector2D IKBtnPos = PopupPos + FVector2D(8, 46);
+			FVector2D IKBtnSize(64, 18);
+			if (LocalPos.X >= IKBtnPos.X && LocalPos.X <= IKBtnPos.X + IKBtnSize.X &&
+				LocalPos.Y >= IKBtnPos.Y && LocalPos.Y <= IKBtnPos.Y + IKBtnSize.Y)
+			{
+				// IK 선택 (bSwitchState = true)
+				int32 SwitchIdx = OwnerWidget->ActiveSwitchPickerIndex;
+				if (SwitchIdx < OwnerWidget->MainBonePickers2D.Num())
+				{
+					OwnerWidget->MainBonePickers2D[SwitchIdx].bSwitchState = true;
+					// Control Rig에 적용
+					OwnerWidget->SetSwitchControlValue(OwnerWidget->MainBonePickers2D[SwitchIdx].SwitchControlName, true);
+				}
+				OwnerWidget->bShowSwitchPopup = false;
+				OwnerWidget->ActiveSwitchPickerIndex = INDEX_NONE;
+				return FReply::Handled();
+			}
+			
+			// 팝업 영역 밖 클릭: 팝업 닫기
+			if (LocalPos.X < PopupPos.X || LocalPos.X > PopupPos.X + PopupW ||
+				LocalPos.Y < PopupPos.Y || LocalPos.Y > PopupPos.Y + PopupH)
+			{
+				OwnerWidget->bShowSwitchPopup = false;
+				OwnerWidget->ActiveSwitchPickerIndex = INDEX_NONE;
+				// 팝업 닫은 후 다른 클릭 처리 계속 진행
+			}
+			else
+			{
+				// 팝업 내부 클릭이지만 버튼이 아닌 곳
+				return FReply::Handled();
 			}
 		}
 		
-		// 1-b. 선택된 메인 피커의 리사이즈 핸들 체크
-		if (SelectedMainPicker != INDEX_NONE && OwnerWidget && SelectedMainPicker < OwnerWidget->MainBonePickers2D.Num())
+		// Ctrl+드래그는 줌이므로 여기서는 피커 선택만 처리
+		if (bCtrlDown)
 		{
-			const auto& MainPicker = OwnerWidget->MainBonePickers2D[SelectedMainPicker];
-			FVector2D PickerScreenPos = WorldToScreen(MainPicker.Position);
-			FVector2D PickerScreenSize = MainPicker.Size * Zoom;
+			// Ctrl+클릭: 피커 토글 선택
+			int32 HitCustom = HitTestCustomPicker(WorldPos);
+			int32 HitMain = HitTestMainPicker(WorldPos);
 			
-			// 4 코너 핸들 히트 테스트
-			const float HandleSize = 8.0f;
-			FVector2D Corners[4] = {
-				PickerScreenPos - PickerScreenSize * 0.5f,  // 좌상
-				PickerScreenPos + FVector2D(PickerScreenSize.X * 0.5f, -PickerScreenSize.Y * 0.5f),  // 우상
-				PickerScreenPos + PickerScreenSize * 0.5f,  // 우하
-				PickerScreenPos + FVector2D(-PickerScreenSize.X * 0.5f, PickerScreenSize.Y * 0.5f)   // 좌하
-			};
-			
-			FVector2D LocalMousePos = MyGeometry.AbsoluteToLocal(MouseEvent.GetScreenSpacePosition());
-			for (int32 i = 0; i < 4; i++)
+			if (HitCustom != INDEX_NONE && OwnerWidget)
 			{
-				if ((LocalMousePos - Corners[i]).Size() < HandleSize)
+				// 커스텀 피커 토글
+				if (SelectedCustomPickers.Contains(HitCustom))
 				{
-					ResizeHandle = i * 2;  // 0, 2, 4, 6
-					DraggingMainPicker = SelectedMainPicker;
-					bResizingMainPicker = true;
+					SelectedCustomPickers.Remove(HitCustom);
+					// 컨트롤러 선택도 해제
+					const auto& Group = OwnerWidget->CustomPickerGroups[HitCustom];
+					for (const FName& CtrlName : Group.ControllerNames)
+					{
+						OwnerWidget->AnimPickerSelectedControllers.Remove(CtrlName);
+					}
+				}
+				else
+				{
+					SelectedCustomPickers.Add(HitCustom);
+					// 컨트롤러도 선택
+					const auto& Group = OwnerWidget->CustomPickerGroups[HitCustom];
+					for (const FName& CtrlName : Group.ControllerNames)
+					{
+						OwnerWidget->AnimPickerSelectedControllers.Add(CtrlName);
+					}
+				}
+				OwnerWidget->SelectControlsInEditor(OwnerWidget->AnimPickerSelectedControllers, false);
+				return FReply::Handled();
+			}
+			else if (HitMain != INDEX_NONE && OwnerWidget)
+			{
+				// 메인 피커 토글
+				if (SelectedMainPickers.Contains(HitMain))
+				{
+					SelectedMainPickers.Remove(HitMain);
+					const auto& Picker = OwnerWidget->MainBonePickers2D[HitMain];
+					OwnerWidget->AnimPickerSelectedControllers.Remove(Picker.ControlName);
+				}
+				else
+				{
+					SelectedMainPickers.Add(HitMain);
+					const auto& Picker = OwnerWidget->MainBonePickers2D[HitMain];
+					OwnerWidget->AnimPickerSelectedControllers.Add(Picker.ControlName);
+				}
+				OwnerWidget->SelectControlsInEditor(OwnerWidget->AnimPickerSelectedControllers, false);
+				return FReply::Handled();
+			}
+			return FReply::Unhandled();
+		}
+		
+		// 1. 선택된 커스텀 피커들의 리사이즈 핸들 체크
+		for (int32 PickerIdx : SelectedCustomPickers)
+		{
+			if (OwnerWidget && PickerIdx < OwnerWidget->CustomPickerGroups.Num())
+			{
+				int32 Handle = HitTestResizeHandle(WorldPos, PickerIdx);
+				if (Handle != INDEX_NONE)
+				{
+					// ★ 그룹 스케일 리사이즈: 그룹 중심 기준으로 배치 유지하며 스케일 ★
+					ResizeHandle = Handle;
+					PrimaryDragPicker = PickerIdx;
+					bDraggingMainPickers = false;
+					bResizingMainPicker = false;
 					DragStartWorld = WorldPos;
-					PickerStartPos = MainPicker.Position;
-					PickerStartSize = MainPicker.Size;
+					ResizeStartPos = OwnerWidget->CustomPickerGroups[PickerIdx].Position2D;
+					ResizeStartSize = OwnerWidget->CustomPickerGroups[PickerIdx].Size2D;
+					DragStartPositions.Empty();
+					ResizeStartSizes.Empty();
+					ResizeStartOffsets.Empty();
+					
+					// 그룹 중심점 계산 (선택된 피커들의 위치 평균)
+					GroupResizeCenter = FVector2D::ZeroVector;
+					int32 Count = 0;
+					for (int32 Idx : SelectedCustomPickers)
+					{
+						if (Idx < OwnerWidget->CustomPickerGroups.Num())
+						{
+							GroupResizeCenter += OwnerWidget->CustomPickerGroups[Idx].Position2D;
+							Count++;
+						}
+					}
+					if (Count > 0) GroupResizeCenter /= Count;
+					
+					// 각 피커의 시작 크기와 그룹 중심에서의 오프셋 저장
+					for (int32 Idx : SelectedCustomPickers)
+					{
+						if (Idx < OwnerWidget->CustomPickerGroups.Num())
+						{
+							ResizeStartSizes.Add(Idx, OwnerWidget->CustomPickerGroups[Idx].Size2D);
+							ResizeStartOffsets.Add(Idx, OwnerWidget->CustomPickerGroups[Idx].Position2D - GroupResizeCenter);
+							DragStartPositions.Add(Idx, OwnerWidget->CustomPickerGroups[Idx].Position2D);
+						}
+					}
 					return FReply::Handled().CaptureMouse(SharedThis(this));
+				}
+			}
+		}
+		
+		// 1-b. 선택된 메인 피커들의 리사이즈 핸들 체크
+		for (int32 PickerIdx : SelectedMainPickers)
+		{
+			if (OwnerWidget && PickerIdx < OwnerWidget->MainBonePickers2D.Num())
+			{
+				const auto& MainPicker = OwnerWidget->MainBonePickers2D[PickerIdx];
+				FVector2D PickerScreenPos = WorldToScreen(MainPicker.Position);
+				FVector2D PickerScreenSize = MainPicker.Size * Zoom;
+				const float HandleSize = 8.0f;
+				FVector2D Corners[4] = {
+					PickerScreenPos - PickerScreenSize * 0.5f,
+					PickerScreenPos + FVector2D(PickerScreenSize.X * 0.5f, -PickerScreenSize.Y * 0.5f),
+					PickerScreenPos + PickerScreenSize * 0.5f,
+					PickerScreenPos + FVector2D(-PickerScreenSize.X * 0.5f, PickerScreenSize.Y * 0.5f)
+				};
+				
+				FVector2D LocalMousePos = MyGeometry.AbsoluteToLocal(MouseEvent.GetScreenSpacePosition());
+				for (int32 i = 0; i < 4; i++)
+				{
+					if ((LocalMousePos - Corners[i]).Size() < HandleSize)
+					{
+						// ★ 그룹 스케일 리사이즈: 그룹 중심 기준으로 배치 유지하며 스케일 ★
+						ResizeHandle = i * 2;
+						PrimaryDragPicker = PickerIdx;
+						bDraggingMainPickers = true;
+						bResizingMainPicker = true;
+						DragStartWorld = WorldPos;
+						ResizeStartPos = MainPicker.Position;
+						ResizeStartSize = MainPicker.Size;
+						DragStartPositions.Empty();
+						ResizeStartSizes.Empty();
+						ResizeStartOffsets.Empty();
+						
+						// 그룹 중심점 계산 (선택된 피커들의 위치 평균)
+						GroupResizeCenter = FVector2D::ZeroVector;
+						int32 Count = 0;
+						for (int32 Idx : SelectedMainPickers)
+						{
+							if (Idx < OwnerWidget->MainBonePickers2D.Num())
+							{
+								GroupResizeCenter += OwnerWidget->MainBonePickers2D[Idx].Position;
+								Count++;
+							}
+						}
+						if (Count > 0) GroupResizeCenter /= Count;
+						
+						// 각 피커의 시작 크기와 그룹 중심에서의 오프셋 저장
+						for (int32 Idx : SelectedMainPickers)
+						{
+							if (Idx < OwnerWidget->MainBonePickers2D.Num())
+							{
+								ResizeStartSizes.Add(Idx, OwnerWidget->MainBonePickers2D[Idx].Size);
+								ResizeStartOffsets.Add(Idx, OwnerWidget->MainBonePickers2D[Idx].Position - GroupResizeCenter);
+								DragStartPositions.Add(Idx, OwnerWidget->MainBonePickers2D[Idx].Position);
+							}
+						}
+						return FReply::Handled().CaptureMouse(SharedThis(this));
+					}
 				}
 			}
 		}
@@ -845,55 +1336,11 @@ FReply SAnimPicker2DPanel::OnMouseButtonDown(const FGeometry& MyGeometry, const 
 		int32 HitCustom = HitTestCustomPicker(WorldPos);
 		if (HitCustom != INDEX_NONE && OwnerWidget)
 		{
-			SelectedCustomPicker = HitCustom;
-			SelectedMainPicker = INDEX_NONE;  // 메인 피커 선택 해제
-			DraggingCustomPicker = HitCustom;
-			DraggingMainPicker = INDEX_NONE;
-			ResizeHandle = INDEX_NONE;
-			bResizingMainPicker = false;
-			DragStartWorld = WorldPos;
-			PickerStartPos = OwnerWidget->CustomPickerGroups[HitCustom].Position2D;
-			PickerStartSize = OwnerWidget->CustomPickerGroups[HitCustom].Size2D;
-			
-			// ★★★ Shift/Ctrl 다중 선택 (커스텀 피커의 모든 컨트롤러에 적용) ★★★
-			bool bShiftDown = MouseEvent.IsShiftDown();
-			bool bCtrlDown = MouseEvent.IsControlDown();
-			const auto& Group = OwnerWidget->CustomPickerGroups[HitCustom];
-			
-			if (bCtrlDown)
-			{
-				// Ctrl+클릭: 토글 (그룹 내 컨트롤러 전체)
-				bool bAllSelected = true;
-				for (const FName& CtrlName : Group.ControllerNames)
-				{
-					if (!OwnerWidget->AnimPickerSelectedControllers.Contains(CtrlName))
-					{
-						bAllSelected = false;
-						break;
-					}
-				}
-				
-				if (bAllSelected)
-				{
-					// 모두 선택됨 → 해제
-					for (const FName& CtrlName : Group.ControllerNames)
-					{
-						OwnerWidget->AnimPickerSelectedControllers.Remove(CtrlName);
-					}
-				}
-				else
-				{
-					// 일부 또는 없음 → 전체 추가
-					for (const FName& CtrlName : Group.ControllerNames)
-					{
-						OwnerWidget->AnimPickerSelectedControllers.Add(CtrlName);
-					}
-				}
-				OwnerWidget->SelectControlsInEditor(OwnerWidget->AnimPickerSelectedControllers, false);
-			}
-			else if (bShiftDown)
+			if (bShiftDown)
 			{
 				// Shift+클릭: 추가 선택
+				SelectedCustomPickers.Add(HitCustom);
+				const auto& Group = OwnerWidget->CustomPickerGroups[HitCustom];
 				for (const FName& CtrlName : Group.ControllerNames)
 				{
 					OwnerWidget->AnimPickerSelectedControllers.Add(CtrlName);
@@ -902,8 +1349,37 @@ FReply SAnimPicker2DPanel::OnMouseButtonDown(const FGeometry& MyGeometry, const 
 			}
 			else
 			{
-				// 일반 클릭: 단일 선택 (그룹의 컨트롤러들만)
-				OwnerWidget->OnCustomPickerGroupClicked(HitCustom);
+				// 일반 클릭: 이미 선택된 피커면 드래그 준비, 아니면 단일 선택
+				if (!SelectedCustomPickers.Contains(HitCustom))
+				{
+					// 새 피커 단일 선택
+					SelectedCustomPickers.Empty();
+					SelectedMainPickers.Empty();
+					SelectedCustomPickers.Add(HitCustom);
+					
+					OwnerWidget->AnimPickerSelectedControllers.Empty();
+					const auto& Group = OwnerWidget->CustomPickerGroups[HitCustom];
+					for (const FName& CtrlName : Group.ControllerNames)
+					{
+						OwnerWidget->AnimPickerSelectedControllers.Add(CtrlName);
+					}
+					OwnerWidget->SelectControlsInEditor(OwnerWidget->AnimPickerSelectedControllers, true);
+				}
+			}
+			
+			// 드래그 시작 준비 (선택된 모든 커스텀 피커)
+			PrimaryDragPicker = HitCustom;
+			bDraggingMainPickers = false;
+			ResizeHandle = INDEX_NONE;
+			bResizingMainPicker = false;
+			DragStartWorld = WorldPos;
+			DragStartPositions.Empty();
+			for (int32 Idx : SelectedCustomPickers)
+			{
+				if (Idx < OwnerWidget->CustomPickerGroups.Num())
+				{
+					DragStartPositions.Add(Idx, OwnerWidget->CustomPickerGroups[Idx].Position2D);
+				}
 			}
 			
 			return FReply::Handled().CaptureMouse(SharedThis(this));
@@ -913,66 +1389,92 @@ FReply SAnimPicker2DPanel::OnMouseButtonDown(const FGeometry& MyGeometry, const 
 		int32 HitMain = HitTestMainPicker(WorldPos);
 		if (HitMain != INDEX_NONE && OwnerWidget)
 		{
-			SelectedMainPicker = HitMain;
-			SelectedCustomPicker = INDEX_NONE;  // 커스텀 피커 선택 해제
-			DraggingMainPicker = HitMain;
-			DraggingCustomPicker = INDEX_NONE;
-			ResizeHandle = INDEX_NONE;
-			bResizingMainPicker = false;
-			DragStartWorld = WorldPos;
+			const auto& HitPicker = OwnerWidget->MainBonePickers2D[HitMain];
 			
-			const auto& Picker = OwnerWidget->MainBonePickers2D[HitMain];
-			PickerStartPos = Picker.Position;
-			PickerStartSize = Picker.Size;
-			
-			// ★★★ Shift/Ctrl 다중 선택 ★★★
-			bool bShiftDown = MouseEvent.IsShiftDown();
-			bool bCtrlDown = MouseEvent.IsControlDown();
-			
-			if (bCtrlDown)
+			// ★★★ Switch 피커인 경우 팝업 표시 ★★★
+			if (HitPicker.bIsSwitch)
 			{
-				// Ctrl+클릭: 토글 (선택/해제)
-				if (OwnerWidget->AnimPickerSelectedControllers.Contains(Picker.ControlName))
+				// 시퀀서에서 Switch 컨트롤러 선택
+				OwnerWidget->AnimPickerSelectedControllers.Empty();
+				OwnerWidget->AnimPickerSelectedControllers.Add(HitPicker.ControlName);
+				OwnerWidget->SelectControlsInEditor(OwnerWidget->AnimPickerSelectedControllers, true);
+				
+				// 팝업 토글 (이미 열려있으면 닫기, 아니면 열기)
+				if (OwnerWidget->bShowSwitchPopup && OwnerWidget->ActiveSwitchPickerIndex == HitMain)
 				{
-					OwnerWidget->AnimPickerSelectedControllers.Remove(Picker.ControlName);
+					OwnerWidget->bShowSwitchPopup = false;
+					OwnerWidget->ActiveSwitchPickerIndex = INDEX_NONE;
 				}
 				else
 				{
-					OwnerWidget->AnimPickerSelectedControllers.Add(Picker.ControlName);
+					OwnerWidget->bShowSwitchPopup = true;
+					OwnerWidget->ActiveSwitchPickerIndex = HitMain;
 				}
-				// 에디터 선택 동기화 (기존 선택 유지)
-				OwnerWidget->SelectControlsInEditor(OwnerWidget->AnimPickerSelectedControllers, false);
+				return FReply::Handled();
 			}
-			else if (bShiftDown)
+			
+			if (bShiftDown)
 			{
 				// Shift+클릭: 추가 선택
+				SelectedMainPickers.Add(HitMain);
+				const auto& Picker = OwnerWidget->MainBonePickers2D[HitMain];
 				OwnerWidget->AnimPickerSelectedControllers.Add(Picker.ControlName);
 				OwnerWidget->SelectControlsInEditor(OwnerWidget->AnimPickerSelectedControllers, false);
 			}
 			else
 			{
-				// 일반 클릭: 단일 선택 (기존 선택 해제)
-				OwnerWidget->AnimPickerSelectedControllers.Empty();
-				OwnerWidget->AnimPickerSelectedControllers.Add(Picker.ControlName);
-				OwnerWidget->SelectControlsInEditor(OwnerWidget->AnimPickerSelectedControllers, true);
+				// 일반 클릭: 이미 선택된 피커면 드래그 준비, 아니면 단일 선택
+				if (!SelectedMainPickers.Contains(HitMain))
+				{
+					// 새 피커 단일 선택
+					SelectedMainPickers.Empty();
+					SelectedCustomPickers.Empty();
+					SelectedMainPickers.Add(HitMain);
+					
+					OwnerWidget->AnimPickerSelectedControllers.Empty();
+					const auto& Picker = OwnerWidget->MainBonePickers2D[HitMain];
+					OwnerWidget->AnimPickerSelectedControllers.Add(Picker.ControlName);
+					OwnerWidget->SelectControlsInEditor(OwnerWidget->AnimPickerSelectedControllers, true);
+				}
+			}
+			
+			// 드래그 시작 준비 (선택된 모든 메인 피커)
+			PrimaryDragPicker = HitMain;
+			bDraggingMainPickers = true;
+			ResizeHandle = INDEX_NONE;
+			bResizingMainPicker = false;
+			DragStartWorld = WorldPos;
+			DragStartPositions.Empty();
+			for (int32 Idx : SelectedMainPickers)
+			{
+				if (Idx < OwnerWidget->MainBonePickers2D.Num())
+				{
+					DragStartPositions.Add(Idx, OwnerWidget->MainBonePickers2D[Idx].Position);
+				}
 			}
 			
 			return FReply::Handled().CaptureMouse(SharedThis(this));
 		}
 		
-		// 4. 빈 공간 클릭: 선택 해제 (Shift/Ctrl 없을 때만)
-		if (!MouseEvent.IsShiftDown() && !MouseEvent.IsControlDown())
+		// 4. 빈 공간 클릭: 마퀴 선택 시작 또는 선택 해제
+		// Shift/Ctrl 없으면 기존 선택 해제 후 마퀴 시작
+		if (!bShiftDown && !bCtrlDown)
 		{
-			SelectedCustomPicker = INDEX_NONE;
-			SelectedMainPicker = INDEX_NONE;
+			SelectedCustomPickers.Empty();
+			SelectedMainPickers.Empty();
 			HoveredMainPicker = INDEX_NONE;
-			// 전체 선택 해제
 			if (OwnerWidget)
 			{
 				OwnerWidget->AnimPickerSelectedControllers.Empty();
 				OwnerWidget->SelectControlsInEditor(OwnerWidget->AnimPickerSelectedControllers, true);
 			}
 		}
+		
+		// 마퀴 선택 시작
+		bIsMarqueeSelecting = true;
+		MarqueeStartWorld = WorldPos;
+		MarqueeEndWorld = WorldPos;
+		return FReply::Handled().CaptureMouse(SharedThis(this));
 	}
 	
 	return FReply::Unhandled();
@@ -980,15 +1482,77 @@ FReply SAnimPicker2DPanel::OnMouseButtonDown(const FGeometry& MyGeometry, const 
 
 FReply SAnimPicker2DPanel::OnMouseButtonUp(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent)
 {
-	bool bWasInteracting = (bIsPanning || bIsZooming || DraggingCustomPicker != INDEX_NONE || DraggingMainPicker != INDEX_NONE);
+	bool bWasInteracting = (bIsPanning || bIsZooming || PrimaryDragPicker != INDEX_NONE || bIsMarqueeSelecting);
+	
+	// 마퀴 선택 완료
+	if (bIsMarqueeSelecting && OwnerWidget)
+	{
+		bIsMarqueeSelecting = false;
+		
+		// 마퀴 영역 계산 (정규화 좌표)
+		float MinX = FMath::Min(MarqueeStartWorld.X, MarqueeEndWorld.X);
+		float MaxX = FMath::Max(MarqueeStartWorld.X, MarqueeEndWorld.X);
+		float MinY = FMath::Min(MarqueeStartWorld.Y, MarqueeEndWorld.Y);
+		float MaxY = FMath::Max(MarqueeStartWorld.Y, MarqueeEndWorld.Y);
+		
+		// 최소 드래그 크기 체크 (너무 작으면 선택 안 함)
+		if ((MaxX - MinX) > 0.01f || (MaxY - MinY) > 0.01f)
+		{
+			bool bShiftDown = MouseEvent.IsShiftDown();
+			bool bCtrlDown = MouseEvent.IsControlDown();
+			
+			// Shift 없으면 기존 선택 초기화
+			if (!bShiftDown && !bCtrlDown)
+			{
+				SelectedMainPickers.Empty();
+				SelectedCustomPickers.Empty();
+				OwnerWidget->AnimPickerSelectedControllers.Empty();
+			}
+			
+			// 메인 피커 선택
+			for (int32 i = 0; i < OwnerWidget->MainBonePickers2D.Num(); ++i)
+			{
+				const auto& Picker = OwnerWidget->MainBonePickers2D[i];
+				if (Picker.Position.X >= MinX && Picker.Position.X <= MaxX &&
+					Picker.Position.Y >= MinY && Picker.Position.Y <= MaxY)
+				{
+					SelectedMainPickers.Add(i);
+					OwnerWidget->AnimPickerSelectedControllers.Add(Picker.ControlName);
+				}
+			}
+			
+			// 커스텀 피커 선택
+			for (int32 i = 0; i < OwnerWidget->CustomPickerGroups.Num(); ++i)
+			{
+				const auto& Group = OwnerWidget->CustomPickerGroups[i];
+				if (Group.Position2D.IsNearlyZero()) continue;
+				
+				if (Group.Position2D.X >= MinX && Group.Position2D.X <= MaxX &&
+					Group.Position2D.Y >= MinY && Group.Position2D.Y <= MaxY)
+				{
+					SelectedCustomPickers.Add(i);
+					for (const FName& CtrlName : Group.ControllerNames)
+					{
+						OwnerWidget->AnimPickerSelectedControllers.Add(CtrlName);
+					}
+				}
+			}
+			
+			// 에디터에 선택 동기화
+			OwnerWidget->SelectControlsInEditor(OwnerWidget->AnimPickerSelectedControllers, true);
+		}
+		
+		return FReply::Handled().ReleaseMouseCapture();
+	}
 	
 	// 상태 리셋
 	bIsPanning = false;
 	bIsZooming = false;
-	DraggingCustomPicker = INDEX_NONE;
-	DraggingMainPicker = INDEX_NONE;
+	PrimaryDragPicker = INDEX_NONE;
+	bDraggingMainPickers = false;
 	ResizeHandle = INDEX_NONE;
 	bResizingMainPicker = false;
+	DragStartPositions.Empty();
 	
 	if (bWasInteracting)
 	{
@@ -1002,7 +1566,7 @@ FReply SAnimPicker2DPanel::OnMouseMove(const FGeometry& MyGeometry, const FPoint
 	FVector2D LocalPos = MyGeometry.AbsoluteToLocal(MouseEvent.GetScreenSpacePosition());
 	FVector2D WorldPos = ScreenToWorld(LocalPos);
 	FVector2D PanelSize = MyGeometry.GetLocalSize();
-	if (PanelSize.X < 10) PanelSize = FVector2D(900.0f, 1400.0f);
+	if (PanelSize.X < 10) PanelSize = FVector2D(1200.0f, 1800.0f);
 	
 	// 뷰포트 패닝 (휠 버튼 드래그)
 	if (bIsPanning)
@@ -1039,133 +1603,161 @@ FReply SAnimPicker2DPanel::OnMouseMove(const FGeometry& MyGeometry, const FPoint
 		return FReply::Handled();
 	}
 	
-	// 커스텀 피커 드래그/리사이즈
-	if (DraggingCustomPicker != INDEX_NONE && OwnerWidget)
+	// 피커 드래그/리사이즈 (다중 선택 지원)
+	if (PrimaryDragPicker != INDEX_NONE && OwnerWidget)
 	{
-		if (DraggingCustomPicker < OwnerWidget->CustomPickerGroups.Num())
+		FVector2D DeltaWorld = WorldPos - DragStartWorld;
+		
+		if (!bDraggingMainPickers)
 		{
-			FVector2D DeltaWorld = WorldPos - DragStartWorld;
-			
-			if (ResizeHandle != INDEX_NONE)
+			// 커스텀 피커 드래그/리사이즈
+			if (ResizeHandle != INDEX_NONE && PrimaryDragPicker < OwnerWidget->CustomPickerGroups.Num())
 			{
-				// 리사이즈
-				FVector2D NewSize = PickerStartSize;
-				FVector2D NewPos = PickerStartPos;
+				// ★ 그룹 스케일 리사이즈: 그룹 중심 기준으로 배치 유지하며 스케일 ★
 				FVector2D DeltaPixel = DeltaWorld * PanelSize;
 				
+				// 스케일 비율 계산 (드래그 거리 기반)
+				float ScaleFactor = 1.0f;
 				switch (ResizeHandle)
 				{
-				case 0: // 좌상
-					NewSize.X = PickerStartSize.X - DeltaPixel.X;
-					NewSize.Y = PickerStartSize.Y - DeltaPixel.Y;
-					NewPos.X = PickerStartPos.X + DeltaWorld.X * 0.5f;
-					NewPos.Y = PickerStartPos.Y + DeltaWorld.Y * 0.5f;
+				case 0: // 좌상단 - 왼쪽위로 드래그하면 커짐
+					ScaleFactor = 1.0f + (-DeltaPixel.X - DeltaPixel.Y) * 0.005f;
 					break;
-				case 2: // 우상
-					NewSize.X = PickerStartSize.X + DeltaPixel.X;
-					NewSize.Y = PickerStartSize.Y - DeltaPixel.Y;
-					NewPos.X = PickerStartPos.X + DeltaWorld.X * 0.5f;
-					NewPos.Y = PickerStartPos.Y + DeltaWorld.Y * 0.5f;
+				case 2: // 우상단 - 오른쪽위로 드래그하면 커짐
+					ScaleFactor = 1.0f + (DeltaPixel.X - DeltaPixel.Y) * 0.005f;
 					break;
-				case 4: // 우하
-					NewSize.X = PickerStartSize.X + DeltaPixel.X;
-					NewSize.Y = PickerStartSize.Y + DeltaPixel.Y;
-					NewPos.X = PickerStartPos.X + DeltaWorld.X * 0.5f;
-					NewPos.Y = PickerStartPos.Y + DeltaWorld.Y * 0.5f;
+				case 4: // 우하단 - 오른쪽아래로 드래그하면 커짐
+					ScaleFactor = 1.0f + (DeltaPixel.X + DeltaPixel.Y) * 0.005f;
 					break;
-				case 6: // 좌하
-					NewSize.X = PickerStartSize.X - DeltaPixel.X;
-					NewSize.Y = PickerStartSize.Y + DeltaPixel.Y;
-					NewPos.X = PickerStartPos.X + DeltaWorld.X * 0.5f;
-					NewPos.Y = PickerStartPos.Y + DeltaWorld.Y * 0.5f;
+				case 6: // 좌하단 - 왼쪽아래로 드래그하면 커짐
+					ScaleFactor = 1.0f + (-DeltaPixel.X + DeltaPixel.Y) * 0.005f;
 					break;
 				}
+				ScaleFactor = FMath::Clamp(ScaleFactor, 0.2f, 5.0f);  // 스케일 제한
 				
-				NewSize.X = FMath::Max(30.0f, NewSize.X);
-				NewSize.Y = FMath::Max(20.0f, NewSize.Y);
-				NewPos.X = FMath::Clamp(NewPos.X, 0.02f, 0.98f);
-				NewPos.Y = FMath::Clamp(NewPos.Y, 0.02f, 0.98f);
-				
-				OwnerWidget->CustomPickerGroups[DraggingCustomPicker].Size2D = NewSize;
-				OwnerWidget->CustomPickerGroups[DraggingCustomPicker].Position2D = NewPos;
+				// ★ 선택된 모든 커스텀 피커에 그룹 스케일 적용 ★
+				for (auto& SizePair : ResizeStartSizes)
+				{
+					int32 Idx = SizePair.Key;
+					FVector2D StartSize = SizePair.Value;
+					if (Idx < OwnerWidget->CustomPickerGroups.Num())
+					{
+						// 크기 스케일
+						FVector2D NewSize = StartSize * ScaleFactor;
+						NewSize.X = FMath::Max(30.0f, NewSize.X);
+						NewSize.Y = FMath::Max(20.0f, NewSize.Y);
+						OwnerWidget->CustomPickerGroups[Idx].Size2D = NewSize;
+						
+						// 위치도 그룹 중심 기준으로 스케일 (배치 유지)
+						if (FVector2D* StartOffset = ResizeStartOffsets.Find(Idx))
+						{
+							FVector2D NewPos = GroupResizeCenter + (*StartOffset) * ScaleFactor;
+							NewPos.X = FMath::Clamp(NewPos.X, -2.0f, 3.0f);
+							NewPos.Y = FMath::Clamp(NewPos.Y, -2.0f, 3.0f);
+							OwnerWidget->CustomPickerGroups[Idx].Position2D = NewPos;
+						}
+					}
+				}
 			}
 			else
 			{
-				// 위치 이동
-				FVector2D NewPos = PickerStartPos + DeltaWorld;
-				NewPos.X = FMath::Clamp(NewPos.X, 0.02f, 0.98f);
-				NewPos.Y = FMath::Clamp(NewPos.Y, 0.02f, 0.98f);
-				OwnerWidget->CustomPickerGroups[DraggingCustomPicker].Position2D = NewPos;
+				// 선택된 모든 커스텀 피커 동시 이동
+				for (auto& Pair : DragStartPositions)
+				{
+					int32 Idx = Pair.Key;
+					FVector2D StartPos = Pair.Value;
+					if (Idx < OwnerWidget->CustomPickerGroups.Num())
+					{
+						FVector2D NewPos = StartPos + DeltaWorld;
+						// 줌 0.3x에서 전체 작업 영역 이동 가능하도록 확장
+						NewPos.X = FMath::Clamp(NewPos.X, -2.0f, 3.0f);
+						NewPos.Y = FMath::Clamp(NewPos.Y, -2.0f, 3.0f);
+						OwnerWidget->CustomPickerGroups[Idx].Position2D = NewPos;
+					}
+				}
+			}
+		}
+		else
+		{
+			// 메인 피커 드래그/리사이즈
+			if (bResizingMainPicker && ResizeHandle != INDEX_NONE && PrimaryDragPicker < OwnerWidget->MainBonePickers2D.Num())
+			{
+				// ★ 그룹 스케일 리사이즈: 그룹 중심 기준으로 배치 유지하며 스케일 ★
+				FVector2D DeltaPixel = DeltaWorld * PanelSize;
+				
+				// 스케일 비율 계산 (드래그 거리 기반)
+				float ScaleFactor = 1.0f;
+				switch (ResizeHandle)
+				{
+				case 0: // 좌상단
+					ScaleFactor = 1.0f + (-DeltaPixel.X - DeltaPixel.Y) * 0.005f;
+					break;
+				case 2: // 우상단
+					ScaleFactor = 1.0f + (DeltaPixel.X - DeltaPixel.Y) * 0.005f;
+					break;
+				case 4: // 우하단
+					ScaleFactor = 1.0f + (DeltaPixel.X + DeltaPixel.Y) * 0.005f;
+					break;
+				case 6: // 좌하단
+					ScaleFactor = 1.0f + (-DeltaPixel.X + DeltaPixel.Y) * 0.005f;
+					break;
+				}
+				ScaleFactor = FMath::Clamp(ScaleFactor, 0.2f, 5.0f);  // 스케일 제한
+				
+				// ★ 선택된 모든 메인 피커에 그룹 스케일 적용 ★
+				for (auto& SizePair : ResizeStartSizes)
+				{
+					int32 Idx = SizePair.Key;
+					FVector2D StartSize = SizePair.Value;
+					if (Idx < OwnerWidget->MainBonePickers2D.Num())
+					{
+						// 크기 스케일
+						FVector2D NewSize = StartSize * ScaleFactor;
+						NewSize.X = FMath::Max(15.0f, NewSize.X);
+						NewSize.Y = FMath::Max(10.0f, NewSize.Y);
+						OwnerWidget->MainBonePickers2D[Idx].Size = NewSize;
+						
+						// 위치도 그룹 중심 기준으로 스케일 (배치 유지)
+						if (FVector2D* StartOffset = ResizeStartOffsets.Find(Idx))
+						{
+							FVector2D NewPos = GroupResizeCenter + (*StartOffset) * ScaleFactor;
+							NewPos.X = FMath::Clamp(NewPos.X, -2.0f, 3.0f);
+							NewPos.Y = FMath::Clamp(NewPos.Y, -2.0f, 3.0f);
+							OwnerWidget->MainBonePickers2D[Idx].Position = NewPos;
+						}
+					}
+				}
+			}
+			else
+			{
+				// 선택된 모든 메인 피커 동시 이동
+				for (auto& Pair : DragStartPositions)
+				{
+					int32 Idx = Pair.Key;
+					FVector2D StartPos = Pair.Value;
+					if (Idx < OwnerWidget->MainBonePickers2D.Num())
+					{
+						FVector2D NewPos = StartPos + DeltaWorld;
+						// 줌 0.3x에서 전체 작업 영역 이동 가능하도록 확장
+						NewPos.X = FMath::Clamp(NewPos.X, -2.0f, 3.0f);
+						NewPos.Y = FMath::Clamp(NewPos.Y, -2.0f, 3.0f);
+						OwnerWidget->MainBonePickers2D[Idx].Position = NewPos;
+					}
+				}
 			}
 		}
 		return FReply::Handled();
 	}
 	
-	// 메인 피커 드래그/리사이즈
-	if (DraggingMainPicker != INDEX_NONE && OwnerWidget)
+	// 마퀴 선택 중 (드래그 선택)
+	if (bIsMarqueeSelecting)
 	{
-		if (DraggingMainPicker < OwnerWidget->MainBonePickers2D.Num())
-		{
-			FVector2D DeltaWorld = WorldPos - DragStartWorld;
-			auto& MainPicker = OwnerWidget->MainBonePickers2D[DraggingMainPicker];
-			
-			if (bResizingMainPicker && ResizeHandle != INDEX_NONE)
-			{
-				// 리사이즈 (픽셀 단위)
-				FVector2D NewSize = PickerStartSize;
-				FVector2D NewPos = PickerStartPos;
-				FVector2D DeltaPixel = DeltaWorld * PanelSize;
-				
-				switch (ResizeHandle)
-				{
-				case 0: // 좌상
-					NewSize.X = PickerStartSize.X - DeltaPixel.X;
-					NewSize.Y = PickerStartSize.Y - DeltaPixel.Y;
-					NewPos.X = PickerStartPos.X + DeltaWorld.X;
-					NewPos.Y = PickerStartPos.Y + DeltaWorld.Y;
-					break;
-				case 2: // 우상
-					NewSize.X = PickerStartSize.X + DeltaPixel.X;
-					NewSize.Y = PickerStartSize.Y - DeltaPixel.Y;
-					NewPos.X = PickerStartPos.X + DeltaWorld.X;
-					NewPos.Y = PickerStartPos.Y + DeltaWorld.Y;
-					break;
-				case 4: // 우하
-					NewSize.X = PickerStartSize.X + DeltaPixel.X;
-					NewSize.Y = PickerStartSize.Y + DeltaPixel.Y;
-					NewPos.X = PickerStartPos.X + DeltaWorld.X;
-					NewPos.Y = PickerStartPos.Y + DeltaWorld.Y;
-					break;
-				case 6: // 좌하
-					NewSize.X = PickerStartSize.X - DeltaPixel.X;
-					NewSize.Y = PickerStartSize.Y + DeltaPixel.Y;
-					NewPos.X = PickerStartPos.X + DeltaWorld.X;
-					NewPos.Y = PickerStartPos.Y + DeltaWorld.Y;
-					break;
-				}
-				
-				NewSize.X = FMath::Max(15.0f, NewSize.X);
-				NewSize.Y = FMath::Max(10.0f, NewSize.Y);
-				NewPos.X = FMath::Clamp(NewPos.X, 0.01f, 0.99f);
-				NewPos.Y = FMath::Clamp(NewPos.Y, 0.01f, 0.99f);
-				
-				MainPicker.Size = NewSize;
-				MainPicker.Position = NewPos;
-			}
-			else
-			{
-				// 위치 이동 (정규화 좌표)
-				FVector2D NewPos = PickerStartPos + DeltaWorld;
-				NewPos.X = FMath::Clamp(NewPos.X, 0.01f, 0.99f);
-				NewPos.Y = FMath::Clamp(NewPos.Y, 0.01f, 0.99f);
-				MainPicker.Position = NewPos;
-			}
-		}
+		MarqueeEndWorld = WorldPos;
 		return FReply::Handled();
 	}
 	
 	// 드래그/줌/패닝 중이 아닐 때: 호버 감지
-	if (!bIsPanning && !bIsZooming && DraggingCustomPicker == INDEX_NONE && DraggingMainPicker == INDEX_NONE)
+	if (!bIsPanning && !bIsZooming && PrimaryDragPicker == INDEX_NONE)
 	{
 		// 마우스 위치 저장 (툴팁용)
 		LastMouseWorldPos = WorldPos;
@@ -13828,8 +14420,8 @@ TSharedRef<SWidget> SControlRigToolWidget::CreateAnimPickerTab()
 							[
 								// 2D 피커 패널 (마우스 휠 줌 지원)
 								SNew(SBox)
-								.WidthOverride_Lambda([this]() { return 900.0f * AnimPicker2DZoomScale; })
-								.HeightOverride_Lambda([this]() { return 1400.0f * AnimPicker2DZoomScale; })
+								.WidthOverride_Lambda([this]() { return 1200.0f * AnimPicker2DZoomScale; })
+								.HeightOverride_Lambda([this]() { return 1800.0f * AnimPicker2DZoomScale; })
 								[
 									SAssignNew(AnimPicker2DPanel, SAnimPicker2DPanel)
 									.OwnerWidget(this)
@@ -14365,14 +14957,26 @@ void SControlRigToolWidget::LoadControllersFromControlRig(const FString& Control
 		FName ParentSpace = NAME_None;
 		
 		// 부모 체인을 따라가며 Space(Null) 찾기
+		// ★★★ 체인 루트 찾기: 부모 체인을 따라가면서 Space 바로 아래 컨트롤러 찾기 ★★★
+		FName ChainRoot = ControlName;  // 기본값: 자기 자신
 		FRigBaseElement* Parent = Hierarchy->GetFirstParent(Control);
+		FRigBaseElement* PrevElement = Control;
+		
 		while (Parent)
 		{
 			if (FRigNullElement* NullParent = Cast<FRigNullElement>(Parent))
 			{
+				// Null (Space)을 찾았으면 ParentSpace 저장
 				ParentSpace = NullParent->GetFName();
+				
+				// 이전 요소가 Control이면 그게 체인 루트
+				if (FRigControlElement* PrevCtrl = Cast<FRigControlElement>(PrevElement))
+				{
+					ChainRoot = PrevCtrl->GetFName();
+				}
 				break;
 			}
+			PrevElement = Parent;
 			Parent = Hierarchy->GetFirstParent(Parent);
 		}
 		
@@ -14386,6 +14990,7 @@ void SControlRigToolWidget::LoadControllersFromControlRig(const FString& Control
 		FAnimPickerControllerInfo Info;
 		Info.ControlName = ControlName;
 		Info.ParentSpace = ParentSpace;
+		Info.ChainRoot = ChainRoot;  // 체인 루트 저장
 		Info.Transform = Hierarchy->GetGlobalTransform(Control->GetKey());
 		
 		// ★★★ Control Rig에서 Shape 정보 직접 추출 (올바른 API 사용!) ★★★
@@ -14647,6 +15252,7 @@ void SControlRigToolWidget::UpdateAnimPicker2DView()
 	BonePositions.Add(TEXT("body"), FVector2D(0.50f, 0.365f));
 	BonePositions.Add(TEXT("body_offset"), FVector2D(0.50f, 0.355f));
 	BonePositions.Add(TEXT("global"), FVector2D(0.50f, 0.44f));
+	BonePositions.Add(TEXT("root"), FVector2D(0.50f, 0.46f));  // ★ ROOT 추가 ★
 	// === 왼쪽 쇄골/팔 (실루엣 위치에 맞춤) ===
 	BonePositions.Add(TEXT("clavicle_l"), FVector2D(0.36f, 0.16f));
 	BonePositions.Add(TEXT("upperarm_l"), FVector2D(0.205f, 0.22f));
@@ -14753,6 +15359,7 @@ void SControlRigToolWidget::UpdateAnimPicker2DView()
 	{
 		FName ControlName;
 		FName SpaceName;
+		FName ChainRoot;     // 체인 루트 (Space 바로 아래 컨트롤러)
 		bool bIsMainBone;
 		FVector2D ScreenPos;
 		bool bHasFixedPos;
@@ -14813,12 +15420,23 @@ void SControlRigToolWidget::UpdateAnimPicker2DView()
 				continue;
 			}
 			
+			// ★★★ NECK, SPINE Switch는 죽은 컨트롤러이므로 제외 ★★★
+			if (NameLower.Contains(TEXT("neck")) && NameLower.Contains(TEXT("switch")))
+			{
+				continue;
+			}
+			if (NameLower.Contains(TEXT("spine")) && NameLower.Contains(TEXT("switch")))
+			{
+				continue;
+			}
+			
 			// ★★★ 메인/세컨더리 분류: 이름 패턴 기반 ★★★
 			bool bIsMainBone = !IsSecondaryPattern(NameLower);
 			
 			F2DPickerInfo PickerInfo;
 			PickerInfo.ControlName = Info.ControlName;
 			PickerInfo.SpaceName = Pair.Key;
+			PickerInfo.ChainRoot = Info.ChainRoot;  // 체인 루트 복사
 			PickerInfo.bIsMainBone = bIsMainBone;
 			PickerInfo.bHasFixedPos = false;
 			
@@ -14830,8 +15448,8 @@ void SControlRigToolWidget::UpdateAnimPicker2DView()
 				{
 					if (NameLower.Contains(PosEntry.Key))
 					{
-						// ★★★ X 좌표 스케일: 중앙 기준으로 0.70배 축소 (구분선 안쪽으로) ★★★
-						float ScaledX = 0.5f + (PosEntry.Value.X - 0.5f) * 0.70f;
+						// ★★★ X 좌표 스케일: 중앙 기준으로 0.55배 축소 (구분선에서 여유있게) ★★★
+						float ScaledX = 0.5f + (PosEntry.Value.X - 0.5f) * 0.55f;
 						PickerInfo.ScreenPos = FVector2D(ScaledX * CanvasWidth, PosEntry.Value.Y * CanvasHeight);
 						PickerInfo.bHasFixedPos = true;
 						MatchedKey = PosEntry.Key;
@@ -15026,8 +15644,8 @@ void SControlRigToolWidget::UpdateAnimPicker2DView()
 	const float SpaceLabelHeight = 22.0f;
 	const float ChainSpacing = 4.0f;  // 같은 체인 내 간격
 	
-	// 오른쪽 영역 시작 위치 (75% 지점부터) - 더 오른쪽으로
-	const float SecAreaStartX = 0.75f;
+	// 오른쪽 영역 시작 위치 (85% 지점부터) - 구분선 오른쪽
+	const float SecAreaStartX = 0.85f;
 	const float SecAreaStartY = 0.04f;  // 상단 여백
 	
 	// Space별로 세컨더리 정리
@@ -15064,22 +15682,43 @@ void SControlRigToolWidget::UpdateAnimPicker2DView()
 	// 현재 Y 위치 추적
 	float CurrentY = SecAreaStartY;
 	
-	// 체인 이름 추출 함수 (예: "l_cape_01_ctrl" → "l_cape")
+	// 체인 이름 추출 함수 (예: "l_cape_a01_ctrl" → "l_cape_a")
+	// 마지막 연속 숫자를 제거하여 체인 그룹화
 	auto GetChainName = [](const FString& NameLower) -> FString
 	{
-		// 숫자와 _ctrl 제거
+		// _ctrl 제거
 		FString ChainName = NameLower;
 		ChainName = ChainName.Replace(TEXT("_ctrl"), TEXT(""));
-		// 마지막 _숫자 제거 (예: _01, _02, _03)
-		int32 LastUnderscoreIdx;
-		if (ChainName.FindLastChar('_', LastUnderscoreIdx))
+		
+		// ★★★ 마지막 연속 숫자 제거 (예: l_cape_a01 → l_cape_a) ★★★
+		// 끝에서부터 숫자가 아닌 문자가 나올 때까지 제거
+		int32 EndIdx = ChainName.Len() - 1;
+		while (EndIdx >= 0 && FChar::IsDigit(ChainName[EndIdx]))
 		{
-			FString Suffix = ChainName.Mid(LastUnderscoreIdx + 1);
-			if (Suffix.IsNumeric())
-			{
-				ChainName = ChainName.Left(LastUnderscoreIdx);
-			}
+			EndIdx--;
 		}
+		
+		if (EndIdx >= 0 && EndIdx < ChainName.Len() - 1)
+		{
+			ChainName = ChainName.Left(EndIdx + 1);
+		}
+		
+		// 마지막 언더스코어+숫자 패턴도 제거 (예: _01)
+		while (ChainName.Len() > 0)
+		{
+			int32 LastUnderscoreIdx;
+			if (ChainName.FindLastChar('_', LastUnderscoreIdx) && LastUnderscoreIdx > 0)
+			{
+				FString Suffix = ChainName.Mid(LastUnderscoreIdx + 1);
+				if (Suffix.Len() > 0 && Suffix.IsNumeric())
+				{
+					ChainName = ChainName.Left(LastUnderscoreIdx);
+					continue;
+				}
+			}
+			break;
+		}
+		
 		return ChainName;
 	};
 	
@@ -15098,10 +15737,11 @@ void SControlRigToolWidget::UpdateAnimPicker2DView()
 		
 		CurrentY += SpaceLabelHeight / CanvasHeight;
 		
-		// 체인별로 그룹화
+		// ★★★ 체인별로 그룹화: 이름 패턴 기반 (스켈레톤이 flat 구조인 경우 대응) ★★★
 		TMap<FString, TArray<F2DPickerInfo>> ChainGroups;
 		for (const F2DPickerInfo& Info : SpaceSecondaries)
 		{
+			// 컨트롤러 이름에서 체인 이름 추출 (GetChainName 사용)
 			FString ChainName = GetChainName(Info.ControlName.ToString().ToLower());
 			if (!ChainGroups.Contains(ChainName))
 			{
@@ -15115,7 +15755,10 @@ void SControlRigToolWidget::UpdateAnimPicker2DView()
 		ChainGroups.GetKeys(SortedChainNames);
 		SortedChainNames.Sort();
 		
-		int32 ChainIndex = 0;
+		// ★★★ 체인별 가로 배치: 체인 내에서 좌→우, 체인 끝나면 다음 줄 ★★★
+		const float SecPickerSpacingX = 0.045f;  // 피커 간 가로 간격
+		const float ChainRowSpacing = 0.035f;   // 체인 간 세로 간격
+		
 		for (const FString& ChainName : SortedChainNames)
 		{
 			TArray<F2DPickerInfo>& ChainMembers = ChainGroups[ChainName];
@@ -15126,18 +15769,16 @@ void SControlRigToolWidget::UpdateAnimPicker2DView()
 				return A.ControlName.ToString() < B.ControlName.ToString();
 			});
 			
-			// X 위치: 체인마다 오른쪽으로 이동
-			float ChainX = SecAreaStartX + (ChainIndex % 3) * 0.10f;
-			
+			// 체인 내에서 가로로 배치 (좌→우)
 			for (int32 i = 0; i < ChainMembers.Num(); i++)
 			{
 				const F2DPickerInfo& Info = ChainMembers[i];
 				FString NameLower = Info.ControlName.ToString().ToLower();
 				
-				// 위치 계산
+				// ★ 위치 계산: X는 체인 내 순서대로 오른쪽으로, Y는 체인 시작 줄에 고정 ★
 				FVector2D NormPos;
-				NormPos.X = ChainX;
-				NormPos.Y = CurrentY + (i * SecSpacing / CanvasHeight);
+				NormPos.X = SecAreaStartX + (i * SecPickerSpacingX);
+				NormPos.Y = CurrentY;
 				
 				// 세컨더리 색상 (타입 기반)
 				FLinearColor BtnColor(0.6f, 0.4f, 0.8f, 1.0f);  // 기본 보라
@@ -15176,44 +15817,116 @@ void SControlRigToolWidget::UpdateAnimPicker2DView()
 				SecCount++;
 			}
 			
-			ChainIndex++;
-			
-			// 3개 체인마다 Y 위치 증가 (다음 행)
-			if (ChainIndex % 3 == 0)
-			{
-				// 이 행의 최대 높이 계산
-				int32 MaxChainLen = 0;
-				for (int32 ci = ChainIndex - 3; ci < ChainIndex; ci++)
-				{
-					if (ci < SortedChainNames.Num())
-					{
-						MaxChainLen = FMath::Max(MaxChainLen, ChainGroups[SortedChainNames[ci]].Num());
-					}
-				}
-				CurrentY += (MaxChainLen * SecSpacing + ChainSpacing) / CanvasHeight;
-			}
-		}
-		
-		// 마지막 행 처리
-		if (ChainIndex % 3 != 0)
-		{
-			int32 StartIdx = (ChainIndex / 3) * 3;
-			int32 MaxChainLen = 0;
-			for (int32 ci = StartIdx; ci < ChainIndex; ci++)
-			{
-				if (ci < SortedChainNames.Num())
-				{
-					MaxChainLen = FMath::Max(MaxChainLen, ChainGroups[SortedChainNames[ci]].Num());
-				}
-			}
-			CurrentY += (MaxChainLen * SecSpacing + ChainSpacing) / CanvasHeight;
+			// ★ 체인 끝나면 다음 줄로 이동 ★
+			CurrentY += ChainRowSpacing;
 		}
 		
 		// Space 간 간격
-		CurrentY += 0.02f;
+		CurrentY += 0.03f;
 	}
 	
 	UE_LOG(LogTemp, Warning, TEXT("[AnimPicker 2D] Created %d main bones, %d secondary"), MainCount, SecCount);
+	
+	// ★★★ FK/IK Switch 피커 자동 생성 (PV 옆에 흰색 원형) ★★★
+	// Switch 컨트롤러 이름 패턴 정의
+	struct FSwitchPickerDef
+	{
+		FString PVName;           // PV 컨트롤러 이름
+		FString SwitchName;       // Switch 컨트롤러 이름
+		FVector2D RelativeOffset; // PV 기준 오프셋 (정규화 좌표)
+	};
+	
+	TArray<FSwitchPickerDef> SwitchPickerDefs;
+	// 왼쪽 팔/다리 Switch: PV 왼쪽에 배치
+	SwitchPickerDefs.Add({ TEXT("arm_l_pv"), TEXT("arm_l_fk_ik_switch"), FVector2D(-0.04f, 0.0f) });
+	SwitchPickerDefs.Add({ TEXT("leg_l_pv"), TEXT("leg_l_fk_ik_switch"), FVector2D(-0.04f, 0.0f) });
+	// 오른쪽 팔/다리 Switch: PV 오른쪽에 배치
+	SwitchPickerDefs.Add({ TEXT("arm_r_pv"), TEXT("arm_r_fk_ik_switch"), FVector2D(0.04f, 0.0f) });
+	SwitchPickerDefs.Add({ TEXT("leg_r_pv"), TEXT("leg_r_fk_ik_switch"), FVector2D(0.04f, 0.0f) });
+	
+	// Control Rig에서 Switch 컨트롤러 존재 여부 및 현재 상태 확인
+	UControlRig* ControlRig = LastActiveControlRig.Get();
+	
+	for (const FSwitchPickerDef& Def : SwitchPickerDefs)
+	{
+		// PV 피커 위치 찾기
+		FVector2D PVPosition = FVector2D::ZeroVector;
+		bool bFoundPV = false;
+		
+		// BonePositions에서 PV 위치 찾기
+		if (FVector2D* PVPos = BonePositions.Find(Def.PVName))
+		{
+			// 스케일 적용 (메인 컨트롤러와 동일)
+			float ScaledX = 0.5f + (PVPos->X - 0.5f) * 0.55f;
+			PVPosition = FVector2D(ScaledX, PVPos->Y);
+			bFoundPV = true;
+		}
+		
+		if (!bFoundPV) continue;
+		
+		// Switch 컨트롤러 존재 여부 확인
+		FName SwitchControlName = FName(*Def.SwitchName);
+		bool bSwitchExists = false;
+		bool bCurrentSwitchState = false;  // false=FK, true=IK
+		
+		// AnimPickerControllersBySpace에서 Switch 컨트롤러 검색
+		for (const auto& SpacePair : AnimPickerControllersBySpace)
+		{
+			for (const FAnimPickerControllerInfo& Info : SpacePair.Value)
+			{
+				FString CtrlName = Info.ControlName.ToString().ToLower();
+				if (CtrlName.Contains(Def.SwitchName.ToLower()) || 
+					CtrlName.Contains(Def.SwitchName.ToLower().Replace(TEXT("_fk_ik_switch"), TEXT("_switch"))))
+				{
+					SwitchControlName = Info.ControlName;
+					bSwitchExists = true;
+					
+					// Control Rig에서 현재 Bool 값 가져오기
+					if (ControlRig)
+					{
+						URigHierarchy* Hierarchy = ControlRig->GetHierarchy();
+						if (Hierarchy)
+						{
+							FRigElementKey ControlKey(SwitchControlName, ERigElementType::Control);
+							if (Hierarchy->Contains(ControlKey))
+							{
+								FRigControlElement* ControlElement = Hierarchy->Find<FRigControlElement>(ControlKey);
+								if (ControlElement && ControlElement->Settings.ControlType == ERigControlType::Bool)
+								{
+									bCurrentSwitchState = ControlRig->GetControlValue(SwitchControlName).IsValid() ? 
+										ControlRig->GetControlValue(SwitchControlName).Get<bool>() : false;
+								}
+							}
+						}
+					}
+					break;
+				}
+			}
+			if (bSwitchExists) break;
+		}
+		
+		// Switch 컨트롤러가 없으면 건너뜀
+		if (!bSwitchExists) continue;
+		
+		// Switch 피커 위치 계산
+		FVector2D SwitchPos = PVPosition + Def.RelativeOffset;
+		
+		// Switch 피커 데이터 생성
+		F2DPickerData SwitchPickerData;
+		SwitchPickerData.ControlName = SwitchControlName;
+		SwitchPickerData.Position = SwitchPos;
+		SwitchPickerData.Size = FVector2D(20.0f, 20.0f);  // 흰색 원형, 적당한 크기
+		SwitchPickerData.Color = FLinearColor(1.0f, 1.0f, 1.0f, 1.0f);  // 흰색
+		SwitchPickerData.bIsSecondary = false;
+		SwitchPickerData.bIsSwitch = true;
+		SwitchPickerData.SwitchControlName = SwitchControlName;
+		SwitchPickerData.bSwitchState = bCurrentSwitchState;
+		
+		MainBonePickers2D.Add(SwitchPickerData);
+		
+		UE_LOG(LogTemp, Log, TEXT("[AnimPicker 2D] Added FK/IK Switch picker: %s at (%.2f, %.2f), State=%s"), 
+			*SwitchControlName.ToString(), SwitchPos.X, SwitchPos.Y, bCurrentSwitchState ? TEXT("IK") : TEXT("FK"));
+	}
 	
 	// 커스텀 피커는 SAnimPicker2DPanel::OnPaint에서 직접 그림 (드래그/리사이즈 지원)
 	if (CustomPickerGroups.Num() > 0)
@@ -15352,6 +16065,16 @@ void SControlRigToolWidget::UpdateAnimPicker3DView()
 			
 			// ★ 필터링: _ctrl 또는 _switch로 끝나는 것만 ★
 			if (!NameLower.EndsWith(TEXT("_ctrl")) && !NameLower.EndsWith(TEXT("_switch")))
+			{
+				continue;
+			}
+			
+			// ★★★ NECK, SPINE Switch는 죽은 컨트롤러이므로 제외 ★★★
+			if (NameLower.Contains(TEXT("neck")) && NameLower.Contains(TEXT("switch")))
+			{
+				continue;
+			}
+			if (NameLower.Contains(TEXT("spine")) && NameLower.Contains(TEXT("switch")))
 			{
 				continue;
 			}
@@ -15534,6 +16257,60 @@ void SControlRigToolWidget::SelectControlsInEditor(const TSet<FName>& ControlNam
 	
 	UE_LOG(LogTemp, Log, TEXT("[AnimPicker] Selected %d controls in '%s'"), 
 		ControlNames.Num(), *TargetControlRig->GetName());
+}
+
+// ============================================================================
+// FK/IK Switch 값 설정
+// ============================================================================
+void SControlRigToolWidget::SetSwitchControlValue(FName SwitchControlName, bool bNewValue)
+{
+	UControlRig* TargetControlRig = LastActiveControlRig.Get();
+	
+	if (!TargetControlRig)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[AnimPicker] SetSwitchControlValue: No Control Rig loaded"));
+		return;
+	}
+	
+	// Control Rig에서 해당 컨트롤 찾기
+	URigHierarchy* Hierarchy = TargetControlRig->GetHierarchy();
+	if (!Hierarchy)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[AnimPicker] SetSwitchControlValue: No Hierarchy"));
+		return;
+	}
+	
+	FRigElementKey ControlKey(SwitchControlName, ERigElementType::Control);
+	if (!Hierarchy->Contains(ControlKey))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[AnimPicker] SetSwitchControlValue: Control '%s' not found"), *SwitchControlName.ToString());
+		return;
+	}
+	
+	FRigControlElement* ControlElement = Hierarchy->Find<FRigControlElement>(ControlKey);
+	if (!ControlElement)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[AnimPicker] SetSwitchControlValue: ControlElement is null"));
+		return;
+	}
+	
+	// Bool 타입인지 확인
+	if (ControlElement->Settings.ControlType != ERigControlType::Bool)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[AnimPicker] SetSwitchControlValue: Control '%s' is not Bool type"), *SwitchControlName.ToString());
+		return;
+	}
+	
+	// 값 설정
+	FRigControlValue NewControlValue;
+	NewControlValue.Set<bool>(bNewValue);
+	TargetControlRig->SetControlValue(SwitchControlName, NewControlValue, true, EControlRigSetKey::Always);
+	
+	UE_LOG(LogTemp, Log, TEXT("[AnimPicker] Set Switch '%s' to %s"), 
+		*SwitchControlName.ToString(), bNewValue ? TEXT("IK (ON)") : TEXT("FK (OFF)"));
+	
+	// 상태 표시
+	SetAnimPickerStatus(FString::Printf(TEXT("%s: %s"), *SwitchControlName.ToString(), bNewValue ? TEXT("IK") : TEXT("FK")));
 }
 
 // ============================================================================

@@ -36,7 +36,7 @@ public:
 	void Construct(const FArguments& InArgs);
 	
 	// SWidget 인터페이스
-	virtual FVector2D ComputeDesiredSize(float) const override { return FVector2D(900, 1400); }
+	virtual FVector2D ComputeDesiredSize(float) const override { return FVector2D(1200, 1800); }
 	virtual int32 OnPaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry, const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements, int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const override;
 	
 	// 마우스 이벤트
@@ -71,19 +71,28 @@ private:
 	FVector2D LastMousePos = FVector2D::ZeroVector;
 	FVector2D ZoomPivot = FVector2D::ZeroVector;  // 줌 중심점 (월드 좌표)
 	
-	// 피커 선택/드래그
-	int32 SelectedCustomPicker = INDEX_NONE;
-	int32 DraggingCustomPicker = INDEX_NONE;
+	// 피커 선택/드래그 (다중 선택 지원)
+	TSet<int32> SelectedMainPickers;    // 선택된 메인 피커들
+	TSet<int32> SelectedCustomPickers;  // 선택된 커스텀 피커들
 	int32 HoveredMainPicker = INDEX_NONE;
 	int32 HoveredCustomPicker = INDEX_NONE;
-	int32 SelectedMainPicker = INDEX_NONE;   // 선택된 메인 피커
-	int32 DraggingMainPicker = INDEX_NONE;   // 드래그 중인 메인 피커
+	int32 PrimaryDragPicker = INDEX_NONE;   // 드래그 기준 피커 (메인 또는 커스텀)
+	bool bDraggingMainPickers = false;      // true=메인 피커 드래그, false=커스텀 피커 드래그
 	int32 ResizeHandle = INDEX_NONE;  // 0=좌상, 2=우상, 4=우하, 6=좌하
 	bool bResizingMainPicker = false;  // 메인 피커 리사이즈 중
 	FVector2D DragStartWorld = FVector2D::ZeroVector;
-	FVector2D PickerStartPos = FVector2D::ZeroVector;
-	FVector2D PickerStartSize = FVector2D::ZeroVector;
 	FVector2D LastMouseWorldPos = FVector2D::ZeroVector;  // 툴팁용 마우스 위치
+	TMap<int32, FVector2D> DragStartPositions;  // 드래그 시작 시 각 피커의 위치 저장
+	TMap<int32, FVector2D> ResizeStartSizes;    // ★ 다중 선택 리사이즈용: 각 피커의 시작 크기 저장
+	TMap<int32, FVector2D> ResizeStartOffsets;  // ★ 그룹 중심점에서의 오프셋 저장
+	FVector2D GroupResizeCenter = FVector2D::ZeroVector;  // ★ 그룹 리사이즈 중심점
+	FVector2D ResizeStartSize = FVector2D::ZeroVector;    // 리사이즈 시작 시 피커 크기
+	FVector2D ResizeStartPos = FVector2D::ZeroVector;     // 리사이즈 시작 시 피커 위치
+	
+	// 마퀴 선택 (드래그 박스 선택)
+	bool bIsMarqueeSelecting = false;
+	FVector2D MarqueeStartWorld = FVector2D::ZeroVector;  // 마퀴 시작점 (월드 좌표)
+	FVector2D MarqueeEndWorld = FVector2D::ZeroVector;    // 마퀴 끝점 (월드 좌표)
 	
 	// 히트 테스트 함수
 	int32 HitTestMainPicker(const FVector2D& WorldPos) const;
@@ -630,6 +639,7 @@ private:
 	{
 		FName ControlName;           // 컨트롤러 이름
 		FName ParentSpace;           // 부모 Space 이름
+		FName ChainRoot;             // 체인 루트 컨트롤러 이름 (Space 바로 아래 첫 컨트롤러)
 		FLinearColor Color;          // 표시 색상 (Control Rig에서 가져온 원본)
 		FTransform Transform;        // 글로벌 위치
 		FTransform ShapeTransform;   // Shape 오프셋 (본 위치 기준)
@@ -679,8 +689,18 @@ private:
 		FVector2D Size;                       // 픽셀 크기
 		FLinearColor Color;                   // 색상
 		bool bIsSecondary = false;            // 세컨더리 본인지
+		
+		// ★ FK/IK Switch 피커 관련 ★
+		bool bIsSwitch = false;               // Switch 피커인지 여부
+		FName SwitchControlName;              // 연결된 Switch 컨트롤러 이름 (예: arm_l_fk_ik_switch)
+		bool bSwitchState = false;            // 현재 Switch 상태 (false=FK, true=IK)
 	};
 	TArray<F2DPickerData> MainBonePickers2D;  // 메인본 피커들 (2D 뷰용)
+	
+	// ★★★ FK/IK Switch 팝업 상태 ★★★
+	int32 ActiveSwitchPickerIndex = INDEX_NONE;  // 현재 활성화된 Switch 피커 인덱스
+	bool bShowSwitchPopup = false;               // Switch 팝업 표시 여부
+	FVector2D SwitchPopupPosition;               // Switch 팝업 위치 (스크린 좌표)
 	
 	// ★★★ 2D 뷰 세컨더리 영역 Space 라벨 ★★★
 	struct FSpaceLabel2D
@@ -778,4 +798,5 @@ private:
 	FLinearColor GetColorForController(const FName& ControllerName) const;  // 컨트롤러별 색상
 	FString GetSelectedAnimPickerControlRigPath() const;
 	void SelectControlsInEditor(const TSet<FName>& ControlNames, bool bClearSelection = true);  // 시퀀서/에디터에서 실제 선택
+	void SetSwitchControlValue(FName SwitchControlName, bool bNewValue);  // FK/IK Switch 값 설정
 };
